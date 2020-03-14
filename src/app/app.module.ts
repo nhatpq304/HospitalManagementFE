@@ -4,6 +4,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UsersModule } from "./Users/users.module";
+import { LayoutsModule } from "./Layouts/layouts.module";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -12,7 +14,8 @@ import { UsersModule } from "./Users/users.module";
     BrowserModule,
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
-    UsersModule
+    UsersModule,
+    LayoutsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
