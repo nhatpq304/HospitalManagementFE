@@ -1,7 +1,7 @@
-.fixed-top {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 270px;
-    z-index: 1030;
+@media (min-width: 1200px) {
+  .navbar,
+  .page-footer,
+  main {
+    padding-left: 270px;
+  }
 }
