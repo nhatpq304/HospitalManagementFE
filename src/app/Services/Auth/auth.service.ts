@@ -1,17 +1,27 @@
 import { Injectable } from "@angular/core";
 import { RestfulService } from "../restful.service";
 import { AuthModel } from "src/app/Models/Auth/auth.model";
+import { LocalStorageService } from "../LocalStorage/local-storage.service";
+import apis from "../api.routes";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-  constructor(public restfulService: RestfulService) {}
+  constructor(
+    public restfulService: RestfulService,
+    public localStorageService: LocalStorageService
+  ) {}
 
-  userLogin(authData: AuthModel) {
-    const api = "https://hospital-myn-be.herokuapp.com/api/auth/login";
-    return this.restfulService
-      .post(api, authData)
-      .subscribe(data => console.log(data));
+  loginUser(authData: AuthModel) {
+    const api = apis.login;
+
+    return this.restfulService.post(api, authData).toPromise();
+  }
+
+  getLoggedUser() {
+    const api = apis.getLoggedAccount;
+
+    return this.restfulService.get(api).toPromise();
   }
 }

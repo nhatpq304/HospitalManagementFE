@@ -1,0 +1,15 @@
+.login__form {
+  width: 20rem;
+  background-color: white;
+  position: absolute;
+  right: 2vw;
+  top: 30vh;
+  border-radius: 2px;
+  &--alert {
+    line-height: 0px;
+    margin: 0px;
+  }
+}
+.login__alertbox {
+  height: 26px;
+}

@@ -1,41 +1,35 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl, Validators } from "@angular/forms";
-import { AuthService } from "src/app/Services/Auth/auth.service";
-import { AuthModel } from "src/app/Models/Auth/auth.model";
+import { Component, OnInit, Input } from "@angular/core";
+import { LocalStorageService } from "src/app/Services/LocalStorage/local-storage.service";
+import { Router } from "@angular/router";
 @Component({
   selector: "layouts-navigation-bar",
   templateUrl: "./navigation-bar.component.html",
   styleUrls: ["./navigation-bar.component.scss"]
 })
 export class NavigationBarComponent implements OnInit {
+  @Input() username: string;
+
   resource;
-
-  email = new FormControl("", [Validators.required, Validators.email]);
-  password = new FormControl("", [
-    Validators.required,
-    Validators.minLength(6)
-  ]);
-
-  constructor(public authService: AuthService) {}
+  constructor(
+    public router: Router,
+    public localStorage: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     this.initResource();
   }
 
-  onLoginClick($event) {
-    let authData = new AuthModel();
-    authData.email = this.email.value;
-    authData.password = this.password.value;
+  onLogOutClick() {
+    this.localStorage.removeItem("token");
+    this.localStorage.removeItem("user");
 
-    this.authService.userLogin(authData);
+    return this.router.navigate(["/"]);
   }
 
   private initResource() {
     this.resource = {
-      loginModalId: "loginModal",
-      modalTitle: "Đăng nhập",
-      modalEmail: "Email",
-      modalPassword: "Mật khẩu"
+      accountMenu: "Xin chào",
+      logOut: "Đăng xuất"
     };
   }
 }
