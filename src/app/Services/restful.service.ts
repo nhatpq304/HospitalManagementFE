@@ -6,6 +6,8 @@ import {
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError, retry } from "rxjs/operators";
+import { LocalStorageService } from "./LocalStorage/local-storage.service";
+import _ from "lodash";
 
 @Injectable({
   providedIn: "root"
@@ -13,19 +15,33 @@ import { catchError, retry } from "rxjs/operators";
 export class RestfulService {
   httpOptions;
 
-  constructor(public http: HttpClient) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json"
-        // 'Authorization': 'my-auth-token'
-      })
-    };
+  constructor(
+    public http: HttpClient,
+    public localStorageService: LocalStorageService
+  ) {}
+
+  public get(api, options?: any): Observable<any> {
+    this.setHttpOptions();
+
+    return this.http.get(api, this.httpOptions);
   }
 
   public post(api, body): Observable<any> {
-    return this.http
-      .post(api, body, this.httpOptions)
-      .pipe(catchError(this.handleError));
+    this.setHttpOptions();
+
+    return this.http.post(api, body, this.httpOptions);
+  }
+
+  private setHttpOptions() {
+    let authToken = this.localStorageService.getItem("token");
+
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer  ${authToken}`
+      })
+    };
   }
 
   private handleError(error: HttpErrorResponse) {

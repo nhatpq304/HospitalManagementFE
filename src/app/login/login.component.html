@@ -1,0 +1,63 @@
+<form
+  [formGroup]="loginForm"
+  class="text-center border border-light p-5 login__form rounded"
+  (ngSubmit)="onLoginClick()"
+>
+  <p class="h4 mb-4">{{ resource.title }}</p>
+  <div class="login__alertbox">
+    <p
+      class="alert alert-danger login__form--alert"
+      *ngIf="isLoggingFailed"
+    >
+      wrong
+    </p>
+  </div>
+  <div class="md-form">
+    <div class="form-group">
+      <mdb-error
+        *ngIf="email?.errors?.email && (email.dirty || email.touched)"
+        >{{ resource.invalidEmail }}</mdb-error
+      >
+      <mdb-error
+        *ngIf="email?.errors?.required && (email.dirty || email.touched)"
+        >{{ resource.requiredEmail }}</mdb-error
+      >
+      <input
+        type="email"
+        class="form-control mb-4"
+        formControlName="email"
+        [attr.placeholder]="resource.email"
+        mdbInput
+        mdbValidate
+      />
+    </div>
+  </div>
+  <div class="md-form">
+    <div class="form-group">
+      <mdb-error
+        *ngIf="
+          password?.errors?.minlength && (password.dirty || password.touched)
+        "
+        >{{ resource.minLengthPassword }}</mdb-error
+      >
+      <mdb-error
+        *ngIf="
+          password?.errors?.required && (password.dirty || password.touched)
+        "
+        >{{ resource.requiredPassword }}</mdb-error
+      >
+      <input
+        type="password"
+        class="form-control mb-4"
+        formControlName="password"
+        [attr.placeholder]="resource.password"
+        mdbInput
+        mdbValidate
+      />
+    </div>
+    <button type="submit" class="btn btn-info btn-block my-4 ">
+      {{ resource.title }}
+      <i class="fa fa-spinner fa-spin" *ngIf="isLogPromisePending"></i>
+    </button>
+  </div>
+</form>
