@@ -6,7 +6,17 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./side-bar.component.scss"]
 })
 export class SideBarComponent implements OnInit {
+  resource;
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initResource();
+  }
+
+  private initResource() {
+    this.resource = {
+      menu: [{ title: "Quản lý Người", iconCss: "fas fa-user" }]
+    };
+  }
 }
