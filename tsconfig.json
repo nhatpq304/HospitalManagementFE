@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "types": ["jquery"],
+    "types": ["jquery", "bootstrap", "signalr"],
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,

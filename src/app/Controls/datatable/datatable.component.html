@@ -1,0 +1,22 @@
+<table
+  class="table table-striped table-bordered"
+  cellspacing="0"
+  width="100%"
+  id="table"
+>
+  <thead>
+    <tr>
+      <th *ngFor="let column of config.columns" class="th-sm">
+        {{ column.header }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of data">
+      <td *ngFor="let dataCol of config.columns">
+        {{ transformData(row, dataCol) }}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot></tfoot>
+</table>
