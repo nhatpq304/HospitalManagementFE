@@ -16,19 +16,9 @@ export class AppComponent implements OnInit {
     public localStorage: LocalStorageService
   ) {}
 
-  ngOnInit() {
-    this.checkIfLogged();
-  }
+  ngOnInit() {}
 
   getBackground() {
-    return this.router.url === "/" ? "login__background" : "";
-  }
-
-  private checkIfLogged() {
-    if (this.localStorage.getItem("token")) {
-      this.router.navigate(["default"]);
-    } else {
-      this.router.navigate([""]);
-    }
+    return this.router.url === "/login" ? "login__background" : "";
   }
 }
