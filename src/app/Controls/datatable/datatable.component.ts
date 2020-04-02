@@ -36,6 +36,10 @@ export class DatatableComponent implements OnInit, OnChanges {
       columns: this.config.columns,
       language: {
         info: "Hiển thị _PAGE_ trên _PAGES_ trang",
+        zeroRecords: "Không tồn tại bản ghi nào phù hợp",
+        sSearch: "Tìm kiếm",
+        infoEmpty: "Không tồn tại bản ghi nào",
+        infoFiltered: " - lọc từ _MAX_ bản ghi",
         lengthMenu: `Hiển thị <select> 
 			            <option value="10">10</option> 
 			            <option value="20">20</option>
@@ -52,7 +56,7 @@ export class DatatableComponent implements OnInit, OnChanges {
   private setGridRenderFunction() {
     if (this.config.columns) {
       this.config.columns = _.map(this.config.columns, column => {
-        if (!column.render && column.type === "date") {
+        if (!column.render && column.type === "Date") {
           column.render = obj => {
             return datetimeUtil.formatDateString(new Date(obj));
           };
