@@ -20,13 +20,26 @@ export class UserDashboardComponent implements OnInit {
         { data: "address", title: "Địa chỉ", type: "string" },
         { data: "birthday", title: "Ngày sinh", type: "Date" },
         { data: "id_card_number", title: "CMND", type: "string" },
-        { data: "medical_card_number", title: "Số BHYT", type: "string" }
+        { data: "medical_card_number", title: "Số BHYT", type: "string" },
+        {
+          data: "email",
+          title: "Sửa",
+          render: obj => {
+            return `<i class="fas fa-edit"></i>`;
+          }
+        },
+        {
+          data: "email",
+          title: "Xóa",
+          render: obj => {
+            return `<i class="fas fa-trash-alt"></i>`;
+          }
+        }
       ]
     };
 
     this.usersService.getAllUsers().subscribe(
       response => {
-        console.log(response.user);
         this.datatableData = response.user;
       },
       error => {},

@@ -52,7 +52,7 @@ export class DatatableComponent implements OnInit, OnChanges {
   private setGridRenderFunction() {
     if (this.config.columns) {
       this.config.columns = _.map(this.config.columns, column => {
-        if (!column.render && column.type !== "string") {
+        if (!column.render && column.type === "date") {
           column.render = obj => {
             return datetimeUtil.formatDateString(new Date(obj));
           };
