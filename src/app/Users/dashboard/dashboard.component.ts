@@ -27,13 +27,6 @@ export class UserDashboardComponent implements OnInit {
           render: obj => {
             return `<i class="fas fa-edit"></i>`;
           }
-        },
-        {
-          data: "email",
-          title: "Xóa",
-          render: obj => {
-            return `<i class="fas fa-trash-alt"></i>`;
-          }
         }
       ]
     };
