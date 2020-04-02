@@ -7,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class SideBarComponent implements OnInit {
   resource;
-
+  defaultLink = "/default";
   constructor() {}
 
   ngOnInit(): void {
@@ -16,7 +16,13 @@ export class SideBarComponent implements OnInit {
 
   private initResource() {
     this.resource = {
-      menu: [{ title: "Quản lý Người", iconCss: "fas fa-user" }]
+      menu: [
+        {
+          title: "Quản lý Người",
+          iconCss: "fas fa-user",
+          routerLink: `${this.defaultLink}/users`
+        }
+      ]
     };
   }
 }

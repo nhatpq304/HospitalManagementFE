@@ -9,7 +9,7 @@ import { MainModule } from "./main/main.module";
 import { MainRoutingModule } from "./main/main-routing.module";
 import { LoginModule } from "./login/login.module";
 import { AuthGuardService } from "./Services/Auth/auth-guard.service";
-import { LoginGuardService } from './Services/Auth/login-guard.service';
+import { LoginGuardService } from "./Services/Auth/login-guard.service";
 import * as $ from "jquery";
 @NgModule({
   declarations: [AppComponent],
