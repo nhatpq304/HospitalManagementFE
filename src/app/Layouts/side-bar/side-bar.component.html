@@ -9,7 +9,10 @@
   </a>
 
   <div class="list-group list-group-flush" *ngFor="let menu of resource.menu">
-    <a href="#" class="list-group-item list-group-item-action waves-effect">
+    <a
+      [routerLink]="[menu.routerLink]"
+      class="list-group-item list-group-item-action waves-effect"
+    >
       <i class="mr-3" [ngClass]="menu.iconCss"> </i>{{ menu.title }}</a
     >
   </div>

@@ -15,12 +15,12 @@ export class UserDashboardComponent implements OnInit {
     this.datatableConfig = {
       id: "userDatatableId",
       columns: [
-        { id: "email", header: "email", type: "string" },
-        { id: "name", header: "Tên", type: "string" },
-        { id: "address", header: "Địa chỉ", type: "string" },
-        { id: "birthday", header: "Ngày sinh", type: "Date" },
-        { id: "id_card_number", header: "CMND", type: "string" },
-        { id: "medical_card_number", header: "Số BHYT", type: "string" }
+        { data: "email", title: "Email", type: "string" },
+        { data: "name", title: "Tên", type: "string" },
+        { data: "address", title: "Địa chỉ", type: "string" },
+        { data: "birthday", title: "Ngày sinh", type: "Date" },
+        { data: "id_card_number", title: "CMND", type: "string" },
+        { data: "medical_card_number", title: "Số BHYT", type: "string" }
       ]
     };
 
