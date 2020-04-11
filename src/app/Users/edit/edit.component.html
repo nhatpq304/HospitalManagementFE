@@ -36,6 +36,7 @@
               <select-box
                 [parentForm]="userForm"
                 [config]="formConfig.gender"
+                (onDataChange)="onDataChange($event)"
               ></select-box>
             </div>
           </div>
@@ -57,17 +58,18 @@
           <!-- END USER INFO -->
 
           <!-- LOGIN INFO ACCORDION -->
-          <div class="accordion" id="accordionExample275">
+          <div class="accordion" id="loginAccordion">
             <div class="z-depth-0">
-              <div class="" id="headingOne2">
+              <div>
                 {{ resource.loginInfoTitle }}
                 <button
                   type="button"
                   class="btn btn-success"
                   data-toggle="collapse"
-                  data-target="#collapseOne2"
+                  data-target="#loginAccordionCollapse"
                   aria-expanded="true"
-                  aria-controls="collapseOne2"
+                  aria-controls="loginAccordionCollapse"
+                  (click)="onLoginAccordionClick()"
                 >
                   <span>
                     <i class="fa fa-plus"></i>
@@ -75,10 +77,9 @@
                 </button>
               </div>
               <div
-                id="collapseOne2"
+                id="loginAccordionCollapse"
                 class="collapse"
-                aria-labelledby="headingOne2"
-                data-parent="#accordionExample275"
+                data-parent="#loginAccordion"
               >
                 <div class="form-group col-4">
                   <text-input

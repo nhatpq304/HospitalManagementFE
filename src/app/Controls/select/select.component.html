@@ -3,6 +3,7 @@
     class="custom-select"
     name="selectbox"
     [id]="config.controlName"
+    (change)="onDataChanged($event.target.value)"
     mdbInput
     mdbValidate
   >
