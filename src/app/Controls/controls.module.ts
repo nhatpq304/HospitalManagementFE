@@ -7,12 +7,14 @@ import { DatepickerComponent } from "./datepicker/datepicker.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { TextInputComponent } from "./text-input/text-input.component";
+import { SelectComponent } from "./select/select.component";
 @NgModule({
   declarations: [
     ButtonComponent,
     DatatableComponent,
     DatepickerComponent,
-    TextInputComponent
+    TextInputComponent,
+    SelectComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { TextInputComponent } from "./text-input/text-input.component";
     ButtonComponent,
     DatatableComponent,
     DatepickerComponent,
-    TextInputComponent
+    TextInputComponent,
+    SelectComponent
   ]
 })
 export class ControlsModule {}

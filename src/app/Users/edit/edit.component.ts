@@ -15,7 +15,7 @@ export class UserEditComponent implements OnInit {
 
   userForm = new FormGroup({
     name: new FormControl("", [Validators.required]),
-    gender: new FormControl(0, [Validators.required]),
+    gender: new FormControl("", [Validators.required]),
     idCard: new FormControl("", [Validators.pattern("^[0-9]*$")]),
     medicalCard: new FormControl("", [Validators.pattern("^[0-9]*$")]),
     address: new FormControl("", []),
@@ -34,23 +34,12 @@ export class UserEditComponent implements OnInit {
   initResource() {
     this.resource = {
       stateTitle: this.state === "ADD" ? "Thêm người" : "Sửa thông tin",
-      form: {
-        name: "Họ và tên",
-        idCard: "Số CMND",
-        medicalCard: "Số BHYT",
-        address: "Địa chỉ",
-        phone: "SĐT",
-        birthday: "Ngày sinh",
-        department: "Khoa",
-        email: "Email",
-        password: "Mật khẩu"
-      }
+      cardTitle: "Thông tin cá nhân",
+      loginInfoTitle: "Thông tin đăng nhập"
     };
   }
 
-  onSubmitClick() {
-    console.log(this.userForm.controls.birthday);
-  }
+  onSubmitClick() {}
 
   onDataChange(param) {
     this.userForm.controls[param.controlName].setValue(param.data);

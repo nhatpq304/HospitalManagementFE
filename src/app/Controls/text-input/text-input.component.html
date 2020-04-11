@@ -1,7 +1,7 @@
 <div [formGroup]="parentForm" class="md-form">
   <input
     [id]="config.controlName"
-    [type]="config.type"
+    [type]="config.type || 'text'"
     class="form-control mb-4"
     [formControlName]="config.controlName"
     mdbInput
