@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, OnChanges } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import * as _ from "lodash";
 
@@ -10,6 +17,8 @@ import * as _ from "lodash";
 export class SelectComponent implements OnInit, OnChanges {
   @Input() config;
   @Input() parentForm: FormGroup;
+  @Output() onDataChange = new EventEmitter();
+
   isSelected: boolean;
   constructor() {}
 
@@ -20,6 +29,13 @@ export class SelectComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {}
+
+  onDataChanged(value: string) {
+    this.onDataChange.emit({
+      data: value,
+      controlName: this.config.controlName
+    });
+  }
 
   private selectDefaultOption(options) {
     return _.map(options, option => {
