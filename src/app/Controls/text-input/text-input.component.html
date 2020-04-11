@@ -1,0 +1,11 @@
+<div [formGroup]="parentForm" class="md-form">
+  <input
+    [id]="config.controlName"
+    [type]="config.type"
+    class="form-control mb-4"
+    [formControlName]="config.controlName"
+    mdbInput
+    mdbValidate
+  />
+  <label [for]="config.controlName">{{ config.title }}</label>
+</div>
