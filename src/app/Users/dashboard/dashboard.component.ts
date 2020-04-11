@@ -9,9 +9,33 @@ import { UsersService } from "src/app/Services/Users/users.service";
 export class UserDashboardComponent implements OnInit {
   datatableConfig;
   datatableData;
+  resource;
   constructor(public usersService: UsersService) {}
 
   ngOnInit(): void {
+    this.initResource();
+    this.initGridConfig();
+    this.loadData();
+  }
+
+  private initResource() {
+    this.resource = {
+      stateTitle: "Quản lý người",
+      addButton: { title: "Thêm người", routerLink: "../users/add" }
+    };
+  }
+
+  private loadData() {
+    this.usersService.getAllUsers().subscribe(
+      response => {
+        this.datatableData = response.user;
+      },
+      error => {},
+      () => {}
+    );
+  }
+
+  private initGridConfig() {
     this.datatableConfig = {
       id: "userDatatableId",
       columns: [
@@ -30,13 +54,5 @@ export class UserDashboardComponent implements OnInit {
         }
       ]
     };
-
-    this.usersService.getAllUsers().subscribe(
-      response => {
-        this.datatableData = response.user;
-      },
-      error => {},
-      () => {}
-    );
   }
 }
