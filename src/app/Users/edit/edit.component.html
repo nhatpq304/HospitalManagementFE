@@ -1,49 +1,118 @@
-<div class="card mb-4">
-  <!--Card content-->
-  <div class="card-body d-sm-flex justify-content-between">
-    <h5 class="mb-2 mb-sm-0 pt-1">
-      {{ resource.stateTitle }}
-    </h5>
+<div class="row">
+  <div class="col-12">
+    <div class="card mb-4">
+      <!--Card content-->
+      <div class="card-body d-sm-flex justify-content-between">
+        <h5 class="mb-2 mb-sm-0 pt-1">
+          {{ resource.stateTitle }}
+        </h5>
+      </div>
+    </div>
   </div>
 </div>
-<div class="card">
-  <div class="card-body">
-    <form [formGroup]="userForm" (ngSubmit)="onSubmitClick()">
-      <div class="md-form">
-        <div class="row">
-          <div class="col-4">
-            <div class="form-group">
+<div class="row">
+  <div class="col-9">
+    <div class="card">
+      <div class="card-body">
+        <a>{{ resource.cardTitle }}</a>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmitClick()">
+          <!-- USER INFO -->
+
+          <div class="form-row">
+            <div class="form-group col">
               <text-input
                 [parentForm]="userForm"
                 [config]="formConfig.name"
               ></text-input>
             </div>
-          </div>
-          <div class="col-4">
-            <div class="form-group">
+            <div class="form-group col">
               <datepicker
                 [parentForm]="userForm"
                 [config]="formConfig.birthday"
                 (onDataChange)="onDataChange($event)"
               ></datepicker>
             </div>
+            <div class="form-group col">
+              <select-box
+                [parentForm]="userForm"
+                [config]="formConfig.gender"
+              ></select-box>
+            </div>
           </div>
-          <div class="col-4">
-            <div class="form-group">
+          <div class="form-row">
+            <div class="form-group col-4">
               <text-input
                 [parentForm]="userForm"
                 [config]="formConfig.phone"
               ></text-input>
             </div>
+            <div class="form-group col-4">
+              <text-input
+                [parentForm]="userForm"
+                [config]="formConfig.address"
+              ></text-input>
+            </div>
           </div>
+
+          <!-- END USER INFO -->
+
+          <!-- LOGIN INFO ACCORDION -->
+          <div class="accordion" id="accordionExample275">
+            <div class="z-depth-0">
+              <div class="" id="headingOne2">
+                {{ resource.loginInfoTitle }}
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  data-toggle="collapse"
+                  data-target="#collapseOne2"
+                  aria-expanded="true"
+                  aria-controls="collapseOne2"
+                >
+                  <span>
+                    <i class="fa fa-plus"></i>
+                  </span>
+                </button>
+              </div>
+              <div
+                id="collapseOne2"
+                class="collapse"
+                aria-labelledby="headingOne2"
+                data-parent="#accordionExample275"
+              >
+                <div class="form-group col-4">
+                  <text-input
+                    [parentForm]="userForm"
+                    [config]="formConfig.email"
+                  ></text-input>
+                </div>
+                <div class="form-group col-4">
+                  <text-input
+                    [parentForm]="userForm"
+                    [config]="formConfig.password"
+                  ></text-input>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END LOGIN INFO ACCORDION -->
+          <div class="md-form">
+            <button type="submit" class="btn btn-info btn-block my-4 ">
+              {{ resource.login }}
+              <i class="fa fa-spinner fa-spin"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="container-fluid">
+          IMAGE CROPPER
         </div>
       </div>
-      <div class="md-form">
-        <button type="submit" class="btn btn-info btn-block my-4 ">
-          {{ resource.title }}
-          <i class="fa fa-spinner fa-spin"></i>
-        </button>
-      </div>
-    </form>
+    </div>
   </div>
 </div>
