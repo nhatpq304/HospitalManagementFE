@@ -8,6 +8,8 @@ import {
 } from "@angular/forms";
 import formConfig from "./formConfig";
 import formUtil from "src/util/form.util";
+import UsersService from "src/app/Services/Users/users.service";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "user-edit",
@@ -20,7 +22,11 @@ export class UserEditComponent implements OnInit {
   state = this.router.url === "/default/users/add" ? "ADD" : "EDIT";
   userForm: FormGroup;
 
-  constructor(public router: Router) {}
+  constructor(
+    public router: Router,
+    public location: Location,
+    public usersService: UsersService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -59,6 +65,7 @@ export class UserEditComponent implements OnInit {
       stateTitle: this.state === "ADD" ? "Thêm người" : "Sửa thông tin",
       cardTitle: "Thông tin cá nhân",
       loginInfoTitle: "Thông tin đăng nhập",
+      saveButton: "Lưu",
       validationErrors: {
         email: "Email không đúng định dạng",
         required: "Không thể để trống ",
@@ -68,14 +75,25 @@ export class UserEditComponent implements OnInit {
     };
   }
 
-  onSubmitClick() {
-    this.disableForm(true);
+  async onSubmitClick() {
     if (this.userForm.valid) {
-      
+      this.disableForm(true);
+
+      let data = this.userForm.value;
+      try {
+        await this.saveUser(data);
+
+        this.location.back();
+      } catch {
+        this.disableForm(false);
+      }
     } else {
       formUtil.validateAllFormFields(this.userForm);
     }
-    this.disableForm(false);
+  }
+
+  private async saveUser(data) {
+    return this.usersService.saveUser(data).toPromise();
   }
 
   onDataChange(param) {
