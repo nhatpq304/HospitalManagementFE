@@ -10,6 +10,7 @@ import formConfig from "./formConfig";
 import formUtil from "src/util/form.util";
 import UsersService from "src/app/Services/Users/users.service";
 import { Location } from "@angular/common";
+import ToastService from "src/app/Services/Common/toast.service";
 
 @Component({
   selector: "user-edit",
@@ -25,6 +26,7 @@ export class UserEditComponent implements OnInit {
   constructor(
     public router: Router,
     public location: Location,
+    public toastService: ToastService,
     public usersService: UsersService
   ) {}
 
@@ -66,6 +68,8 @@ export class UserEditComponent implements OnInit {
       cardTitle: "Thông tin cá nhân",
       loginInfoTitle: "Thông tin đăng nhập",
       saveButton: "Lưu",
+      saveError: "Thông tin nhập không chính xác",
+      saveSuccess: "Lưu người dùng thành công",
       validationErrors: {
         email: "Email không đúng định dạng",
         required: "Không thể để trống ",
@@ -83,22 +87,29 @@ export class UserEditComponent implements OnInit {
       try {
         await this.saveUser(data);
 
+        this.toastService.show({
+          text: this.resource.saveSuccess,
+          type: "success",
+        });
+
         this.location.back();
       } catch {
         this.disableForm(false);
       }
     } else {
+      this.toastService.show({ text: this.resource.saveError, type: "error" });
+
       formUtil.validateAllFormFields(this.userForm);
     }
-  }
-
-  private async saveUser(data) {
-    return this.usersService.saveUser(data).toPromise();
   }
 
   onDataChange(param) {
     this.userForm.controls[param.controlName].setValue(param.data);
     this.handleEnablePassword(param);
+  }
+
+  private saveUser(data) {
+    return this.usersService.saveUser(data).toPromise();
   }
 
   private disableForm(value: boolean) {
