@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../Services/Auth/auth.service";
 import { LocalStorageService } from "../Services/LocalStorage/local-storage.service";
-import { UserModel } from "../Models/user.model";
+import UserModel from "../Models/user.model";
 
 @Component({
   selector: "app-main",
   templateUrl: "./main.component.html",
-  styleUrls: ["./main.component.scss"]
+  styleUrls: ["./main.component.scss"],
 })
 export class MainComponent implements OnInit {
   user = new UserModel();
@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
   }
 
   getLoggedUser() {
-    this.authService.getLoggedUser().then(response => {
+    this.authService.getLoggedUser().then((response) => {
       let responseData = response.user;
 
       this.user.email = responseData.email;

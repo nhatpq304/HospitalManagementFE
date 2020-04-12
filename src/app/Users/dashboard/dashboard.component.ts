@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { UsersService } from "src/app/Services/Users/users.service";
+import UsersService from "src/app/Services/Users/users.service";
 
 @Component({
   selector: "user-dashboard",
   templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.scss"]
+  styleUrls: ["./dashboard.component.scss"],
 })
 export class UserDashboardComponent implements OnInit {
   datatableConfig;
@@ -21,16 +21,16 @@ export class UserDashboardComponent implements OnInit {
   private initResource() {
     this.resource = {
       stateTitle: "Quản lý người",
-      addButton: { title: "Thêm người", routerLink: "../users/add" }
+      addButton: { title: "Thêm người", routerLink: "../users/add" },
     };
   }
 
   private loadData() {
     this.usersService.getAllUsers().subscribe(
-      response => {
+      (response) => {
         this.datatableData = response.user;
       },
-      error => {},
+      (error) => {},
       () => {}
     );
   }
@@ -48,11 +48,11 @@ export class UserDashboardComponent implements OnInit {
         {
           data: "email",
           title: "Sửa",
-          render: obj => {
+          render: (obj) => {
             return `<i class="fas fa-edit"></i>`;
-          }
-        }
-      ]
+          },
+        },
+      ],
     };
   }
 }
