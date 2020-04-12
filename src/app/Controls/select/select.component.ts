@@ -4,7 +4,7 @@ import {
   Input,
   OnChanges,
   Output,
-  EventEmitter
+  EventEmitter,
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import * as _ from "lodash";
@@ -12,7 +12,7 @@ import * as _ from "lodash";
 @Component({
   selector: "select-box",
   templateUrl: "./select.component.html",
-  styleUrls: ["./select.component.scss"]
+  styleUrls: ["./select.component.scss"],
 })
 export class SelectComponent implements OnInit, OnChanges {
   @Input() config;
@@ -33,12 +33,12 @@ export class SelectComponent implements OnInit, OnChanges {
   onDataChanged(value: string) {
     this.onDataChange.emit({
       data: value,
-      controlName: this.config.controlName
+      controlName: this.config.controlName,
     });
   }
 
   private selectDefaultOption(options) {
-    return _.map(options, option => {
+    return _.map(options, (option) => {
       option.selected =
         option.value ===
         this.parentForm.controls[this.config.controlName].value + "";
