@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import UserModel from "src/app/Models/user.model";
+import UserSaveModel from "src/app/Models/userSave.model";
 
 @Injectable({
   providedIn: "root",
@@ -7,15 +7,15 @@ import UserModel from "src/app/Models/user.model";
 export default class UsersMappingService {
   constructor() {}
 
-  mapNewUserData(data: any): UserModel {
-    let user = new UserModel();
+  mapNewUserData(data: any): UserSaveModel {
+    let user = new UserSaveModel();
 
     user.name = data.name;
     user.email = data.email;
     user.birthday = data.birthday;
     user.phone = data.phone;
-    user.idCard = data.idCard;
-    user.medicalCard = data.medicalCard;
+    user.id_card_number = data.idCard;
+    user.medical_card_number = data.medicalCard;
     user.address = data.address;
     user.gender = data.gender;
     user.department = data.department;
