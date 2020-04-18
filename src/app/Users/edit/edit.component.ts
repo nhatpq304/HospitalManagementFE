@@ -57,6 +57,7 @@ export class UserEditComponent implements OnInit {
           value: "",
           disabled: true,
         }),
+        avatar: new FormControl(""),
       },
       formUtil.mustMatch("password", "confirmPassword")
     );
@@ -106,6 +107,11 @@ export class UserEditComponent implements OnInit {
   onDataChange(param) {
     this.userForm.controls[param.controlName].setValue(param.data);
     this.handleEnablePassword(param);
+  }
+
+  onImageChanged($event) {
+    $("#preview_image").attr("src", $event.data);
+    this.userForm.get("avatar").setValue($event.data);
   }
 
   private saveUser(data) {

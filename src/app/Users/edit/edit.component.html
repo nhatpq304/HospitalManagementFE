@@ -148,11 +148,11 @@
   </div>
   <div class="col-3">
     <div class="card">
-      <div class="card-body">
-        <div class="container-fluid">
-          IMAGE CROPPER
-        </div>
-      </div>
+      <image-uploader
+        [parentForm]="userForm"
+        [config]="formConfig.avatar"
+        (onCropDone)="onImageChanged($event)"
+      ></image-uploader>
     </div>
   </div>
 </div>

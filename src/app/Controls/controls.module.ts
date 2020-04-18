@@ -8,27 +8,30 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { TextInputComponent } from "./text-input/text-input.component";
 import { SelectComponent } from "./select/select.component";
+import { ImageUploaderComponent } from "./image-uploader/image-uploader.component";
 @NgModule({
   declarations: [
     ButtonComponent,
     DatatableComponent,
     DatepickerComponent,
     TextInputComponent,
-    SelectComponent
+    SelectComponent,
+    ImageUploaderComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MDBBootstrapModule,
     FormsModule,
-    BrowserModule
+    BrowserModule,
   ],
   exports: [
     ButtonComponent,
     DatatableComponent,
     DatepickerComponent,
     TextInputComponent,
-    SelectComponent
-  ]
+    SelectComponent,
+    ImageUploaderComponent,
+  ],
 })
 export class ControlsModule {}

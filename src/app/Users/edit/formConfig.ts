@@ -58,5 +58,8 @@ const formConfig = {
     controlName: "medicalCard",
     title: "Số BHYT",
   },
+  avatar: {
+    controlName: "avatar",
+  },
 };
 export default formConfig;

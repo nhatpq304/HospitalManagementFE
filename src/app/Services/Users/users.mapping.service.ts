@@ -20,6 +20,7 @@ export default class UsersMappingService {
     user.gender = data.gender;
     user.department = data.department;
     user.password = data.department ? data.password : null;
+    user.avatar_image = data.avatar;
 
     return user;
   }
