@@ -4,14 +4,14 @@ import {
   OnChanges,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
 } from "@angular/core";
 import * as moment from "moment";
 import { FormGroup } from "@angular/forms";
 @Component({
   selector: "datepicker",
   templateUrl: "./datepicker.component.html",
-  styleUrls: ["./datepicker.component.scss"]
+  styleUrls: ["./datepicker.component.scss"],
 })
 export class DatepickerComponent implements OnInit, OnChanges {
   @Input() config: any;
@@ -33,11 +33,11 @@ export class DatepickerComponent implements OnInit, OnChanges {
         minYear: this.config?.minYear || 1901,
         maxYear: this.config?.maxYear || parseInt(moment().format("YYYY")),
         locale: {
-          format: "DD/MM/YYYY"
-        }
+          format: "DD/MM/YYYY",
+        },
       },
-      function(start, end, label) {
-        self.onDataChanged(start.format("DD/MM/YYYY"));
+      function (start, end, label) {
+        self.onDataChanged(start.format("YYYY-MM-DD[T]HH:mm:ss.SSSZZ"));
       }
     );
   }
@@ -45,7 +45,7 @@ export class DatepickerComponent implements OnInit, OnChanges {
   private onDataChanged(param) {
     this.onDataChange.emit({
       data: param,
-      controlName: this.config.controlName
+      controlName: this.config.controlName,
     });
   }
 }
