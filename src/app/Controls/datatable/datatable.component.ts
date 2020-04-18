@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from "@angular/core";
 import datetimeUtil from "../../../util/datetime.util";
 import _ from "lodash";
+import * as moment from "moment";
 
 interface datatableConfig {
   id: string;
@@ -11,7 +12,7 @@ interface datatableConfig {
 @Component({
   selector: "datatable",
   templateUrl: "./datatable.component.html",
-  styleUrls: ["./datatable.component.scss"]
+  styleUrls: ["./datatable.component.scss"],
 })
 export class DatatableComponent implements OnInit, OnChanges {
   @Input() config: datatableConfig;
@@ -47,18 +48,18 @@ export class DatatableComponent implements OnInit, OnChanges {
                   </select> bản ghi`,
         paginate: {
           previous: "Trước",
-          next: "Sau"
-        }
-      }
+          next: "Sau",
+        },
+      },
     });
   }
 
   private setGridRenderFunction() {
     if (this.config.columns) {
-      this.config.columns = _.map(this.config.columns, column => {
+      this.config.columns = _.map(this.config.columns, (column) => {
         if (!column.render && column.type === "Date") {
-          column.render = obj => {
-            return datetimeUtil.formatDateString(new Date(obj));
+          column.render = (obj) => {
+            return moment(obj).format("DD-MM-YYYY");
           };
         }
         return column;
