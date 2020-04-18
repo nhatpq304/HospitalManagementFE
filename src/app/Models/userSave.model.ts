@@ -9,4 +9,5 @@ export default class UserSaveModel {
   department: string;
   password: string;
   gender: string;
+  avatar_image: string;
 }
