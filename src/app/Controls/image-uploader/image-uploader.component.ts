@@ -13,15 +13,20 @@ import { FormGroup } from "@angular/forms";
   styleUrls: ["./image-uploader.component.scss"],
 })
 export class ImageUploaderComponent implements OnInit, OnChanges {
+  @Input() source: string;
   @Input() config: any;
   @Input() parentForm: FormGroup;
   @Output() onCropDone = new EventEmitter();
   resource;
   previewUrl;
-
+  defaultSource = "../../../assets/img/avatar.png";
   constructor() {}
 
-  ngOnChanges(changeObj) {}
+  ngOnChanges(changeObj) {
+    if (changeObj?.source?.currentValue) {
+      this.source = this.source;
+    }
+  }
 
   ngOnInit(): void {
     this.initResource();

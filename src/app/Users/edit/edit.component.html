@@ -151,6 +151,7 @@
       <image-uploader
         [parentForm]="userForm"
         [config]="formConfig.avatar"
+        [source]="avatar"
         (onCropDone)="onImageChanged($event)"
       ></image-uploader>
     </div>

@@ -8,15 +8,15 @@ import formUtil from "../../util/form.util";
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"]
+  styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [
       Validators.required,
-      Validators.minLength(6)
-    ])
+      Validators.minLength(6),
+    ]),
   });
   resource;
   isLogPromisePending: boolean;
@@ -69,11 +69,12 @@ export class LoginComponent implements OnInit {
     this.resource = {
       title: "Đăng nhập",
       email: "Email",
+      loginFail: "Đăng nhập thất bại",
       password: "Mật khẩu",
       invalidEmail: "Email không đúng định dạng.",
       requiredEmail: "Vui lòng điền email.",
       minLengthPassword: "Mật khẩu có độ dài tối thiểu 6 ký tự.",
-      requiredPassword: "Vui lòng điền mật khẩu."
+      requiredPassword: "Vui lòng điền mật khẩu.",
     };
   }
 }

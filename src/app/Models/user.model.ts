@@ -1,4 +1,7 @@
+import MediaModel from "./media.model";
+
 export default class UserModel {
+  id: string;
   email: string;
   name: string;
   address: string;
@@ -7,6 +10,6 @@ export default class UserModel {
   idCard: string;
   medicalCard: string;
   department: string;
-  password: string;
   gender: string;
+  avatar: MediaModel;
 }

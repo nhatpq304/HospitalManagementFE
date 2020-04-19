@@ -37,7 +37,7 @@ export class DatepickerComponent implements OnInit, OnChanges {
         },
       },
       function (start, end, label) {
-        self.onDataChanged(start.format("YYYY-MM-DD[T]HH:mm:ss.SSSZZ"));
+        self.onDataChanged(start);
       }
     );
   }

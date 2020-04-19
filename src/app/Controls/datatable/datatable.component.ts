@@ -6,7 +6,7 @@ import * as moment from "moment";
 interface datatableConfig {
   id: string;
   columns: Object[];
-  isReady: boolean;
+  drawCallback: Function;
 }
 
 @Component({
@@ -51,6 +51,7 @@ export class DatatableComponent implements OnInit, OnChanges {
           next: "Sau",
         },
       },
+      drawCallback: this.config.drawCallback,
     });
   }
 
@@ -59,7 +60,10 @@ export class DatatableComponent implements OnInit, OnChanges {
       this.config.columns = _.map(this.config.columns, (column) => {
         if (!column.render && column.type === "Date") {
           column.render = (obj) => {
-            return moment(obj).format("DD-MM-YYYY");
+            if (obj) {
+              return moment(obj).format("DD/MM/YYYY");
+            }
+            return "";
           };
         }
         return column;

@@ -5,11 +5,8 @@
 >
   <p class="h4 mb-4">{{ resource.title }}</p>
   <div class="login__alertbox">
-    <p
-      class="alert alert-danger login__form--alert"
-      *ngIf="isLoggingFailed"
-    >
-      wrong
+    <p class="alert alert-danger login__form--alert" *ngIf="isLoggingFailed">
+      {{ resource.loginFail }}
     </p>
   </div>
   <div class="md-form">
@@ -55,7 +52,7 @@
         mdbValidate
       />
     </div>
-    <button type="submit" class="btn btn-info btn-block my-4 ">
+    <button type="submit" class="btn btn-info btn-block my-4">
       {{ resource.title }}
       <i class="fa fa-spinner fa-spin" *ngIf="isLogPromisePending"></i>
     </button>

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import {
   HttpHeaders,
   HttpClient,
-  HttpErrorResponse
+  HttpErrorResponse,
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError, retry } from "rxjs/operators";
@@ -10,7 +10,7 @@ import { LocalStorageService } from "./LocalStorage/local-storage.service";
 import _ from "lodash";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class RestfulService {
   httpOptions;
@@ -26,10 +26,22 @@ export class RestfulService {
     return this.http.get(api, this.httpOptions);
   }
 
+  public delete(api, options?: any): Observable<any> {
+    this.setHttpOptions();
+
+    return this.http.delete(api, this.httpOptions);
+  }
+
   public post(api, body): Observable<any> {
     this.setHttpOptions();
 
     return this.http.post(api, body, this.httpOptions);
+  }
+
+  public put(api, body): Observable<any> {
+    this.setHttpOptions();
+
+    return this.http.put(api, body, this.httpOptions);
   }
 
   private setHttpOptions() {
@@ -39,8 +51,8 @@ export class RestfulService {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer  ${authToken}`
-      })
+        Authorization: `Bearer  ${authToken}`,
+      }),
     };
   }
 

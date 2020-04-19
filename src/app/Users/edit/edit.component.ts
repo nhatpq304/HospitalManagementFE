@@ -1,16 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  ValidatorFn,
-} from "@angular/forms";
+import { Router, ActivatedRoute } from "@angular/router";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import formConfig from "./formConfig";
 import formUtil from "src/util/form.util";
 import UsersService from "src/app/Services/Users/users.service";
 import { Location } from "@angular/common";
 import ToastService from "src/app/Services/Common/toast.service";
+import UserModel from "src/app/Models/user.model";
 
 @Component({
   selector: "user-edit",
@@ -20,11 +16,15 @@ import ToastService from "src/app/Services/Common/toast.service";
 export class UserEditComponent implements OnInit {
   resource;
   formConfig = formConfig;
-  state = this.router.url === "/default/users/add" ? "ADD" : "EDIT";
   userForm: FormGroup;
+  userId = this.route.snapshot.paramMap.get("id");
+  state = this.userId ? "EDIT" : "ADD";
+  originalData: UserModel;
+  avatar: string;
 
   constructor(
     public router: Router,
+    public route: ActivatedRoute,
     public location: Location,
     public toastService: ToastService,
     public usersService: UsersService
@@ -33,6 +33,28 @@ export class UserEditComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.initResource();
+    this.getUserData();
+  }
+
+  getUserData() {
+    if (this.userId) {
+      this.usersService.getUser(this.userId).then((data: UserModel) => {
+        this.originalData = data;
+        this.avatar = data.avatar?.path;
+
+        this.userForm.patchValue({
+          name: data.name,
+          gender: data.gender,
+          idCard: data.idCard,
+          medicalCard: data.medicalCard,
+          address: data.address,
+          phone: data.phone,
+          birthday: data.birthday,
+          department: data.department,
+          email: data.email,
+        });
+      });
+    }
   }
 
   initForm() {
@@ -71,6 +93,7 @@ export class UserEditComponent implements OnInit {
       saveButton: "Lưu",
       saveError: "Thông tin nhập không chính xác",
       saveSuccess: "Lưu người dùng thành công",
+      saveFail: "Lưu người dùng không thành công",
       validationErrors: {
         email: "Email không đúng định dạng",
         required: "Không thể để trống ",
@@ -80,27 +103,60 @@ export class UserEditComponent implements OnInit {
     };
   }
 
-  async onSubmitClick() {
+  onSubmitClick() {
     if (this.userForm.valid) {
       this.disableForm(true);
 
       let data = this.userForm.value;
-      try {
-        await this.saveUser(data);
-
-        this.toastService.show({
-          text: this.resource.saveSuccess,
-          type: "success",
-        });
-
-        this.location.back();
-      } catch {
-        this.disableForm(false);
+      if (this.state === "ADD") {
+        this.onSaveClick(data);
+      } else {
+        this.onUpdateClick(data);
       }
     } else {
       this.toastService.show({ text: this.resource.saveError, type: "error" });
 
       formUtil.validateAllFormFields(this.userForm);
+    }
+  }
+
+  async onUpdateClick(data: any) {
+    try {
+      await this.updateUser(data, this.originalData);
+
+      this.toastService.show({
+        text: this.resource.saveSuccess,
+        type: "success",
+      });
+
+      this.location.back();
+    } catch {
+      this.toastService.show({
+        text: this.resource.saveFail,
+        type: "error",
+      });
+
+      this.disableForm(false);
+    }
+  }
+
+  async onSaveClick(data: any) {
+    try {
+      await this.saveUser(data);
+
+      this.toastService.show({
+        text: this.resource.saveSuccess,
+        type: "success",
+      });
+
+      this.location.back();
+    } catch {
+      this.toastService.show({
+        text: this.resource.saveFail,
+        type: "error",
+      });
+
+      this.disableForm(false);
     }
   }
 
@@ -114,8 +170,12 @@ export class UserEditComponent implements OnInit {
     this.userForm.get("avatar").setValue($event.data);
   }
 
-  private saveUser(data) {
+  private saveUser(data: any) {
     return this.usersService.saveUser(data);
+  }
+
+  private updateUser(data: any, originalData: UserModel) {
+    return this.usersService.updateUser(data, originalData);
   }
 
   private disableForm(value: boolean) {

@@ -1,7 +1,7 @@
 <div class="card-body">
   <div class="container-fluid">
     <img
-      src="../../../assets/img/avatar.png"
+      [attr.src]="source ? source : defaultSource"
       id="preview_image"
       style="width: inherit;"
     />
