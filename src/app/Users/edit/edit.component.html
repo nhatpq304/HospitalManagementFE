@@ -37,6 +37,7 @@
               <select-box
                 [parentForm]="userForm"
                 [config]="formConfig.gender"
+                [value]="userForm.get('gender').value"
                 (onDataChange)="onDataChange($event)"
               ></select-box>
             </div>
@@ -112,6 +113,7 @@
                     <select-box
                       [parentForm]="userForm"
                       [config]="formConfig.department"
+                      [value]="userForm.get('department').value"
                       (onDataChange)="onDataChange($event)"
                     ></select-box>
                   </div>

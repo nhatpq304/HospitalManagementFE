@@ -15,6 +15,7 @@ import * as _ from "lodash";
   styleUrls: ["./select.component.scss"],
 })
 export class SelectComponent implements OnInit, OnChanges {
+  @Input() value;
   @Input() config;
   @Input() parentForm: FormGroup;
   @Output() onDataChange = new EventEmitter();
@@ -23,7 +24,10 @@ export class SelectComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnChanges(changesObj) {
-    if (changesObj?.config.currentValue) {
+    if (changesObj?.config?.currentValue) {
+      this.config.options = this.selectDefaultOption(this.config.options);
+    }
+    if (changesObj?.value?.currentValue && this.config?.options) {
       this.config.options = this.selectDefaultOption(this.config.options);
     }
   }
