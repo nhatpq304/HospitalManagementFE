@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import UserSaveModel from "src/app/Models/userSave.model";
+import AvatarSaveModel from "src/app/Models/avatarSave.model";
 
 @Injectable({
   providedIn: "root",
@@ -23,5 +24,14 @@ export default class UsersMappingService {
     user.avatar_image = data.avatar;
 
     return user;
+  }
+
+  mapNewAvatarData(base64: string, userId: string) {
+    let media = new AvatarSaveModel();
+    media.file = base64;
+    media.media_type = "AVATAR";
+    media.user_id = userId;
+
+    return media;
   }
 }

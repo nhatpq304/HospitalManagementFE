@@ -115,7 +115,7 @@ export class UserEditComponent implements OnInit {
   }
 
   private saveUser(data) {
-    return this.usersService.saveUser(data).toPromise();
+    return this.usersService.saveUser(data);
   }
 
   private disableForm(value: boolean) {

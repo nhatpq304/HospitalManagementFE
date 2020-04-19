@@ -5,6 +5,9 @@ const apis = {
 
   // Users
   getAllUsers: `${baseURL}/api/auth/users`,
-  saveUser: `${baseURL}/api/auth/users`
+  saveUser: `${baseURL}/api/auth/users`,
+
+  //Media
+  saveMedia: `${baseURL}/api/auth/media`,
 };
 export default apis;
