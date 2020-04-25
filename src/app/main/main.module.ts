@@ -5,6 +5,7 @@ import { UsersModule } from "../Users/users.module";
 import { LayoutsModule } from "../Layouts/layouts.module";
 import { ControlsModule } from "../Controls/controls.module";
 import { RouterModule } from "@angular/router";
+import { ExaminationsModule } from "../examinations/examinations.module";
 
 @NgModule({
   declarations: [MainComponent],
@@ -13,8 +14,9 @@ import { RouterModule } from "@angular/router";
     UsersModule,
     LayoutsModule,
     ControlsModule,
-    RouterModule
+    RouterModule,
+    ExaminationsModule,
   ],
-  exports: [MainComponent]
+  exports: [MainComponent],
 })
 export class MainModule {}

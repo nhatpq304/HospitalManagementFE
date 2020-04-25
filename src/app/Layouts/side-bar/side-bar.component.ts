@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 @Component({
   selector: "layouts-side-bar",
   templateUrl: "./side-bar.component.html",
-  styleUrls: ["./side-bar.component.scss"]
+  styleUrls: ["./side-bar.component.scss"],
 })
 export class SideBarComponent implements OnInit {
   resource;
@@ -18,11 +18,16 @@ export class SideBarComponent implements OnInit {
     this.resource = {
       menu: [
         {
-          title: "Quản lý Người",
+          title: "Người",
           iconCss: "fas fa-user",
-          routerLink: `${this.defaultLink}/users`
-        }
-      ]
+          routerLink: `${this.defaultLink}/users`,
+        },
+        {
+          title: "Kết quả khám",
+          iconCss: "fas fa-file-medical-alt",
+          routerLink: `${this.defaultLink}/examinations`,
+        },
+      ],
     };
   }
 }
