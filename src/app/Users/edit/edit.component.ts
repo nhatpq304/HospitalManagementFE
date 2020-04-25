@@ -61,7 +61,7 @@ export class UserEditComponent implements OnInit {
     this.userForm = new FormGroup(
       {
         name: new FormControl("", [Validators.required]),
-        gender: new FormControl(0, [Validators.required]),
+        gender: new FormControl("", [Validators.required]),
         idCard: new FormControl("", [
           Validators.required,
           Validators.pattern("^[0-9]*$"),

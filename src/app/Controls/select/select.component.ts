@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  Output,
-  EventEmitter,
-} from "@angular/core";
+import { Component, OnInit, Input, OnChanges } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import * as _ from "lodash";
 
@@ -15,31 +8,19 @@ import * as _ from "lodash";
   styleUrls: ["./select.component.scss"],
 })
 export class SelectComponent implements OnInit, OnChanges {
-  @Input() value;
   @Input() config;
   @Input() parentForm: FormGroup;
-  @Output() onDataChange = new EventEmitter();
 
   isSelected: boolean;
   constructor() {}
 
   ngOnChanges(changesObj) {
-    if (changesObj?.config?.currentValue) {
-      this.config.options = this.selectDefaultOption(this.config.options);
-    }
-    if (changesObj?.value?.currentValue && this.config?.options) {
-      this.config.options = this.selectDefaultOption(this.config.options);
-    }
+    // if (changesObj?.config?.currentValue) {
+    //   this.config.options = this.selectDefaultOption(this.config.options);
+    // }
   }
 
   ngOnInit(): void {}
-
-  onDataChanged(value: string) {
-    this.onDataChange.emit({
-      data: value,
-      controlName: this.config.controlName,
-    });
-  }
 
   private selectDefaultOption(options) {
     return _.map(options, (option) => {
