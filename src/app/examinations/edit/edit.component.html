@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row mb-4">
   <div class="col-12">
-    <div class="card mb-4">
+    <div class="card">
       <!--Card content-->
       <div class="card-body d-sm-flex justify-content-between">
         <h5 class="mb-2 mb-sm-0 pt-1">
@@ -10,17 +10,22 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row mb-4">
   <div class="col-9">
-    <div class="card mb-4">
+    <div class="card">
       <div class="card-body">
         <a>{{ resource.patientInfo }}</a>
         <!-- Search form -->
         <div class="col-4">
-          <search-bar (onSearchApply)="onSearchApply($event)"></search-bar>
+          <search-bar
+            [parentForm]="examForm"
+            [config]="formConfig.search"
+            (onSearchApply)="onSearchApply($event)"
+            (onRemove)= "onSearchRemove()"
+          ></search-bar>
         </div>
-        <div class="p-4" style="border: 2px solid red;">
-          <form [formGroup]="examForm" (ngSubmit)="onSubmitClick()">
+        <div class="p-4 border border-dark">
+          <form [formGroup]="examForm">
             <!-- USER INFO -->
 
             <div class="form-row">
@@ -69,7 +74,7 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-4">
+              <div class="form-group col-8">
                 <text-input
                   [parentForm]="examForm"
                   [config]="formConfig.address"
@@ -89,8 +94,19 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row mb-4">
   <div class="col-9">
-    <div class="card"></div>
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="examForm">
+          <div class="form-row">
+            <div class="form-group col">
+              <text-input [parentForm]="examForm" [config]="formConfig.name">
+              </text-input>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>

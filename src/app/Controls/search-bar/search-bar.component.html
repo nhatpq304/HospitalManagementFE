@@ -1,17 +1,28 @@
-<form class="input-group md-form form-sm form-2 pl-0" [formGroup]="searchForm">
+<form class="input-group md-form form-sm form-2 pl-0" [formGroup]="parentForm">
   <input
     class="form-control my-0 py-1 red-border"
     type="text"
     [placeholder]="resource.placeholder"
-    formControlName="searchText"
+    [formControlName]="config.controlName"
+    [readonly]="isReadOnly"
     aria-label="Search"
+    mdbInput
+    mdbValidate
   />
-  <div class="input-group-append">
+  <div class="input-group-append" *ngIf="!isReadOnly">
     <span
       class="input-group-text red lighten-3"
-      id="basic-text1"
+      id="search"
       (click)="onSearchClick()"
       ><i class="fas fa-search text-grey" aria-hidden="true"></i
+    ></span>
+  </div>
+  <div class="input-group-append" *ngIf="isReadOnly">
+    <span
+      class="input-group-text grey lighten-3"
+      id="remove"
+      (click)="onSearchRemove()"
+      ><i class="fas fa-remove text-grey" aria-hidden="true"></i
     ></span>
   </div>
 </form>
@@ -47,7 +58,13 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary" (click)="onSearchComplete()">Save changes</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onSearchComplete()"
+        >
+          Save changes
+        </button>
       </div>
     </div>
   </div>

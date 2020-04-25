@@ -2,10 +2,17 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import ToastService from "src/app/Services/Common/toast.service";
 import { Location } from "@angular/common";
-import { FormControl, Validators, FormGroup } from "@angular/forms";
+import {
+  FormControl,
+  Validators,
+  FormGroup,
+  ValidatorFn,
+  AbstractControl,
+} from "@angular/forms";
 import formConfig from "./formConfig";
 import MediaModel from "src/app/Models/media.model";
 import * as _ from "lodash";
+import UserModel from "src/app/Models/user.model";
 @Component({
   selector: "examination-edit",
   templateUrl: "./edit.component.html",
@@ -17,6 +24,7 @@ export class ExaminationEditComponent implements OnInit {
   state = this.examId ? "EDIT" : "ADD";
   examForm: FormGroup;
   formConfig = formConfig;
+  patientData: UserModel;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -58,19 +66,36 @@ export class ExaminationEditComponent implements OnInit {
       birthday: new FormControl({ value: "", disabled: true }, []),
       email: new FormControl({ value: "", disabled: true }, []),
       avatar: new FormControl(""),
+      search: new FormControl("", [
+        Validators.required,
+        this.hasDataValidator.bind(this),
+      ]),
     });
   }
 
   onSubmitClick() {}
 
   onSearchApply($event) {
-    let data = $event.data;
-    _.forOwn(data, (value, key) => {
+    this.patientData = $event.data;
+    this.examForm.get("search").updateValueAndValidity();
+    _.forOwn(this.patientData, (value, key) => {
       this.examForm.get(key)?.setValue(value);
     });
   }
 
+  onSearchRemove() {
+    this.patientData = null;
+    this.examForm.reset();
+    this.examForm.get("gender").setValue("");
+  }
+
   get avatar(): MediaModel {
     return this.examForm.get("avatar").value;
+  }
+
+  private hasDataValidator(
+    control: AbstractControl
+  ): { [key: string]: any } | null {
+    return !!this.patientData ? null : { requireData: { valid: true } };
   }
 }

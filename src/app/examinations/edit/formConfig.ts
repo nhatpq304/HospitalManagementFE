@@ -51,5 +51,8 @@ const formConfig = {
   avatar: {
     controlName: "avatar",
   },
+  search: {
+    controlName: "search",
+  },
 };
 export default formConfig;
