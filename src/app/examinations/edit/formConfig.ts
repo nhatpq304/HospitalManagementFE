@@ -11,8 +11,8 @@ const formConfig = {
   },
   gender: {
     controlName: "gender",
-    title: "Giới tính",
     options: [
+      { title: "Giới tính", value: "", selected: true, disabled: true },
       { title: "Nam", value: "1" },
       { title: "Nữ", value: "0" },
     ],

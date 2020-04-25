@@ -4,7 +4,8 @@ import ToastService from "src/app/Services/Common/toast.service";
 import { Location } from "@angular/common";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
 import formConfig from "./formConfig";
-import MediaModel from 'src/app/Models/media.model';
+import MediaModel from "src/app/Models/media.model";
+import * as _ from "lodash";
 @Component({
   selector: "examination-edit",
   templateUrl: "./edit.component.html",
@@ -49,13 +50,12 @@ export class ExaminationEditComponent implements OnInit {
   initForm() {
     this.examForm = new FormGroup({
       name: new FormControl({ value: "", disabled: true }, []),
-      gender: new FormControl({ value: 1, disabled: true }, []),
+      gender: new FormControl({ value: "", disabled: true }, []),
       idCard: new FormControl({ value: "", disabled: true }, []),
       medicalCard: new FormControl({ value: "", disabled: true }, []),
       address: new FormControl({ value: "", disabled: true }, []),
       phone: new FormControl({ value: "", disabled: true }, []),
       birthday: new FormControl({ value: "", disabled: true }, []),
-      department: new FormControl({ value: "", disabled: true }, []),
       email: new FormControl({ value: "", disabled: true }, []),
       avatar: new FormControl(""),
     });
@@ -64,7 +64,10 @@ export class ExaminationEditComponent implements OnInit {
   onSubmitClick() {}
 
   onSearchApply($event) {
-    this.examForm.patchValue($event.data);
+    let data = $event.data;
+    _.forOwn(data, (value, key) => {
+      this.examForm.get(key)?.setValue(value);
+    });
   }
 
   get avatar(): MediaModel {

@@ -39,6 +39,7 @@ export class SearchBarComponent implements OnInit {
   private initGridConfig() {
     this.datatableConfig = {
       id: "userDatatableModalId",
+      pageLength: 5,
       columns: [
         { data: "name", title: "Tên", type: "string" },
         { data: "birthday", title: "Ngày sinh", type: "string" },

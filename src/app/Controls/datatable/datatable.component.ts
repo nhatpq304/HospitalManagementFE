@@ -1,13 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from "@angular/core";
-import datetimeUtil from "../../../util/datetime.util";
 import _ from "lodash";
 import * as moment from "moment";
-
-interface datatableConfig {
-  id: string;
-  columns: Object[];
-  drawCallback: Function;
-}
 
 @Component({
   selector: "datatable",
@@ -49,16 +42,18 @@ export class DatatableComponent implements OnInit, OnChanges {
         sSearch: "Tìm kiếm",
         infoEmpty: "Không tồn tại bản ghi nào",
         infoFiltered: " - lọc từ _MAX_ bản ghi",
-        lengthMenu: `Hiển thị <select> 
-			            <option value="5">5</option> 
-			            <option value="10">10</option>
-			             <option value="-1">Tất cả</option>
-                  </select> bản ghi`,
+        lengthMenu: `Hiển thị _MENU_ bản ghi`,
+
         paginate: {
           previous: "Trước",
           next: "Sau",
         },
       },
+      lengthMenu: [
+        [5, 10, 20, -1],
+        [5, 10, 20, "Tất cả"],
+      ],
+      pageLength: this.config.pageLength || 10,
       drawCallback: this.config.drawCallback,
     });
   }

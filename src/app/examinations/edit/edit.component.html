@@ -39,7 +39,6 @@
                 <select-box
                   [parentForm]="examForm"
                   [config]="formConfig.gender"
-                  [value]="examForm.get('gender').value"
                 ></select-box>
               </div>
             </div>
@@ -86,7 +85,7 @@
   </div>
   <div class="col-3">
     <div class="card">
-      <image-uploader [source]="avatar.path"></image-uploader>
+      <image-uploader [source]="avatar?.path"></image-uploader>
     </div>
   </div>
 </div>
