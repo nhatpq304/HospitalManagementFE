@@ -1,0 +1,54 @@
+<form class="input-group md-form form-sm form-2 pl-0" [formGroup]="searchForm">
+  <input
+    class="form-control my-0 py-1 red-border"
+    type="text"
+    [placeholder]="resource.placeholder"
+    formControlName="searchText"
+    aria-label="Search"
+  />
+  <div class="input-group-append">
+    <span
+      class="input-group-text red lighten-3"
+      id="basic-text1"
+      (click)="onSearchClick()"
+      ><i class="fas fa-search text-grey" aria-hidden="true"></i
+    ></span>
+  </div>
+</form>
+
+<div
+  class="modal fade"
+  id="searchModal"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <datatable
+          [config]="datatableConfig"
+          [data]="datatableData"
+          [searchText]="searchText"
+        ></datatable>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onSearchComplete()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

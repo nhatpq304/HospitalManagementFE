@@ -3,7 +3,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { UserDashboardComponent } from "../Users/dashboard/dashboard.component";
 import { MainComponent } from "./main.component";
 import { UserEditComponent } from "../Users/edit/edit.component";
-import { ExaminationDashboardComponent } from '../examinations/dashboard/dashboard.component';
+import { ExaminationDashboardComponent } from "../examinations/dashboard/dashboard.component";
+import { ExaminationEditComponent } from "../examinations/edit/edit.component";
 
 const routes: Routes = [
   {
@@ -14,6 +15,11 @@ const routes: Routes = [
       { path: "users/add", component: UserEditComponent },
       { path: "users/:id/edit", component: UserEditComponent },
       { path: "examinations", component: ExaminationDashboardComponent },
+      { path: "examinations/add", component: ExaminationEditComponent },
+      {
+        path: "examinations/:id/edit",
+        component: ExaminationEditComponent,
+      },
     ],
   },
 ];

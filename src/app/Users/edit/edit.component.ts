@@ -87,7 +87,7 @@ export class UserEditComponent implements OnInit {
 
   initResource() {
     this.resource = {
-      stateTitle: this.state === "ADD" ? "Thêm người" : "Sửa thông tin",
+      stateTitle: this.state === "ADD" ? "Thêm người" : "Sửa thông tin người",
       cardTitle: "Thông tin cá nhân",
       loginInfoTitle: "Thông tin đăng nhập",
       saveButton: "Lưu",

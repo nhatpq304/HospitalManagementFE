@@ -15,8 +15,10 @@ interface datatableConfig {
   styleUrls: ["./datatable.component.scss"],
 })
 export class DatatableComponent implements OnInit, OnChanges {
+  @Input() searchText: string;
   @Input() config: datatableConfig;
   @Input() data: Object[];
+  table;
   constructor() {}
 
   ngOnInit(): void {}
@@ -29,12 +31,18 @@ export class DatatableComponent implements OnInit, OnChanges {
     if (changeObj?.data?.currentValue) {
       this.initGrid();
     }
+
+    if (changeObj?.searchText) {
+      this.table?.search(this.searchText);
+      this.table?.draw(false);
+    }
   }
 
   private initGrid() {
-    ($(`#${this.config.id}`) as any).dataTable({
+    this.table = ($(`#${this.config.id}`) as any).DataTable({
       data: this.data,
       columns: this.config.columns,
+      select: true,
       language: {
         info: "Hiển thị _PAGE_ trên _PAGES_ trang",
         zeroRecords: "Không tồn tại bản ghi nào phù hợp",
@@ -42,8 +50,8 @@ export class DatatableComponent implements OnInit, OnChanges {
         infoEmpty: "Không tồn tại bản ghi nào",
         infoFiltered: " - lọc từ _MAX_ bản ghi",
         lengthMenu: `Hiển thị <select> 
-			            <option value="10">10</option> 
-			            <option value="20">20</option>
+			            <option value="5">5</option> 
+			            <option value="10">10</option>
 			             <option value="-1">Tất cả</option>
                   </select> bản ghi`,
         paginate: {

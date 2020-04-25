@@ -4,7 +4,8 @@ import { RestfulService } from "../restful.service";
 import UsersMappingService from "./users.mapping.service";
 import UserModel from "src/app/Models/user.model";
 import { MediaService } from "../Media/media.service";
-
+import { map } from "rxjs/operators";
+import * as _ from "lodash";
 @Injectable({
   providedIn: "root",
 })
@@ -18,7 +19,13 @@ export default class UsersService {
   getAllUsers() {
     const api = apis.getAllUsers;
 
-    return this.restfulService.get(api);
+    return this.restfulService
+      .get(api)
+      .pipe(
+        map((res) =>
+          _.map(res.user, (user) => this.usersMappingService.mapUserData(user))
+        )
+      );
   }
 
   saveUser(data: any) {

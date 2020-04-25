@@ -30,7 +30,7 @@ export class UserDashboardComponent implements OnInit {
   private loadData() {
     this.usersService.getAllUsers().subscribe(
       (response) => {
-        this.datatableData = response.user;
+        this.datatableData = response;
       },
       (error) => {},
       () => {}
@@ -41,12 +41,12 @@ export class UserDashboardComponent implements OnInit {
     this.datatableConfig = {
       id: "userDatatableId",
       columns: [
-        { data: "email", title: "Email", type: "string" },
         { data: "name", title: "Tên", type: "string" },
+        { data: "email", title: "Email", type: "string" },
         { data: "address", title: "Địa chỉ", type: "string" },
-        { data: "birthday", title: "Ngày sinh", type: "Date" },
-        { data: "id_card_number", title: "CMND", type: "string" },
-        { data: "medical_card_number", title: "Số BHYT", type: "string" },
+        { data: "birthday", title: "Ngày sinh", type: "string" },
+        { data: "idCard", title: "CMND", type: "string" },
+        { data: "medicalCard", title: "Số BHYT", type: "string" },
         {
           data: "id",
           title: "Sửa",

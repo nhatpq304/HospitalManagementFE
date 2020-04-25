@@ -9,6 +9,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { TextInputComponent } from "./text-input/text-input.component";
 import { SelectComponent } from "./select/select.component";
 import { ImageUploaderComponent } from "./image-uploader/image-uploader.component";
+import { SearchBarComponent } from './search-bar/search-bar.component';
 @NgModule({
   declarations: [
     ButtonComponent,
@@ -17,6 +18,7 @@ import { ImageUploaderComponent } from "./image-uploader/image-uploader.componen
     TextInputComponent,
     SelectComponent,
     ImageUploaderComponent,
+    SearchBarComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +34,7 @@ import { ImageUploaderComponent } from "./image-uploader/image-uploader.componen
     TextInputComponent,
     SelectComponent,
     ImageUploaderComponent,
+    SearchBarComponent,
   ],
 })
 export class ControlsModule {}

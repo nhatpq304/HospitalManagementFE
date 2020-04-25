@@ -6,9 +6,9 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { MDBBootstrapModule } from "angular-bootstrap-md";
 import { BrowserModule } from "@angular/platform-browser";
 import { ExaminationDashboardComponent } from "./dashboard/dashboard.component";
-
+import { ExaminationEditComponent } from "./edit/edit.component";
 @NgModule({
-  declarations: [ExaminationDashboardComponent],
+  declarations: [ExaminationDashboardComponent, ExaminationEditComponent],
   imports: [
     CommonModule,
     ControlsModule,
