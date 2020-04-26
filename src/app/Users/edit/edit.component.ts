@@ -5,7 +5,7 @@ import formConfig from "./formConfig";
 import formUtil from "src/util/form.util";
 import UsersService from "src/app/Services/Users/users.service";
 import { Location } from "@angular/common";
-// import ToastService from "src/app/Services/Common/toast.service";
+import ToastService from "src/app/Services/Common/toast.service";
 import UserModel from "src/app/Models/user.model";
 
 @Component({
@@ -26,7 +26,7 @@ export class UserEditComponent implements OnInit {
     public router: Router,
     public route: ActivatedRoute,
     public location: Location,
-    // public toastService: ToastService,
+    public toastService: ToastService,
     public usersService: UsersService
   ) {}
 
@@ -114,7 +114,7 @@ export class UserEditComponent implements OnInit {
         this.onUpdateClick(data);
       }
     } else {
-      // this.toastService.show({ text: this.resource.saveError, type: "error" });
+      this.toastService.show({ text: this.resource.saveError, type: "error" });
 
       formUtil.validateAllFormFields(this.userForm);
     }
@@ -124,17 +124,17 @@ export class UserEditComponent implements OnInit {
     try {
       await this.updateUser(data, this.originalData);
 
-      // this.toastService.show({
-      //   text: this.resource.saveSuccess,
-      //   type: "success",
-      // });
+      this.toastService.show({
+        text: this.resource.saveSuccess,
+        type: "success",
+      });
 
       this.location.back();
     } catch {
-      // this.toastService.show({
-      //   text: this.resource.saveFail,
-      //   type: "error",
-      // });
+      this.toastService.show({
+        text: this.resource.saveFail,
+        type: "error",
+      });
 
       this.disableForm(false);
     }
@@ -144,17 +144,17 @@ export class UserEditComponent implements OnInit {
     try {
       await this.saveUser(data);
 
-      // this.toastService.show({
-      //   text: this.resource.saveSuccess,
-      //   type: "success",
-      // });
+      this.toastService.show({
+        text: this.resource.saveSuccess,
+        type: "success",
+      });
 
       this.location.back();
     } catch {
-      // this.toastService.show({
-      //   text: this.resource.saveFail,
-      //   type: "error",
-      // });
+      this.toastService.show({
+        text: this.resource.saveFail,
+        type: "error",
+      });
 
       this.disableForm(false);
     }
