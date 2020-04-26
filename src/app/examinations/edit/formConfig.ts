@@ -17,16 +17,6 @@ const formConfig = {
       { title: "Nữ", value: "0" },
     ],
   },
-  department: {
-    controlName: "department",
-    title: "Khoa",
-    options: [
-      { title: "Vui lòng chọn khoa" },
-      { title: "Khoa tim", value: "CARDIOLOGY" },
-      { title: "Khoa da liễu", value: "DERMATOLOGY" },
-      { title: "Khoa dinh dưỡng", value: "DIETETICS" },
-    ],
-  },
   birthday: {
     controlName: "birthday",
     title: "Ngày sinh",
@@ -53,6 +43,31 @@ const formConfig = {
   },
   search: {
     controlName: "search",
+  },
+  //exam
+  doctorName: {
+    controlName: "doctorName",
+    title: "Bác sĩ",
+    required: true,
+  },
+  department: {
+    controlName: "department",
+    title: "Khoa",
+    options: [
+      {
+        title: "Vui lòng chọn khoa*",
+        value: "",
+        selected: true,
+        disabled: true,
+      },
+      { title: "Khoa tim", value: "CARDIOLOGY" },
+      { title: "Khoa da liễu", value: "DERMATOLOGY" },
+      { title: "Khoa dinh dưỡng", value: "DIETETICS" },
+    ],
+  },
+  create: {
+    controlName: "create",
+    title: "Ngày tạo",
   },
 };
 export default formConfig;

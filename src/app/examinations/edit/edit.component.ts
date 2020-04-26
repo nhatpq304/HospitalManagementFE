@@ -13,6 +13,7 @@ import formConfig from "./formConfig";
 import MediaModel from "src/app/Models/media.model";
 import * as _ from "lodash";
 import UserModel from "src/app/Models/user.model";
+import { AuthService } from "src/app/Services/Auth/auth.service";
 @Component({
   selector: "examination-edit",
   templateUrl: "./edit.component.html",
@@ -29,12 +30,23 @@ export class ExaminationEditComponent implements OnInit {
     public router: Router,
     public route: ActivatedRoute,
     public location: Location,
-    public toastService: ToastService
+    public toastService: ToastService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.getAccountData();
     this.initForm();
     this.initResource();
+  }
+
+  getAccountData() {
+    if (this.state === "ADD") {
+      this.authService.getLoggedUser().then((data) => {
+        this.examForm.get("doctorName").setValue(data.user.name);
+        this.examForm.get("department").setValue(data.user.department);
+      });
+    }
   }
 
   initResource() {
@@ -42,6 +54,8 @@ export class ExaminationEditComponent implements OnInit {
       stateTitle:
         this.state === "ADD" ? "Thêm kết quả khám" : "Sửa kết quả khám",
       patientInfo: "Thông tin bệnh nhân",
+      examInfo: "Thông tin chung",
+      generalHealthInfo: "Tình trạng sức khỏe",
       saveButton: "Lưu",
       saveError: "Thông tin nhập không chính xác",
       saveSuccess: "Lưu kết quả khám thành công",
@@ -70,6 +84,10 @@ export class ExaminationEditComponent implements OnInit {
         Validators.required,
         this.hasDataValidator.bind(this),
       ]),
+
+      doctorName: new FormControl("", [Validators.required]),
+      department: new FormControl("", [Validators.required]),
+      create: new FormControl({ value: "", disabled: true }, []),
     });
   }
 

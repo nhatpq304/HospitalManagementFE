@@ -5,7 +5,7 @@ import { LocalStorageService } from "../LocalStorage/local-storage.service";
 import apis from "../api.routes";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class AuthService {
   constructor(

@@ -14,20 +14,46 @@
   <div class="col-9">
     <div class="card">
       <div class="card-body">
-        <a>{{ resource.patientInfo }}</a>
-        <!-- Search form -->
-        <div class="col-4">
-          <search-bar
-            [parentForm]="examForm"
-            [config]="formConfig.search"
-            (onSearchApply)="onSearchApply($event)"
-            (onRemove)= "onSearchRemove()"
-          ></search-bar>
-        </div>
-        <div class="p-4 border border-dark">
-          <form [formGroup]="examForm">
-            <!-- USER INFO -->
-
+        <a>{{ resource.examInfo }}</a>
+        <form [formGroup]="examForm">
+          <div class="form-row">
+            <div class="form-group col-4">
+              <text-input
+                [parentForm]="examForm"
+                [config]="formConfig.doctorName"
+                [resource]="resource.validationErrors"
+              >
+              </text-input>
+            </div>
+            <div class="form-group col-4">
+              <select-box
+                [parentForm]="examForm"
+                [config]="formConfig.department"
+              ></select-box>
+            </div>
+            <div class="form-group col-4">
+              <text-input
+                [parentForm]="examForm"
+                [config]="formConfig.create"
+                [resource]="resource.validationErrors"
+              >
+              </text-input>
+            </div>
+          </div>
+          <a>{{ resource.patientInfo }}</a>
+          <!-- Search form -->
+          <div class="form-row">
+            <div class="form-group col-4">
+              <search-bar
+                [parentForm]="examForm"
+                [config]="formConfig.search"
+                (onSearchApply)="onSearchApply($event)"
+                (onRemove)="onSearchRemove()"
+              ></search-bar>
+            </div>
+          </div>
+          <!-- USER INFO -->
+          <div class="p-4 mb-4 border border-dark">
             <div class="form-row">
               <div class="form-group col">
                 <text-input [parentForm]="examForm" [config]="formConfig.name">
@@ -82,9 +108,10 @@
                 </text-input>
               </div>
             </div>
-            <!-- END USER INFO -->
-          </form>
-        </div>
+          </div>
+          <!-- END USER INFO -->
+          <a>{{ resource.generalHealthInfo }}</a>
+        </form>
       </div>
     </div>
   </div>
@@ -97,16 +124,7 @@
 <div class="row mb-4">
   <div class="col-9">
     <div class="card">
-      <div class="card-body">
-        <form [formGroup]="examForm">
-          <div class="form-row">
-            <div class="form-group col">
-              <text-input [parentForm]="examForm" [config]="formConfig.name">
-              </text-input>
-            </div>
-          </div>
-        </form>
-      </div>
+      <div class="card-body"></div>
     </div>
   </div>
 </div>
