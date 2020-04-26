@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import Toastify from "src/assets/js/addons/Toastify";
+import Toastify from "src/assets/js/addons/toastify";
 
 @Injectable({
   providedIn: "root",
