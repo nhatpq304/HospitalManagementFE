@@ -46,7 +46,9 @@ export default class UsersMappingService {
     user.email = data.email;
     user.birthday =
       (data.birthday &&
-        moment(data.birthday).format("YYYY-MM-DD[T]HH:mm:ss.SSSZZ")) ||
+        moment(data.birthday, "DD/MM/YYYY").format(
+          "YYYY-MM-DD[T]HH:mm:ss.SSSZZ"
+        )) ||
       null;
     user.phone = data.phone;
     user.id_card_number = data.idCard;
