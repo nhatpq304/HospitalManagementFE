@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import ToastService from "src/app/Services/Common/toast.service";
+// import ToastService from "src/app/Services/Common/toast.service";
 import { Location } from "@angular/common";
 import {
   FormControl,
@@ -30,7 +30,7 @@ export class ExaminationEditComponent implements OnInit {
     public router: Router,
     public route: ActivatedRoute,
     public location: Location,
-    public toastService: ToastService,
+    // public toastService: ToastService,
     public authService: AuthService
   ) {}
 

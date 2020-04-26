@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import Toastify from "../../../assets/js/addons/Toastify";
+// import Toastify from "../../../assets/js/addons/Toastify";
 
 @Injectable({
   providedIn: "root",
@@ -28,28 +28,28 @@ export default class ToastService {
       }
     }
 
-    Toastify({
-      text: config.text,
+    // Toastify({
+    //   text: config.text,
 
-      destination: config.destination || null,
-      // Open destination in new window
-      newWindow: config.newWindow || false,
-      // Show toast close icon
-      close: config.close || false,
-      // Toast position - top or bottom
-      gravity: config.gravity || "bottom",
-      // Toast position - left, right, or center
-      position: config.position || "right",
-      // Background color
-      backgroundColor: color,
-      // Avatar
-      avatar: config.avatar || "",
-      // Additional classes for the toast
-      classes: config.classes || "",
-      // Prevents dismissing of toast on hover
-      stopOnFocus: config.stopOnFocus || true,
+    //   destination: config.destination || null,
+    //   // Open destination in new window
+    //   newWindow: config.newWindow || false,
+    //   // Show toast close icon
+    //   close: config.close || false,
+    //   // Toast position - top or bottom
+    //   gravity: config.gravity || "bottom",
+    //   // Toast position - left, right, or center
+    //   position: config.position || "right",
+    //   // Background color
+    //   backgroundColor: color,
+    //   // Avatar
+    //   avatar: config.avatar || "",
+    //   // Additional classes for the toast
+    //   classes: config.classes || "",
+    //   // Prevents dismissing of toast on hover
+    //   stopOnFocus: config.stopOnFocus || true,
 
-      callback: config.callback || function () {},
-    }).showToast();
+    //   callback: config.callback || function () {},
+    // }).showToast();
   }
 }
