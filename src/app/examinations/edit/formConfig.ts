@@ -65,9 +65,26 @@ const formConfig = {
       { title: "Khoa dinh dưỡng", value: "DIETETICS" },
     ],
   },
-  create: {
-    controlName: "create",
+  createDate: {
+    controlName: "createDate",
     title: "Ngày tạo",
+  },
+
+  //basic health data
+  bloodPresure: {
+    controlName: "bloodPresure",
+    title: "Huyết áp",
+    suffix: "mmHg",
+  },
+  height: {
+    controlName: "height",
+    title: "Chiều cao",
+    suffix: "cm",
+  },
+  weight: {
+    controlName: "weight",
+    title: "Cân nặng",
+    suffix: "kg",
   },
 };
 export default formConfig;

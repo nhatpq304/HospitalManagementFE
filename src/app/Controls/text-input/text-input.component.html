@@ -1,4 +1,4 @@
-<div [formGroup]="parentForm" class="md-form">
+<div [formGroup]="parentForm" class="md-form input-group">
   <mdb-error
     *ngIf="property?.errors?.email && (property.dirty || property.touched)"
   >
@@ -28,6 +28,9 @@
     mdbInput
     mdbValidate
   />
+  <div *ngIf="config.suffix" class="input-group-append">
+    <span class="input-group-text md-addon">{{ config.suffix }}</span>
+  </div>
   <label [for]="config.controlName"
     >{{ config.title }}{{ config.required ? "*" : "" }}</label
   >

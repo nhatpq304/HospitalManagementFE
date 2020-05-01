@@ -14,6 +14,8 @@ import MediaModel from "src/app/Models/media.model";
 import * as _ from "lodash";
 import UserModel from "src/app/Models/user.model";
 import { AuthService } from "src/app/Services/Auth/auth.service";
+import * as moment from "moment";
+
 @Component({
   selector: "examination-edit",
   templateUrl: "./edit.component.html",
@@ -45,6 +47,7 @@ export class ExaminationEditComponent implements OnInit {
       this.authService.getLoggedUser().then((data) => {
         this.examForm.get("doctorName").setValue(data.user.name);
         this.examForm.get("department").setValue(data.user.department);
+        this.examForm.get("createDate").setValue(moment().format("DD/MM/YYYY"));
       });
     }
   }
@@ -87,7 +90,11 @@ export class ExaminationEditComponent implements OnInit {
 
       doctorName: new FormControl("", [Validators.required]),
       department: new FormControl("", [Validators.required]),
-      create: new FormControl({ value: "", disabled: true }, []),
+      createDate: new FormControl("", [Validators.required]),
+
+      bloodPresure: new FormControl("", []),
+      height: new FormControl("", []),
+      weight: new FormControl("", []),
     });
   }
 
