@@ -6,8 +6,8 @@ import {
   FormControl,
   Validators,
   FormGroup,
-  ValidatorFn,
   AbstractControl,
+  FormArray,
 } from "@angular/forms";
 import formConfig from "./formConfig";
 import MediaModel from "src/app/Models/media.model";
@@ -99,6 +99,8 @@ export class ExaminationEditComponent implements OnInit {
       weight: new FormControl("", []),
       bodyTemp: new FormControl("", []),
       examResult: new FormControl("", [Validators.required]),
+
+      medicine: new FormArray([]),
     });
   }
 
@@ -120,6 +122,12 @@ export class ExaminationEditComponent implements OnInit {
 
   get avatar(): MediaModel {
     return this.examForm.get("avatar").value;
+  }
+
+  get value() {
+    let a = this.examForm.get("medicine").value;
+    console.log(a);
+    return a;
   }
 
   private hasDataValidator(

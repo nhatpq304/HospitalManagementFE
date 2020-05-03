@@ -157,7 +157,16 @@
             </div>
           </div>
           <a>{{ resource.medicine }}</a>
-          <div class="form-row"></div>
+          <div class="mb-2"></div>
+          <div class="form-row">
+            <div class="form-group col-12">
+              <medicine-picker
+                [parentForm]="examForm"
+                [config]="formConfig.medicine"
+                [resource]="resource.validationErrors"
+              ></medicine-picker>
+            </div>
+          </div>
         </form>
       </div>
     </div>
@@ -165,13 +174,6 @@
   <div class="col-3">
     <div class="card">
       <image-uploader [source]="avatar?.path"></image-uploader>
-    </div>
-  </div>
-</div>
-<div class="row mb-4">
-  <div class="col-9">
-    <div class="card">
-      <div class="card-body"></div>
     </div>
   </div>
 </div>

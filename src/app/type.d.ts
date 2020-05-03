@@ -3,6 +3,12 @@ interface datatableConfig {
   columns: Object[];
   drawCallback: Function;
   pageLength: number;
+  searching: boolean;
+  select: boolean;
+  paging: boolean;
+  info: boolean;
+  lengthChange: boolean;
+  initComplete: any;
 }
 
 interface DynamicObject {

@@ -1,4 +1,8 @@
-<div [formGroup]="parentForm" class="md-form input-group">
+<div
+  [formGroup]="parentForm"
+  class="md-form input-group"
+  [ngClass]="config.formClass"
+>
   <mdb-error
     *ngIf="property?.errors?.email && (property.dirty || property.touched)"
   >

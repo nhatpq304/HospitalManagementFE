@@ -11,6 +11,7 @@ import { SelectComponent } from "./select/select.component";
 import { ImageUploaderComponent } from "./image-uploader/image-uploader.component";
 import { SearchBarComponent } from "./search-bar/search-bar.component";
 import { TextAreaComponent } from "./text-area/text-area.component";
+import { MedicinePickerComponent } from "./medicine-picker/medicine-picker.component";
 @NgModule({
   declarations: [
     ButtonComponent,
@@ -21,6 +22,7 @@ import { TextAreaComponent } from "./text-area/text-area.component";
     ImageUploaderComponent,
     SearchBarComponent,
     TextAreaComponent,
+    MedicinePickerComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +40,7 @@ import { TextAreaComponent } from "./text-area/text-area.component";
     ImageUploaderComponent,
     SearchBarComponent,
     TextAreaComponent,
+    MedicinePickerComponent,
   ],
 })
 export class ControlsModule {}

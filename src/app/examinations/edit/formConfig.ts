@@ -96,5 +96,9 @@ const formConfig = {
     rows: 5,
     required: true,
   },
+
+  medicine: {
+    controlName: "medicine",
+  },
 };
 export default formConfig;

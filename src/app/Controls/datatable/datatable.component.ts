@@ -35,7 +35,11 @@ export class DatatableComponent implements OnInit, OnChanges {
     this.table = ($(`#${this.config.id}`) as any).DataTable({
       data: this.data,
       columns: this.config.columns,
-      select: true,
+      select: this.config.select ?? true,
+      searching: this.config.searching ?? true,
+      paging: this.config.paging ?? true,
+      info: this.config.info ?? true,
+      lengthChange: this.config.lengthChange ?? true,
       language: {
         info: "Hiển thị _PAGE_ trên _PAGES_ trang",
         zeroRecords: "Không tồn tại bản ghi nào phù hợp",
