@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 
 @Component({
-  selector: "text-input",
-  templateUrl: "./text-input.component.html",
-  styleUrls: ["./text-input.component.scss"],
+  selector: "text-area",
+  templateUrl: "./text-area.component.html",
+  styleUrls: ["./text-area.component.scss"],
 })
-export class TextInputComponent implements OnInit {
+export class TextAreaComponent implements OnInit {
   @Input() config;
   @Input() resource;
   @Input() parentForm: FormGroup;

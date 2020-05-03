@@ -13,7 +13,6 @@ export class SearchBarComponent implements OnInit {
   @Output() onSearchApply = new EventEmitter();
   @Output() onRemove = new EventEmitter();
 
-  searchForm: FormGroup;
   resource;
   datatableConfig;
   datatableData;
@@ -24,20 +23,13 @@ export class SearchBarComponent implements OnInit {
   ngOnInit(): void {
     this.loadData();
     this.initGridConfig();
-    this.initForm();
     this.initResource();
   }
 
   initResource() {
     this.resource = {
-      placeholder: "Tìm bệnh nhân",
+      placeholder: `Tìm bệnh nhân${this.config.required && "*"}`,
     };
-  }
-
-  initForm() {
-    this.searchForm = new FormGroup({
-      searchText: new FormControl("", []),
-    });
   }
 
   private initGridConfig() {
@@ -62,7 +54,7 @@ export class SearchBarComponent implements OnInit {
 
   onSearchClick() {
     this.toggleModal();
-    this.searchText = this.searchForm.get("searchText").value;
+    this.searchText = this.parentForm.get(this.config.controlName).value;
   }
 
   onSearchComplete() {

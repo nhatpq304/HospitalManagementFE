@@ -9,7 +9,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { TextInputComponent } from "./text-input/text-input.component";
 import { SelectComponent } from "./select/select.component";
 import { ImageUploaderComponent } from "./image-uploader/image-uploader.component";
-import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SearchBarComponent } from "./search-bar/search-bar.component";
+import { TextAreaComponent } from "./text-area/text-area.component";
 @NgModule({
   declarations: [
     ButtonComponent,
@@ -19,6 +20,7 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     SelectComponent,
     ImageUploaderComponent,
     SearchBarComponent,
+    TextAreaComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     SelectComponent,
     ImageUploaderComponent,
     SearchBarComponent,
+    TextAreaComponent,
   ],
 })
 export class ControlsModule {}

@@ -59,6 +59,8 @@ export class ExaminationEditComponent implements OnInit {
       patientInfo: "Thông tin bệnh nhân",
       examInfo: "Thông tin chung",
       generalHealthInfo: "Tình trạng sức khỏe",
+      examResult: "Kết quả chẩn đoán",
+      medicine: "Đơn thuốc",
       saveButton: "Lưu",
       saveError: "Thông tin nhập không chính xác",
       saveSuccess: "Lưu kết quả khám thành công",
@@ -95,6 +97,8 @@ export class ExaminationEditComponent implements OnInit {
       bloodPresure: new FormControl("", []),
       height: new FormControl("", []),
       weight: new FormControl("", []),
+      bodyTemp: new FormControl("", []),
+      examResult: new FormControl("", [Validators.required]),
     });
   }
 

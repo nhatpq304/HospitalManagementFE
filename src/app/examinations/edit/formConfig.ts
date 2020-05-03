@@ -2,7 +2,6 @@ const formConfig = {
   name: {
     controlName: "name",
     title: "Họ và tên",
-    required: true,
   },
   email: {
     controlName: "email",
@@ -32,7 +31,6 @@ const formConfig = {
   idCard: {
     controlName: "idCard",
     title: "Số CMND",
-    required: true,
   },
   medicalCard: {
     controlName: "medicalCard",
@@ -43,6 +41,7 @@ const formConfig = {
   },
   search: {
     controlName: "search",
+    required: true,
   },
   //exam
   doctorName: {
@@ -85,6 +84,17 @@ const formConfig = {
     controlName: "weight",
     title: "Cân nặng",
     suffix: "kg",
+  },
+  bodyTemp: {
+    controlName: "bodyTemp",
+    title: "Nhiệt độ",
+    suffix: "\u2103",
+  },
+  examResult: {
+    controlName: "examResult",
+    title: "Kết quả chẩn đoán",
+    rows: 5,
+    required: true,
   },
 };
 export default formConfig;

@@ -111,7 +111,7 @@
           <!-- END USER INFO -->
           <a>{{ resource.generalHealthInfo }}</a>
           <div class="form-row">
-            <div class="form-group col-4">
+            <div class="form-group col-3">
               <text-input
                 [parentForm]="examForm"
                 [config]="formConfig.height"
@@ -119,7 +119,7 @@
               >
               </text-input>
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-3">
               <text-input
                 [parentForm]="examForm"
                 [config]="formConfig.weight"
@@ -127,7 +127,7 @@
               >
               </text-input>
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-3">
               <text-input
                 [parentForm]="examForm"
                 [config]="formConfig.bloodPresure"
@@ -135,7 +135,29 @@
               >
               </text-input>
             </div>
+            <div class="form-group col-3">
+              <text-input
+                [parentForm]="examForm"
+                [config]="formConfig.bodyTemp"
+                [resource]="resource.validationErrors"
+              >
+              </text-input>
+            </div>
           </div>
+          <!-- END USER HEALTH DATA -->
+          <a>{{ resource.examResult }}</a>
+          <div class="form-row">
+            <div class="form-group col-12">
+              <text-area
+                [parentForm]="examForm"
+                [config]="formConfig.examResult"
+                [resource]="resource.validationErrors"
+              >
+              </text-area>
+            </div>
+          </div>
+          <a>{{ resource.medicine }}</a>
+          <div class="form-row"></div>
         </form>
       </div>
     </div>
