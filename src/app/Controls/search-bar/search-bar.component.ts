@@ -29,6 +29,9 @@ export class SearchBarComponent implements OnInit {
   initResource() {
     this.resource = {
       placeholder: `Tìm bệnh nhân${this.config.required && "*"}`,
+      modalTitle: "Tìm bệnh nhân",
+      modalCancel: "Hủy",
+      modalApply: "Xác nhận",
     };
   }
 

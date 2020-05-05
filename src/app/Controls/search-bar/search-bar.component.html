@@ -37,7 +37,9 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{ resource.modalTitle }}
+        </h5>
         <button
           type="button"
           class="close"
@@ -56,14 +58,14 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
+          {{ resource.modalCancel }}
         </button>
         <button
           type="button"
           class="btn btn-primary"
           (click)="onSearchComplete()"
         >
-          Save changes
+          {{ resource.modalApply }}
         </button>
       </div>
     </div>

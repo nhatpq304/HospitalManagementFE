@@ -7,6 +7,7 @@ const formConfig = {
   amount: {
     controlName: "amount",
     title: "Số lượng",
+    type: "number",
     formClass: "mb-0 mt-0",
   },
   remark: {
