@@ -92,9 +92,8 @@ const formConfig = {
   },
   examResult: {
     controlName: "examResult",
-    title: "Kết quả chẩn đoán",
+    title: "Chẩn đoán",
     rows: 5,
-    required: true,
   },
 
   medicine: {

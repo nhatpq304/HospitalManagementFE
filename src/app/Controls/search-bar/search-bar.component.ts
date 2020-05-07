@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import UsersService from "src/app/Services/Users/users.service";
 
 @Component({

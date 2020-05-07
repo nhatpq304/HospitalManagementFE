@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-// import ToastService from "src/app/Services/Common/toast.service";
+import ToastService from "src/app/Services/Common/toast.service";
 import { Location } from "@angular/common";
 import {
   FormControl,
@@ -15,6 +15,7 @@ import * as _ from "lodash";
 import UserModel from "src/app/Models/user.model";
 import { AuthService } from "src/app/Services/Auth/auth.service";
 import * as moment from "moment";
+import formUtil from "src/util/form.util";
 
 @Component({
   selector: "examination-edit",
@@ -32,7 +33,7 @@ export class ExaminationEditComponent implements OnInit {
     public router: Router,
     public route: ActivatedRoute,
     public location: Location,
-    // public toastService: ToastService,
+    public toastService: ToastService,
     public authService: AuthService
   ) {}
 
@@ -59,7 +60,7 @@ export class ExaminationEditComponent implements OnInit {
       patientInfo: "Thông tin bệnh nhân",
       examInfo: "Thông tin chung",
       generalHealthInfo: "Tình trạng sức khỏe",
-      examResult: "Kết quả chẩn đoán",
+      examResult: "Chẩn đoán",
       medicine: "Đơn thuốc",
       saveButton: "Lưu",
       saveError: "Thông tin nhập không chính xác",
@@ -98,7 +99,7 @@ export class ExaminationEditComponent implements OnInit {
       height: new FormControl("", []),
       weight: new FormControl("", []),
       bodyTemp: new FormControl("", []),
-      examResult: new FormControl("", [Validators.required]),
+      examResult: new FormControl("", []),
 
       medicine: new FormArray([]),
     });
@@ -120,6 +121,27 @@ export class ExaminationEditComponent implements OnInit {
     this.examForm.get("gender").setValue("");
   }
 
+  onSubmit() {
+    if (this.examForm.valid) {
+      this.disableForm(true);
+      let data = this.examForm.value;
+      console.log(data);
+
+      if (this.state === "ADD") {
+        // this.onSaveClick(data);
+      } else {
+        // this.onUpdateClick(data);
+      }
+    } else {
+      this.toastService.show({
+        text: this.resource.saveError,
+        type: "error",
+      });
+
+      formUtil.validateAllFormFields(this.examForm);
+    }
+  }
+
   get avatar(): MediaModel {
     return this.examForm.get("avatar").value;
   }
@@ -128,6 +150,14 @@ export class ExaminationEditComponent implements OnInit {
     let a = this.examForm.get("medicine").value;
     console.log(a);
     return a;
+  }
+
+  private disableForm(value: boolean) {
+    if (value) {
+      return this.examForm.disable();
+    }
+
+    return this.examForm.enable();
   }
 
   private hasDataValidator(

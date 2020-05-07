@@ -1,7 +1,6 @@
 const formConfig = {
   medicineName: {
     controlName: "medicineName",
-    title: "Tên thuốc",
     formClass: "mb-0 mt-0",
   },
   amount: {

@@ -4,12 +4,16 @@
     *ngFor="let control of array.controls; let i = index"
   >
     <div [formGroupName]="i" class="form-row">
-      <div class="form-group col-4">
-        <text-input
+      <div class="form-group col-3">
+        <medicine-search
+          [id]="i"
           [parentForm]="getFormGroup(i)"
           [config]="formConfig.medicineName"
+          [value]="value"
+          (onSearchApply)="onSearchApply($event)"
+          (onRemove)="onSearchRemove($event)"
         >
-        </text-input>
+        </medicine-search>
       </div>
 
       <div class="form-group col-2">
@@ -19,6 +23,15 @@
       <div class="form-group col-6">
         <text-input [parentForm]="getFormGroup(i)" [config]="formConfig.remark">
         </text-input>
+      </div>
+      <div class="form-group col-1">
+        <button
+          type="button"
+          class="btn btn-primary px-3 py-1"
+          (click)="onDeleteRow(i)"
+        >
+          <i class="fas fa-trash" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
   </div>
