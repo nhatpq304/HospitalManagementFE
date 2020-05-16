@@ -33,12 +33,12 @@ export class MedicinePickerComponent implements OnInit, OnChanges {
     this.array.enabled && this.array.push(this.newFormGroup());
   }
 
-  newFormGroup(medicineObj?): FormGroup {
+  newFormGroup(): FormGroup {
     return new FormGroup({
-      medicineId: new FormControl(medicineObj?.medicineId || "", []),
-      medicineName: new FormControl(medicineObj?.medicineName || "", []),
-      amount: new FormControl(medicineObj?.amount || "", []),
-      remark: new FormControl(medicineObj?.remark || "", []),
+      medicineId: new FormControl("", []),
+      medicineName: new FormControl("", [Validators.required]),
+      amount: new FormControl("", [Validators.required]),
+      remark: new FormControl("", []),
     });
   }
 

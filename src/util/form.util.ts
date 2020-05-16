@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, ValidatorFn } from "@angular/forms";
+import { FormGroup, FormControl, ValidatorFn, FormArray } from "@angular/forms";
 import * as _ from "lodash";
 
 export default {
@@ -9,6 +9,12 @@ export default {
         if (control instanceof FormControl) {
           control.markAsTouched({
             onlySelf: true,
+          });
+        } else if (control instanceof FormArray) {
+          control.controls.forEach((element) => {
+            if (element instanceof FormGroup) {
+              this.validateAllFormFields(element);
+            }
           });
         } else if (control instanceof FormGroup) {
           this.validateAllFormFields(control);

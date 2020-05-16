@@ -2,7 +2,7 @@
   <input
     class="form-control my-0 py-1 red-border"
     type="text"
-    [placeholder]="resource.placeholder"
+    [placeholder]="resource?.placeholder"
     [formControlName]="config.controlName"
     [readonly]="isReadOnly"
     aria-label="Search"
@@ -38,7 +38,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-          {{ resource.modalTitle }}
+          {{ resource?.modalTitle }}
         </h5>
         <button
           type="button"
@@ -58,14 +58,14 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          {{ resource.modalCancel }}
+          {{ resource?.modalCancel }}
         </button>
         <button
           type="button"
           class="btn btn-primary"
           (click)="onSearchComplete()"
         >
-          {{ resource.modalApply }}
+          {{ resource?.modalApply }}
         </button>
       </div>
     </div>

@@ -6,22 +6,22 @@
   <mdb-error
     *ngIf="property?.errors?.email && (property.dirty || property.touched)"
   >
-    {{ resource.email }}
+    {{ resource?.email }}
   </mdb-error>
   <mdb-error
     *ngIf="property?.errors?.required && (property.dirty || property.touched)"
   >
-    {{ resource.required }} {{ config.title }}
+    {{ resource?.required }} {{ config.title }}
   </mdb-error>
   <mdb-error
     *ngIf="property?.errors?.pattern && (property.dirty || property.touched)"
   >
-    {{ config.title }} {{ resource.pattern }}
+    {{ config.title }} {{ resource?.pattern }}
   </mdb-error>
   <mdb-error
     *ngIf="property?.errors?.mustMatch && (property.dirty || property.touched)"
   >
-    {{ config.title }} {{ resource.mustMatch }}
+    {{ config.title }} {{ resource?.mustMatch }}
   </mdb-error>
 
   <input

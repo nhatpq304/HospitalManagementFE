@@ -16,7 +16,11 @@
       </div>
 
       <div class="form-group col-2">
-        <text-input [parentForm]="getFormGroup(i)" [config]="formConfig.amount">
+        <text-input
+          [parentForm]="getFormGroup(i)"
+          [config]="formConfig.amount"
+          [resource]="resource"
+        >
         </text-input>
       </div>
       <div class="form-group col-6">

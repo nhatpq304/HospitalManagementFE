@@ -7,6 +7,7 @@ import {
   OnChanges,
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
+import * as _ from "lodash";
 
 @Component({
   selector: "medicine-search",
