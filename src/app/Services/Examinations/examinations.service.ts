@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { RestfulService } from "../restful.service";
 import apis from "../api.routes";
 import { ExaminationsMappingService } from "./examinations.mapping.service";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -11,6 +12,18 @@ export class ExaminationsService {
     public restfulService: RestfulService,
     public examinationsMappingService: ExaminationsMappingService
   ) {}
+
+  getAllExaminations() {
+    const api = apis.getAllExamination;
+
+    return this.restfulService.get(api).pipe(
+      map((response) => {
+        return response.data.map((data) => {
+          return this.examinationsMappingService.mappingSearchExamination(data);
+        });
+      })
+    );
+  }
 
   saveExamination(data: any) {
     const api = apis.saveExamination;

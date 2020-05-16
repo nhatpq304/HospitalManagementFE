@@ -1,4 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { ExaminationsService } from "src/app/Services/Examinations/examinations.service";
+import * as moment from "moment";
 
 @Component({
   selector: "examinations-dashboard",
@@ -8,7 +11,11 @@ import { Component, OnInit } from "@angular/core";
 export class ExaminationDashboardComponent implements OnInit {
   resource;
   datatableConfig;
-  constructor() {}
+  datatableData;
+  constructor(
+    public router: Router,
+    public examinationService: ExaminationsService
+  ) {}
 
   ngOnInit(): void {
     this.initResource();
@@ -27,24 +34,55 @@ export class ExaminationDashboardComponent implements OnInit {
     };
   }
 
-  private loadData() {}
+  private loadData() {
+    this.examinationService.getAllExaminations().subscribe(
+      (response) => {
+        this.datatableData = response;
+      },
+      (error) => {},
+      () => {}
+    );
+  }
 
   private initGridConfig() {
     this.datatableConfig = {
       id: "resultDatatableId",
-      columns: [
-        // { data: "email", title: "Email", type: "string" },
-        // { data: "name", title: "Tên", type: "string" },
-        // { data: "address", title: "Địa chỉ", type: "string" },
-        // { data: "birthday", title: "Ngày sinh", type: "Date" },
-        // { data: "id_card_number", title: "CMND", type: "string" },
-        // { data: "medical_card_number", title: "Số BHYT", type: "string" },
-        // {
-        //   data: "id",
-        //   title: "Sửa",
-        // },
+      order: [[4, "desc"]],
+      columnDefs: [
+        {
+          targets: 4,
+          render: function (data) {
+            return moment(data).format("DD/MM/YYYY");
+          },
+        },
       ],
-      drawCallback: () => {},
+      columns: [
+        { data: "patientName", title: "Tên bệnh nhân", type: "string" },
+        { data: "idCardNumber", title: "CMND", type: "string" },
+        { data: "medicalCardNumber", title: "Số BHYT", type: "string" },
+        { data: "doctorName", title: "Tên bác sĩ", type: "string" },
+        { data: "createdDate", title: "Ngày tạo", type: "date" },
+
+        {
+          data: "id",
+          title: "Sửa",
+          render: (id) => {
+            return `
+            <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-link" id="editButton" data-id= "${id}">
+            <i class="fas fa-edit text-primary"></i>
+            </button>
+            </div>`;
+          },
+        },
+      ],
+      drawCallback: () => {
+        $(".btn-link").on("click", ($event) => {
+          let id = $event.currentTarget.dataset.id;
+          let routerLink = this.resource.editRouterLink.replace("{id}", id);
+          this.router.navigateByUrl(routerLink);
+        });
+      },
     };
   }
 }

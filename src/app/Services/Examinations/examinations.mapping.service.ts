@@ -4,12 +4,24 @@ import { LocalStorageService } from "src/app/Services/LocalStorage/local-storage
 import * as _ from "lodash";
 import * as moment from "moment";
 import ExaminationModel from "src/app/Models/examination.model";
+import ExaminationSearchModel from "src/app/Models/examinationSearch.model";
 
 @Injectable({
   providedIn: "root",
 })
 export class ExaminationsMappingService {
   constructor(public localStorageService: LocalStorageService) {}
+
+  mappingSearchExamination(data): ExaminationSearchModel {
+    let exam = new ExaminationSearchModel();
+    exam.id = data.id;
+    exam.doctorName = data.doctor.name;
+    exam.patientName = data.patient.name;
+    exam.idCardNumber = data.patient.id_card_number;
+    exam.medicalCardNumber = data.patient.medical_card_number;
+    exam.createdDate = data.created_date;
+    return exam;
+  }
 
   mappingExamination(data): ExaminationModel {
     let exam = new ExaminationModel();

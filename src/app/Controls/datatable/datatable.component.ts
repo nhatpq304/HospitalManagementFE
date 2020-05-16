@@ -18,7 +18,7 @@ export class DatatableComponent implements OnInit, OnChanges {
 
   ngOnChanges(changeObj) {
     if (changeObj?.config?.currentValue) {
-      this.setGridRenderFunction();
+      // this.setGridRenderFunction();
     }
 
     if (changeObj?.data?.currentValue) {
@@ -33,6 +33,8 @@ export class DatatableComponent implements OnInit, OnChanges {
 
   private initGrid() {
     this.table = ($(`#${this.config.id}`) as any).DataTable({
+      columnDefs: this.config.columnDefs,
+      order: this.config.order,
       data: this.data,
       columns: this.config.columns,
       select: this.config.select ?? true,

@@ -16,8 +16,9 @@ export class MedicinePickerComponent implements OnInit, OnChanges {
   constructor() {}
   ngOnChanges(changeObj) {
     if (changeObj?.value?.currentValue) {
+      this.array.clear();
       if (this.value.length) {
-        for (let i = 0; i < this.value.length - 1; i++) {
+        for (let i = 0; i <= this.value.length - 1; i++) {
           this.array.push(this.newFormGroup());
         }
       } else {

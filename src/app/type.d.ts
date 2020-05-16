@@ -9,6 +9,8 @@ interface datatableConfig {
   info: boolean;
   lengthChange: boolean;
   initComplete: any;
+  order: DynamicObject;
+  columnDefs: any;
 }
 
 interface DynamicObject {

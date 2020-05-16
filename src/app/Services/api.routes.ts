@@ -14,6 +14,7 @@ const apis = {
   delete: `${baseURL}/api/auth/media/{id}`,
 
   //Examination
+  getAllExamination: `${baseURL}/api/auth/examResults`,
   saveExamination: `${baseURL}/api/auth/examResults`,
   updateExamination: `${baseURL}/api/auth/examResults/{id}`,
   getExamination: `${baseURL}/api/auth/examResults/{id}`,
