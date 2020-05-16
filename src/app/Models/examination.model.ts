@@ -1,4 +1,6 @@
 export default class ExaminationModel {
+  id: string = "";
+
   doctorName: string = "";
   doctorDept: string = "";
   bodyTemp: string = "";

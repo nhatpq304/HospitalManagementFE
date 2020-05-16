@@ -35,6 +35,7 @@
               <datepicker
                 [parentForm]="examForm"
                 [config]="formConfig.createDate"
+                (onDataChange)="onDataChange($event)"
               >
               </datepicker>
             </div>

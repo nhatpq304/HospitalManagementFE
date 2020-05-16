@@ -91,6 +91,8 @@ export class ExaminationEditComponent implements OnInit {
 
   initForm() {
     this.examForm = new FormGroup({
+      id: new FormControl({ value: "" }, []),
+
       name: new FormControl({ value: "", disabled: true }, []),
       gender: new FormControl({ value: "", disabled: true }, []),
       idCard: new FormControl({ value: "", disabled: true }, []),
@@ -148,12 +150,14 @@ export class ExaminationEditComponent implements OnInit {
 
   onSubmit() {
     if (this.examForm.valid) {
+      this.disableForm(true);
+
       let data = this.examForm.value;
 
       if (this.state === "ADD") {
         this.onSaveClick(data);
       } else {
-        // this.onUpdateClick(data);
+        this.onUpdateClick(data);
       }
     } else {
       this.toastService.show({
@@ -163,6 +167,10 @@ export class ExaminationEditComponent implements OnInit {
 
       formUtil.validateAllFormFields(this.examForm);
     }
+  }
+
+  onDataChange(param) {
+    this.examForm.controls[param.controlName].setValue(param.data);
   }
 
   async onSaveClick(data: any) {
@@ -185,8 +193,23 @@ export class ExaminationEditComponent implements OnInit {
     }
   }
 
-  private saveExam(data) {
-    return this.examinationsService.saveExamination(data);
+  async onUpdateClick(data: any) {
+    try {
+      await this.updateExam(data);
+
+      this.toastService.show({
+        text: this.resource.saveSuccess,
+        type: "success",
+      });
+      this.location.back();
+    } catch {
+      this.toastService.show({
+        text: this.resource.saveFail,
+        type: "error",
+      });
+
+      this.disableForm(false);
+    }
   }
 
   get avatar(): MediaModel {
@@ -195,6 +218,14 @@ export class ExaminationEditComponent implements OnInit {
 
   get patientName(): MediaModel {
     return this.examForm.get("search").value;
+  }
+
+  private saveExam(data: any) {
+    return this.examinationsService.saveExamination(data);
+  }
+
+  private updateExam(data: any) {
+    return this.examinationsService.updateExamination(data);
   }
 
   private disableForm(value: boolean) {

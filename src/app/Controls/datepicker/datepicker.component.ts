@@ -5,6 +5,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  AfterViewInit,
 } from "@angular/core";
 import * as moment from "moment";
 import { FormGroup } from "@angular/forms";
@@ -13,20 +14,21 @@ import { FormGroup } from "@angular/forms";
   templateUrl: "./datepicker.component.html",
   styleUrls: ["./datepicker.component.scss"],
 })
-export class DatepickerComponent implements OnInit, OnChanges {
+export class DatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() config: any;
   @Input() parentForm: FormGroup;
   @Output() onDataChange = new EventEmitter();
 
   constructor() {}
   ngOnChanges() {}
-  ngOnInit(): void {
+  ngOnInit(): void {}
+  ngAfterViewInit() {
     this.initDatePick();
   }
 
   private initDatePick() {
     let self = this;
-    ($('input[name="date"]') as any).daterangepicker(
+    ($("input[id=" + this.config.controlName + "]") as any).daterangepicker(
       {
         singleDatePicker: true,
         showDropdowns: this.config?.showDropdowns || true,

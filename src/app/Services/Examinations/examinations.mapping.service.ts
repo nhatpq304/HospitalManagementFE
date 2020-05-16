@@ -13,9 +13,13 @@ export class ExaminationsMappingService {
 
   mappingExamination(data): ExaminationModel {
     let exam = new ExaminationModel();
+
+    exam.id = data.id;
     exam.doctorName = data.doctor.name;
     exam.doctorDept = data.department;
-    exam.createDate = data.created_date;
+    exam.createDate =
+      (data.created_date && moment(data.created_date).format("DD/MM/YYYY")) ||
+      "";
     exam.patientId = data.patient_id;
     exam.bodyTemp = data.body_temp;
     exam.height = data.body_height;
@@ -31,6 +35,7 @@ export class ExaminationsMappingService {
     exam.gender = data.patient.gender;
     exam.address = data.patient.address;
     exam.phone = data.patient.phone;
+
     exam.birthday =
       (data.patient.birthday &&
         moment(data.patient.birthday).format("DD/MM/YYYY")) ||
@@ -51,7 +56,6 @@ export class ExaminationsMappingService {
   mappingSaveExamination(data): ExaminationSaveModel {
     let exam = new ExaminationSaveModel();
     let user = this.localStorageService.getItem("user");
-
     exam.doctor_id = user && JSON.parse(user).id;
     exam.patient_id = data.patientId;
     exam.created_date =

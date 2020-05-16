@@ -21,6 +21,15 @@ export class ExaminationsService {
     return this.restfulService.post(api, dataBody).toPromise();
   }
 
+  updateExamination(data: any) {
+    const api = apis.updateExamination.replace("{id}", data.id);
+    const dataBody = this.examinationsMappingService.mappingSaveExamination(
+      data
+    );
+
+    return this.restfulService.put(api, dataBody).toPromise();
+  }
+
   getExamination(id: string) {
     const api = apis.getExamination.replace("{id}", id);
 
