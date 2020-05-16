@@ -176,8 +176,7 @@ export class ExaminationEditComponent implements OnInit {
   async onSaveClick(data: any) {
     try {
       await this.saveExam(data);
-
-      this.toastService.show({
+      await this.toastService.show({
         text: this.resource.saveSuccess,
         type: "success",
       });
@@ -196,11 +195,11 @@ export class ExaminationEditComponent implements OnInit {
   async onUpdateClick(data: any) {
     try {
       await this.updateExam(data);
-
-      this.toastService.show({
+      await this.toastService.show({
         text: this.resource.saveSuccess,
         type: "success",
       });
+
       this.location.back();
     } catch {
       this.toastService.show({

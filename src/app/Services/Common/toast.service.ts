@@ -51,5 +51,9 @@ export default class ToastService {
 
       callback: config.callback || function () {},
     }).showToast();
+
+    return new Promise(function (resolve) {
+      setTimeout(resolve.bind(null), 2000);
+    });
   }
 }

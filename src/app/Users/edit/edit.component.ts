@@ -123,8 +123,7 @@ export class UserEditComponent implements OnInit {
   async onUpdateClick(data: any) {
     try {
       await this.updateUser(data, this.originalData);
-
-      this.toastService.show({
+      await this.toastService.show({
         text: this.resource.saveSuccess,
         type: "success",
       });
@@ -143,8 +142,7 @@ export class UserEditComponent implements OnInit {
   async onSaveClick(data: any) {
     try {
       await this.saveUser(data);
-
-      this.toastService.show({
+      await this.toastService.show({
         text: this.resource.saveSuccess,
         type: "success",
       });
