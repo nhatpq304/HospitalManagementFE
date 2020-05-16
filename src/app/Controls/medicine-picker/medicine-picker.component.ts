@@ -6,35 +6,40 @@ import formConfig from "./formConfig";
   templateUrl: "./medicine-picker.component.html",
   styleUrls: ["./medicine-picker.component.scss"],
 })
-export class MedicinePickerComponent implements OnInit {
+export class MedicinePickerComponent implements OnInit, OnChanges {
+  @Input() value;
   @Input() config;
   @Input() resource;
   @Input() parentForm: FormGroup;
   formConfig = formConfig;
-  value;
-  constructor() {}
 
-  ngOnInit(): void {
-    this.array.push(
-      new FormGroup({
-        medicineId: new FormControl("", []),
-        medicineName: new FormControl("", []),
-        amount: new FormControl("", []),
-        remark: new FormControl("", []),
-      })
-    );
+  constructor() {}
+  ngOnChanges(changeObj) {
+    if (changeObj?.value?.currentValue) {
+      if (this.value.length) {
+        for (let i = 0; i < this.value.length - 1; i++) {
+          this.array.push(this.newFormGroup());
+        }
+      } else {
+        this.array.push(this.newFormGroup());
+      }
+      this.array.patchValue(this.value);
+    }
   }
 
+  ngOnInit(): void {}
+
   onAddClick() {
-    this.array.enabled &&
-      this.array.push(
-        new FormGroup({
-          medicineId: new FormControl("", []),
-          medicineName: new FormControl("", []),
-          amount: new FormControl("", []),
-          remark: new FormControl("", []),
-        })
-      );
+    this.array.enabled && this.array.push(this.newFormGroup());
+  }
+
+  newFormGroup(medicineObj?): FormGroup {
+    return new FormGroup({
+      medicineId: new FormControl(medicineObj?.medicineId || "", []),
+      medicineName: new FormControl(medicineObj?.medicineName || "", []),
+      amount: new FormControl(medicineObj?.amount || "", []),
+      remark: new FormControl(medicineObj?.remark || "", []),
+    });
   }
 
   onSearchApply($event) {

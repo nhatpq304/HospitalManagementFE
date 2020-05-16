@@ -1,4 +1,11 @@
-import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  EventEmitter,
+  Output,
+  Input,
+  OnChanges,
+} from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import UsersService from "src/app/Services/Users/users.service";
 
@@ -7,7 +14,8 @@ import UsersService from "src/app/Services/Users/users.service";
   templateUrl: "./search-bar.component.html",
   styleUrls: ["./search-bar.component.scss"],
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, OnChanges {
+  @Input() value;
   @Input() config;
   @Input() parentForm: FormGroup;
   @Output() onSearchApply = new EventEmitter();
@@ -19,7 +27,11 @@ export class SearchBarComponent implements OnInit {
   searchText: string;
   isReadOnly: boolean;
   constructor(public usersService: UsersService) {}
-
+  ngOnChanges(changeObj) {
+    if (changeObj?.value?.currentValue) {
+      this.setText(this.value);
+    }
+  }
   ngOnInit(): void {
     this.loadData();
     this.initGridConfig();
@@ -57,20 +69,18 @@ export class SearchBarComponent implements OnInit {
 
   onSearchClick() {
     this.toggleModal();
-    this.searchText = this.parentForm.get(this.config.controlName).value;
+    this.searchText = this.parentForm.get(this.config.controlName).value || "";
   }
 
   onSearchComplete() {
     let table = ($(`#${this.datatableConfig.id}`) as any).DataTable();
     let data = table.rows({ selected: true }).data()[0];
-    this.setText(data.name);
 
     this.onSearchApply.emit({ data: data });
     this.toggleModal();
   }
 
   onSearchRemove() {
-    this.setText(null);
     this.onRemove.emit();
   }
 

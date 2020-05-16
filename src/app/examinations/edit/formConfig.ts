@@ -47,10 +47,9 @@ const formConfig = {
   doctorName: {
     controlName: "doctorName",
     title: "Bác sĩ",
-    required: true,
   },
-  department: {
-    controlName: "department",
+  doctorDept: {
+    controlName: "doctorDept",
     title: "Khoa",
     options: [
       {
@@ -70,8 +69,8 @@ const formConfig = {
   },
 
   //basic health data
-  bloodPresure: {
-    controlName: "bloodPresure",
+  bloodPressure: {
+    controlName: "bloodPressure",
     title: "Huyết áp",
     suffix: "mmHg",
   },

@@ -16,6 +16,7 @@ import UserModel from "src/app/Models/user.model";
 import { AuthService } from "src/app/Services/Auth/auth.service";
 import * as moment from "moment";
 import formUtil from "src/util/form.util";
+import { ExaminationsService } from "src/app/Services/Examinations/examinations.service";
 
 @Component({
   selector: "examination-edit",
@@ -29,26 +30,39 @@ export class ExaminationEditComponent implements OnInit {
   examForm: FormGroup;
   formConfig = formConfig;
   patientData: UserModel;
+  medicines = [];
+
   constructor(
     public router: Router,
     public route: ActivatedRoute,
     public location: Location,
     public toastService: ToastService,
-    public authService: AuthService
+    public authService: AuthService,
+    public examinationsService: ExaminationsService
   ) {}
 
   ngOnInit(): void {
     this.getAccountData();
     this.initForm();
     this.initResource();
+    this.loadData();
   }
 
   getAccountData() {
     if (this.state === "ADD") {
       this.authService.getLoggedUser().then((data) => {
         this.examForm.get("doctorName").setValue(data.user.name);
-        this.examForm.get("department").setValue(data.user.department);
+        this.examForm.get("doctorDept").setValue(data.user.department);
         this.examForm.get("createDate").setValue(moment().format("DD/MM/YYYY"));
+      });
+    }
+  }
+
+  loadData() {
+    if (this.state === "EDIT") {
+      this.examinationsService.getExamination(this.examId).then((data) => {
+        this.medicines = data.medicine;
+        this.examForm.patchValue(data);
       });
     }
   }
@@ -90,12 +104,15 @@ export class ExaminationEditComponent implements OnInit {
         Validators.required,
         this.hasDataValidator.bind(this),
       ]),
+      patientId: new FormControl("", []),
 
-      doctorName: new FormControl("", [Validators.required]),
-      department: new FormControl("", [Validators.required]),
+      doctorName: new FormControl({ value: "", disabled: true }, [
+        Validators.required,
+      ]),
+      doctorDept: new FormControl("", [Validators.required]),
       createDate: new FormControl("", [Validators.required]),
 
-      bloodPresure: new FormControl("", []),
+      bloodPressure: new FormControl("", []),
       height: new FormControl("", []),
       weight: new FormControl("", []),
       bodyTemp: new FormControl("", []),
@@ -105,30 +122,36 @@ export class ExaminationEditComponent implements OnInit {
     });
   }
 
-  onSubmitClick() {}
-
   onSearchApply($event) {
-    this.patientData = $event.data;
+    this.examForm.get("patientId").setValue($event.data.id);
+    this.examForm.get("search").setValue($event.data.name);
     this.examForm.get("search").updateValueAndValidity();
-    _.forOwn(this.patientData, (value, key) => {
+    _.forOwn($event.data, (value, key) => {
       this.examForm.get(key)?.setValue(value);
     });
   }
 
   onSearchRemove() {
-    this.patientData = null;
-    this.examForm.reset();
+    this.examForm.get("search").reset();
+    this.examForm.get("patientId").reset();
+    this.examForm.get("name").reset();
+    this.examForm.get("gender").reset();
+    this.examForm.get("idCard").reset();
+    this.examForm.get("address").reset();
+    this.examForm.get("medicalCard").reset();
+    this.examForm.get("phone").reset();
+    this.examForm.get("birthday").reset();
+    this.examForm.get("email").reset();
+    this.examForm.get("avatar").reset();
     this.examForm.get("gender").setValue("");
   }
 
   onSubmit() {
     if (this.examForm.valid) {
-      this.disableForm(true);
       let data = this.examForm.value;
-      console.log(data);
 
       if (this.state === "ADD") {
-        // this.onSaveClick(data);
+        this.onSaveClick(data);
       } else {
         // this.onUpdateClick(data);
       }
@@ -142,14 +165,36 @@ export class ExaminationEditComponent implements OnInit {
     }
   }
 
+  async onSaveClick(data: any) {
+    try {
+      await this.saveExam(data);
+
+      this.toastService.show({
+        text: this.resource.saveSuccess,
+        type: "success",
+      });
+
+      this.location.back();
+    } catch {
+      this.toastService.show({
+        text: this.resource.saveFail,
+        type: "error",
+      });
+
+      this.disableForm(false);
+    }
+  }
+
+  private saveExam(data) {
+    return this.examinationsService.saveExamination(data);
+  }
+
   get avatar(): MediaModel {
     return this.examForm.get("avatar").value;
   }
 
-  get value() {
-    let a = this.examForm.get("medicine").value;
-    console.log(a);
-    return a;
+  get patientName(): MediaModel {
+    return this.examForm.get("search").value;
   }
 
   private disableForm(value: boolean) {
@@ -163,6 +208,8 @@ export class ExaminationEditComponent implements OnInit {
   private hasDataValidator(
     control: AbstractControl
   ): { [key: string]: any } | null {
-    return !!this.patientData ? null : { requireData: { valid: true } };
+    return !!this.examForm?.get("patientId").value
+      ? null
+      : { requireData: { valid: true } };
   }
 }

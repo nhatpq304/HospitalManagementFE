@@ -25,7 +25,6 @@ export class MedicineSearchComponent implements OnInit, OnChanges {
   datatableConfig;
   datatableData;
   searchText: string;
-  isReadOnly: boolean;
   modalId: string;
   constructor() {}
 
@@ -85,8 +84,11 @@ export class MedicineSearchComponent implements OnInit, OnChanges {
   }
 
   setText(data) {
-    this.isReadOnly = !this.isReadOnly;
     this.parentForm.get(this.config.controlName).setValue(data);
+  }
+
+  get searchValue() {
+    return this.parentForm.get(this.config.controlName).value;
   }
 
   private toggleModal() {

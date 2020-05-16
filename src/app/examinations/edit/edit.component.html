@@ -28,7 +28,7 @@
             <div class="form-group col-4">
               <select-box
                 [parentForm]="examForm"
-                [config]="formConfig.department"
+                [config]="formConfig.doctorDept"
               ></select-box>
             </div>
             <div class="form-group col-4">
@@ -44,6 +44,7 @@
           <div class="form-row">
             <div class="form-group col-4">
               <search-bar
+                [value]="patientName"
                 [parentForm]="examForm"
                 [config]="formConfig.search"
                 (onSearchApply)="onSearchApply($event)"
@@ -130,7 +131,7 @@
             <div class="form-group col-3">
               <text-input
                 [parentForm]="examForm"
-                [config]="formConfig.bloodPresure"
+                [config]="formConfig.bloodPressure"
                 [resource]="resource.validationErrors"
               >
               </text-input>
@@ -161,6 +162,7 @@
           <div class="form-row">
             <div class="form-group col-12">
               <medicine-picker
+                [value]="medicines"
                 [parentForm]="examForm"
                 [config]="formConfig.medicine"
                 [resource]="resource.validationErrors"

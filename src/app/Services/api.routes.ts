@@ -12,5 +12,10 @@ const apis = {
   //Media
   saveMedia: `${baseURL}/api/auth/media`,
   delete: `${baseURL}/api/auth/media/{id}`,
+
+  //Examination
+  saveExamination: `${baseURL}/api/auth/examResults`,
+  updateExamination: `${baseURL}/api/auth/examResults/{id}`,
+  getExamination: `${baseURL}/api/auth/examResults/{id}`,
 };
 export default apis;
