@@ -28,8 +28,8 @@ export class SideBarComponent implements OnInit {
           routerLink: `${this.defaultLink}/examinations`,
         },
         {
-          title: "Kết quả khám",
-          iconCss: "fas fa-file-medical-alt",
+          title: "Lịch hẹn",
+          iconCss: "fas fa-calendar",
           routerLink: `${this.defaultLink}/calendar`,
         },
       ],

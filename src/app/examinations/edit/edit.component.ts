@@ -215,7 +215,7 @@ export class ExaminationEditComponent implements OnInit {
     return this.examForm.get("avatar").value;
   }
 
-  get patientName(): MediaModel {
+  get patientName(): string {
     return this.examForm.get("search").value;
   }
 

@@ -25,7 +25,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
   datatableConfig;
   datatableData;
   searchText: string;
-  isReadOnly: boolean;
   constructor(public usersService: UsersService) {}
   ngOnChanges(changeObj) {
     if (changeObj?.value?.currentValue) {
@@ -85,7 +84,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
   }
 
   setText(data) {
-    this.isReadOnly = !this.isReadOnly;
     this.parentForm.get(this.config.controlName).setValue(data);
   }
 

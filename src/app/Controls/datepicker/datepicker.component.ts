@@ -28,20 +28,42 @@ export class DatepickerComponent implements OnInit, OnChanges, AfterViewInit {
 
   private initDatePick() {
     let self = this;
-    ($("input[id=" + this.config.controlName + "]") as any).daterangepicker(
-      {
-        singleDatePicker: true,
-        showDropdowns: this.config?.showDropdowns || true,
-        minYear: this.config?.minYear || 1901,
-        maxYear: this.config?.maxYear || parseInt(moment().format("YYYY")),
-        locale: {
-          format: "DD/MM/YYYY",
-        },
+    let config = this.config.isTimePicker
+      ? this.getTimePickerConfig()
+      : this.getDatePickerConfig();
+
+    let calendar = ($(
+      "input[id=" + this.config.controlName + "]"
+    ) as any).daterangepicker(config, function (start, end, label) {
+      self.onDataChanged(start);
+    });
+
+    this.config.isTimePicker &&
+      calendar.on("show.daterangepicker", function (ev, picker) {
+        picker.container.find(".calendar-table").hide();
+      });
+  }
+  private getTimePickerConfig() {
+    return {
+      singleDatePicker: true,
+      timePicker: true,
+      timePicker24Hour: true,
+      timePickerIncrement: 1,
+      locale: {
+        format: "HH:mm",
       },
-      function (start, end, label) {
-        self.onDataChanged(start);
-      }
-    );
+    };
+  }
+  private getDatePickerConfig() {
+    return {
+      singleDatePicker: true,
+      showDropdowns: this.config?.showDropdowns || true,
+      minYear: this.config?.minYear || 1901,
+      maxYear: this.config?.maxYear || parseInt(moment().format("YYYY")),
+      locale: {
+        format: "DD/MM/YYYY",
+      },
+    };
   }
 
   private onDataChanged(param) {
