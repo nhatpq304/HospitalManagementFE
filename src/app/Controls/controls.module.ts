@@ -13,6 +13,9 @@ import { SearchBarComponent } from "./search-bar/search-bar.component";
 import { TextAreaComponent } from "./text-area/text-area.component";
 import { MedicinePickerComponent } from "./medicine-picker/medicine-picker.component";
 import { MedicineSearchComponent } from "./medicine-search/medicine-search.component";
+import { CalendarComponent } from "./calendar/calendar.component";
+import { FullCalendarModule } from "@fullcalendar/angular";
+
 @NgModule({
   declarations: [
     ButtonComponent,
@@ -25,6 +28,7 @@ import { MedicineSearchComponent } from "./medicine-search/medicine-search.compo
     TextAreaComponent,
     MedicinePickerComponent,
     MedicineSearchComponent,
+    CalendarComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +36,7 @@ import { MedicineSearchComponent } from "./medicine-search/medicine-search.compo
     MDBBootstrapModule,
     FormsModule,
     BrowserModule,
+    FullCalendarModule,
   ],
   exports: [
     ButtonComponent,
@@ -44,6 +49,7 @@ import { MedicineSearchComponent } from "./medicine-search/medicine-search.compo
     TextAreaComponent,
     MedicinePickerComponent,
     MedicineSearchComponent,
+    CalendarComponent,
   ],
 })
 export class ControlsModule {}

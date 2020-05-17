@@ -5,6 +5,7 @@ import { MainComponent } from "./main.component";
 import { UserEditComponent } from "../Users/edit/edit.component";
 import { ExaminationDashboardComponent } from "../examinations/dashboard/dashboard.component";
 import { ExaminationEditComponent } from "../examinations/edit/edit.component";
+import { CalendarDashboardComponent } from "../calendar/dashboard/dashboard.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
         path: "examinations/:id/edit",
         component: ExaminationEditComponent,
       },
+      { path: "calendar", component: CalendarDashboardComponent },
     ],
   },
 ];

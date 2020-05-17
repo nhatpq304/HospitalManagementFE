@@ -22,10 +22,10 @@ import * as $ from "jquery";
     MainModule,
     AppRoutingModule,
     MainRoutingModule,
-    LoginModule
+    LoginModule,
   ],
   providers: [AuthGuardService, LoginGuardService],
   bootstrap: [AppComponent],
-  schemas: [NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class AppModule {}

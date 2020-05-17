@@ -27,6 +27,11 @@ export class SideBarComponent implements OnInit {
           iconCss: "fas fa-file-medical-alt",
           routerLink: `${this.defaultLink}/examinations`,
         },
+        {
+          title: "Kết quả khám",
+          iconCss: "fas fa-file-medical-alt",
+          routerLink: `${this.defaultLink}/calendar`,
+        },
       ],
     };
   }

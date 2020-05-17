@@ -6,6 +6,7 @@ import { LayoutsModule } from "../Layouts/layouts.module";
 import { ControlsModule } from "../Controls/controls.module";
 import { RouterModule } from "@angular/router";
 import { ExaminationsModule } from "../examinations/examinations.module";
+import { CalendarModule } from "../calendar/calendar.module";
 
 @NgModule({
   declarations: [MainComponent],
@@ -16,6 +17,7 @@ import { ExaminationsModule } from "../examinations/examinations.module";
     ControlsModule,
     RouterModule,
     ExaminationsModule,
+    CalendarModule,
   ],
   exports: [MainComponent],
 })
