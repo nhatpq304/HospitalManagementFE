@@ -16,9 +16,9 @@ export default class UsersService {
     public mediaService: MediaService
   ) {}
 
-  getAllUsers() {
+  getAllUsers(isSearchDoctor?: boolean) {
     const api = apis.getAllUsers;
-
+    //todo
     return this.restfulService
       .get(api)
       .pipe(

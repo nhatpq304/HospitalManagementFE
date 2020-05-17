@@ -16,9 +16,10 @@ const formConfig = {
     controlName: "to",
     required: true,
   },
-  doctorName: {
-    title: "Bác sĩ",
-    controlName: "doctorName",
+  searchDoctor: {
+    required: true,
+    searchDoctor: true,
+    controlName: "searchDoctor",
   },
   searchPatient: {
     controlName: "searchPatient",

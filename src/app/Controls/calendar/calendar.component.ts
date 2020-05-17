@@ -36,6 +36,7 @@ export class CalendarComponent implements OnInit {
   initForm() {
     this.appointmentForm = new FormGroup({
       searchDoctor: new FormControl("", [Validators.required]),
+      doctorId: new FormControl("", []),
       date: new FormControl("", [Validators.required]),
       from: new FormControl("", [Validators.required]),
       to: new FormControl("", [Validators.required]),
@@ -72,6 +73,16 @@ export class CalendarComponent implements OnInit {
     this.appointmentForm.get("patientId").reset();
   }
 
+  onSearchDoctorApply($event) {
+    this.appointmentForm.get("doctorId").setValue($event.data.id);
+    this.appointmentForm.get("searchDoctor").setValue($event.data.name);
+    this.appointmentForm.get("searchDoctor").updateValueAndValidity();
+  }
+
+  onSearchDoctorRemove() {
+    this.appointmentForm.get("searchDoctor").reset();
+    this.appointmentForm.get("doctorId").reset();
+  }
   handleDateClick(arg) {
     // if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
     //   this.calendarEvents = this.calendarEvents.concat({
@@ -88,8 +99,13 @@ export class CalendarComponent implements OnInit {
   handleEventClick(arg) {
     console.log(arg);
   }
+
   get patientName(): string {
     return this.appointmentForm.get("searchPatient").value;
+  }
+
+  get doctorName(): string {
+    return this.appointmentForm.get("searchDoctor").value;
   }
 
   private toggleModal() {

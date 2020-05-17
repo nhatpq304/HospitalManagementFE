@@ -72,8 +72,22 @@
             </div>
           </div>
           <div class="form-row">
-            <search-bar [value]="patientName" [parentForm]="appointmentForm" [config]="formConfig.searchPatient"
-              (onSearchApply)="onSearchApply($event)" (onRemove)="onSearchRemove()"></search-bar>
+            <search-bar
+              [value]="patientName"
+              [parentForm]="appointmentForm"
+              [config]="formConfig.searchPatient"
+              (onSearchApply)="onSearchApply($event)"
+              (onRemove)="onSearchRemove()"
+            ></search-bar>
+          </div>
+          <div class="form-row">
+            <search-bar
+              [value]="doctorName"
+              [parentForm]="appointmentForm"
+              [config]="formConfig.searchDoctor"
+              (onSearchApply)="onSearchDoctorApply($event)"
+              (onRemove)="onSearchDoctorRemove()"
+            ></search-bar>
           </div>
         </form>
       </div>
