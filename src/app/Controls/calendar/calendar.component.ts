@@ -42,6 +42,7 @@ export class CalendarComponent implements OnInit {
       to: new FormControl("", [Validators.required]),
       searchPatient: new FormControl("", [this.hasDataValidator.bind(this)]),
       patientId: new FormControl("", []),
+      remark: new FormControl("", []),
     });
   }
 

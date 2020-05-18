@@ -25,6 +25,10 @@ const formConfig = {
     controlName: "searchPatient",
     required: true,
   },
+  remark: {
+    title: "Ghi chú",
+    controlName: "remark",
+  },
 };
 
 export default formConfig;
