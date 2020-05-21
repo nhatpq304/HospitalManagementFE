@@ -56,6 +56,12 @@ export class ExaminationsMappingService {
       (data.patient.birthday &&
         moment(data.patient.birthday).format("DD/MM/YYYY")) ||
       "";
+    let diff = moment(data.reexamination_date).diff(
+      moment().startOf("day"),
+      "days"
+    );
+
+    exam.dayCount = diff > 0 ? diff : 0;
 
     exam.medicine = _.map(data.medicines, (med) => {
       return {
