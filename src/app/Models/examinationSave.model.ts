@@ -9,4 +9,6 @@ export default class ExaminationSaveModel {
   doctor_id: string = "";
   patient_id: string = "";
   created_date: string = "";
+  reexamination_date: string = "";
+  reminders: string = "";
 }

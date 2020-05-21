@@ -92,11 +92,27 @@ const formConfig = {
   examResult: {
     controlName: "examResult",
     title: "Chẩn đoán",
-    rows: 5,
+    rows: 1,
   },
 
   medicine: {
     controlName: "medicine",
+  },
+
+  reminders: {
+    controlName: "reminders",
+    title: "Lời dặn",
+    rows: 3,
+  },
+
+  reexaminationDate: {
+    controlName: "reexaminationDate",
+    title: "Ngày tái khám",
+  },
+
+  dayCount: {
+    controlName: "dayCount",
+    title: "Số ngày",
   },
 };
 export default formConfig;

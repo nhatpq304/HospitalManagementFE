@@ -47,7 +47,11 @@ export class ExaminationsMappingService {
     exam.gender = data.patient.gender;
     exam.address = data.patient.address;
     exam.phone = data.patient.phone;
-
+    exam.reminders = data.reminders;
+    exam.reexaminationDate =
+      (data.reexamination_date &&
+        moment(data.reexamination_date).format("DD/MM/YYYY")) ||
+      "";
     exam.birthday =
       (data.patient.birthday &&
         moment(data.patient.birthday).format("DD/MM/YYYY")) ||
@@ -76,6 +80,13 @@ export class ExaminationsMappingService {
           "YYYY-MM-DD[T]HH:mm:ss.SSSZZ"
         )) ||
       null;
+    exam.reexamination_date =
+      (data.reexaminationDate &&
+        moment(data.reexaminationDate, "DD/MM/YYYY").format(
+          "YYYY-MM-DD[T]HH:mm:ss.SSSZZ"
+        )) ||
+      null;
+    exam.reminders = data.reminders;
     exam.department = data.doctorDept;
     exam.body_temp = data.bodyTemp;
     exam.blood_pressure = data.bloodPressure;

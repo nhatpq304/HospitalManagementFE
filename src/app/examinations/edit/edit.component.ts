@@ -111,14 +111,21 @@ export class ExaminationEditComponent implements OnInit {
       doctorName: new FormControl({ value: "", disabled: true }, [
         Validators.required,
       ]),
-      doctorDept: new FormControl("", [Validators.required]),
-      createDate: new FormControl("", [Validators.required]),
+      doctorDept: new FormControl({ value: "", disabled: true }, [
+        Validators.required,
+      ]),
+      createDate: new FormControl({ value: "", disabled: true }, [
+        Validators.required,
+      ]),
 
       bloodPressure: new FormControl("", []),
       height: new FormControl("", []),
       weight: new FormControl("", []),
       bodyTemp: new FormControl("", []),
       examResult: new FormControl("", []),
+      reminders: new FormControl("", []),
+      reexaminationDate: new FormControl("", []),
+      dayCount: new FormControl({ value: 0, disabled: true }, []),
 
       medicine: new FormArray([]),
     });
@@ -171,6 +178,12 @@ export class ExaminationEditComponent implements OnInit {
 
   onDataChange(param) {
     this.examForm.controls[param.controlName].setValue(param.data);
+    if (param.controlName === formConfig.reexaminationDate.controlName) {
+      let diffDays = param.data.diff(moment().startOf("day"), "days");
+      this.examForm.controls[formConfig.dayCount.controlName].setValue(
+        diffDays > 0 ? diffDays : 0
+      );
+    }
   }
 
   async onSaveClick(data: any) {
