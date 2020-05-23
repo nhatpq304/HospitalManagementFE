@@ -66,7 +66,7 @@ export class UserEditComponent implements OnInit {
           Validators.required,
           Validators.pattern("^[0-9]*$"),
         ]),
-        medicalCard: new FormControl("", [Validators.pattern("^[0-9]*$")]),
+        medicalCard: new FormControl("", []),
         address: new FormControl("", []),
         phone: new FormControl("", [Validators.pattern("^[0-9]*$")]),
         birthday: new FormControl("", []),

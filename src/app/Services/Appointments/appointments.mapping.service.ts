@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
-import Appointment from "src/app/Models/appointment.model";
+import AppointmentModel from "src/app/Models/appointment.model";
+import AppointmentSaveModel from "src/app/Models/appointmentSave.model";
+
 import * as moment from "moment";
 
 @Injectable({
@@ -10,7 +12,7 @@ export class AppointmentsMappingService {
 
   mapAppointment(data): any[] {
     return data.map((appointment) => {
-      let appointmentObj = new Appointment();
+      let appointmentObj = new AppointmentModel();
 
       appointmentObj = {
         date:
@@ -42,5 +44,25 @@ export class AppointmentsMappingService {
 
       return app;
     });
+  }
+
+  mapSaveAppointment(data): AppointmentSaveModel {
+    let appointment = new AppointmentSaveModel();
+
+    appointment = {
+      start_time:
+        moment(data.date, "DD/MM/YYYY").format("YYYY-MM-DD") +
+        "T" +
+        data.from.format("HH:mm:ssZ"),
+      end_time:
+        moment(data.date, "DD/MM/YYYY").format("YYYY-MM-DD") +
+        "T" +
+        data.to.format("HH:mm:ssZ"),
+      remark: data.remark,
+      patient_id: data.patientId,
+      doctor_id: data.doctorId,
+    };
+
+    return appointment;
   }
 }

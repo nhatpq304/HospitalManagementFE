@@ -13,11 +13,35 @@ export class AppointmentsService {
     public appointmentMappingService: AppointmentsMappingService
   ) {}
 
-  getAppoinments(): Promise<Appointment[]> {
+  getAppointments(): Promise<any[]> {
     const api = apis.getAppointments;
 
     return this.restfulService
       .get(api)
+      .toPromise()
+      .then((result) => {
+        return this.appointmentMappingService.mapAppointment(result.data);
+      });
+  }
+
+  saveAppointment(data) {
+    const api = apis.saveAppointment;
+    const dataBody = this.appointmentMappingService.mapSaveAppointment(data);
+
+    return this.restfulService
+      .post(api, dataBody)
+      .toPromise()
+      .then((result) => {
+        return this.appointmentMappingService.mapAppointment([result.data]);
+      });
+  }
+
+  updateAppointment(data) {
+    const api = apis.updateExamination.replace("{id}", data.id);
+    const dataBody = data;
+
+    return this.restfulService
+      .put(api, dataBody)
       .toPromise()
       .then((result) => {
         return this.appointmentMappingService.mapAppointment(result.data);

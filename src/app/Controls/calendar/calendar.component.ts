@@ -13,7 +13,10 @@ import {
 } from "@angular/forms";
 import formConfig from "./formConfig";
 import { AppointmentsService } from "src/app/Services/Appointments/appointments.service";
-import * as moment from 'moment';
+import * as moment from "moment";
+import formUtil from "src/util/form.util";
+import ToastService from "src/app/Services/Common/toast.service";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "calendar",
@@ -29,7 +32,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   resource;
   formConfig = formConfig;
 
-  constructor(public appointmentService: AppointmentsService) {}
+  constructor(
+    public appointmentService: AppointmentsService,
+    public toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.initResource();
@@ -63,17 +69,42 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       modalTitle: "Tạo cuộc hẹn",
       modalCancel: "Hủy",
       modalApply: "Xác nhận",
-      validationErrors: {},
+      saveError: "Thông tin nhập không chính xác",
+      saveSuccess: "Lưu cuộc hẹn thành công",
+      saveFail: "Lưu cuộc hẹn không thành công",
+      validationErrors: {
+        email: "Email không đúng định dạng",
+        required: "Không thể để trống ",
+        pattern: "không đúng định dạng",
+        mustMatch: "không chính xác",
+      },
     };
   }
 
   async loadData() {
-    let data = await this.appointmentService.getAppoinments();
-    this.calendarEvents = [...data];
+    let data = await this.appointmentService.getAppointments();
+    this.addCalendarEvents(data);
+  }
+
+  addCalendarEvents(data: any[]) {
+    this.calendarEvents = [...this.calendarEvents, ...data];
   }
 
   onSubmit() {
-    console.log(this.appointmentForm.value);
+    if (this.appointmentForm.valid) {
+      this.disableForm(true);
+
+      let data = this.appointmentForm.value;
+      if (!this.appointmentForm.get("id").value) {
+        this.onSaveClick(data);
+      } else {
+        this.onUpdateClick(data);
+      }
+    } else {
+      this.toastService.show({ text: this.resource.saveError, type: "error" });
+
+      formUtil.validateAllFormFields(this.appointmentForm);
+    }
   }
 
   onDataChange(param) {
@@ -116,12 +147,65 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.toggleModal();
   }
 
+  async onSaveClick(data: any) {
+    try {
+      let appointments = await this.saveAppointment(data);
+      await this.toastService.show({
+        text: this.resource.saveSuccess,
+        type: "success",
+      });
+      this.addCalendarEvents(appointments);
+      this.toggleModal();
+    } catch {
+      this.toastService.show({
+        text: this.resource.saveFail,
+        type: "error",
+      });
+
+      this.disableForm(false);
+    }
+  }
+
+  async onUpdateClick(data: any) {
+    try {
+      await this.updateAppointment(data);
+      await this.toastService.show({
+        text: this.resource.saveSuccess,
+        type: "success",
+      });
+      this.toggleModal();
+    } catch {
+      this.toastService.show({
+        text: this.resource.saveFail,
+        type: "error",
+      });
+
+      this.disableForm(false);
+    }
+  }
+
   get patientName(): string {
     return this.appointmentForm.get("searchPatient").value;
   }
 
   get doctorName(): string {
     return this.appointmentForm.get("searchDoctor").value;
+  }
+
+  private saveAppointment(data: any) {
+    return this.appointmentService.saveAppointment(data);
+  }
+
+  private updateAppointment(data: any) {
+    return this.appointmentService.updateAppointment(data);
+  }
+
+  private disableForm(value: boolean) {
+    if (value) {
+      return this.appointmentForm.disable();
+    }
+
+    return this.appointmentForm.enable();
   }
 
   private toggleModal() {

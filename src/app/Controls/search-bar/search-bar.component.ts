@@ -112,6 +112,10 @@ export class SearchBarComponent implements OnInit, OnChanges {
     this.toggleModal();
   }
 
+  onSearchCancel() {
+    this.toggleModal();
+  }
+
   onSearchRemove() {
     this.onRemove.emit();
   }

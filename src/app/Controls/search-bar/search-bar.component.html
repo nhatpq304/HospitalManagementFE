@@ -43,8 +43,8 @@
         <button
           type="button"
           class="close"
-          data-dismiss="modal"
           aria-label="Close"
+          (click)="onSearchCancel()"
         >
           <span aria-hidden="true">&times;</span>
         </button>
@@ -57,7 +57,11 @@
         ></datatable>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="onSearchCancel()"
+        >
           {{ resource?.modalCancel }}
         </button>
         <button
