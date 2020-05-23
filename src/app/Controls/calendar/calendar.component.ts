@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { FullCalendarComponent } from "@fullcalendar/angular";
 import { EventInput } from "@fullcalendar/core";
@@ -12,12 +12,14 @@ import {
   AbstractControl,
 } from "@angular/forms";
 import formConfig from "./formConfig";
+import { AppointmentsService } from "src/app/Services/Appointments/appointments.service";
+
 @Component({
   selector: "calendar",
   templateUrl: "./calendar.component.html",
   styleUrls: ["./calendar.component.scss"],
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
   @ViewChild("calendar") calendarComponent: FullCalendarComponent;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarEvents: EventInput[] = [{ title: "Event Now", start: new Date() }];
@@ -26,11 +28,15 @@ export class CalendarComponent implements OnInit {
   resource;
   formConfig = formConfig;
 
-  constructor() {}
+  constructor(public appointmentService: AppointmentsService) {}
 
   ngOnInit(): void {
     this.initResource();
     this.initForm();
+  }
+
+  ngAfterViewInit() {
+    this.loadData();
   }
 
   initForm() {
@@ -53,6 +59,11 @@ export class CalendarComponent implements OnInit {
       modalApply: "Xác nhận",
       validationErrors: {},
     };
+  }
+
+  async loadData() {
+    let data = await this.appointmentService.getAppoinments();
+    this.calendarEvents = [...data];
   }
 
   onSubmit() {
@@ -98,7 +109,7 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEventClick(arg) {
-    console.log(arg);
+    console.log(arg.event);
   }
 
   get patientName(): string {
