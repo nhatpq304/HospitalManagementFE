@@ -13,6 +13,7 @@ import {
 } from "@angular/forms";
 import formConfig from "./formConfig";
 import { AppointmentsService } from "src/app/Services/Appointments/appointments.service";
+import * as moment from 'moment';
 
 @Component({
   selector: "calendar",
@@ -22,7 +23,7 @@ import { AppointmentsService } from "src/app/Services/Appointments/appointments.
 export class CalendarComponent implements OnInit, AfterViewInit {
   @ViewChild("calendar") calendarComponent: FullCalendarComponent;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
-  calendarEvents: EventInput[] = [{ title: "Event Now", start: new Date() }];
+  calendarEvents: EventInput[] = [];
   locales: [viLocale];
   appointmentForm: FormGroup;
   resource;
@@ -42,12 +43,16 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   initForm() {
     this.appointmentForm = new FormGroup({
       id: new FormControl("", []),
-      searchDoctor: new FormControl("", [Validators.required]),
+      searchDoctor: new FormControl("", [
+        this.hasDoctorDataValidator.bind(this),
+      ]),
       doctorId: new FormControl("", []),
       date: new FormControl("", [Validators.required]),
       from: new FormControl("", [Validators.required]),
       to: new FormControl("", [Validators.required]),
-      searchPatient: new FormControl("", [this.hasDataValidator.bind(this)]),
+      searchPatient: new FormControl("", [
+        this.hasPatientDataValidator.bind(this),
+      ]),
       patientId: new FormControl("", []),
       remark: new FormControl("", []),
     });
@@ -99,6 +104,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   handleDateClick(arg) {
     this.appointmentForm.reset();
+    this.appointmentForm
+      .get("date")
+      .setValue(moment(arg.date).format("DD/MM/YYYY"));
     this.toggleModal();
   }
 
@@ -120,10 +128,18 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     ($(`#calendarModalId`) as any).modal("toggle");
   }
 
-  private hasDataValidator(
+  private hasPatientDataValidator(
     control: AbstractControl
   ): { [key: string]: any } | null {
     return !!this.appointmentForm?.get("patientId").value
+      ? null
+      : { requireData: { valid: true } };
+  }
+
+  private hasDoctorDataValidator(
+    control: AbstractControl
+  ): { [key: string]: any } | null {
+    return !!this.appointmentForm?.get("doctorId").value
       ? null
       : { requireData: { valid: true } };
   }
