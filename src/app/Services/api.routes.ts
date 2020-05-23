@@ -21,5 +21,8 @@ const apis = {
 
   //Appointments
   getAppointments: `${baseURL}/api/auth/appointments`,
+  saveAppointments: `${baseURL}/api/auth/appointments`,
+  getAppointment: `${baseURL}/api/auth/appointments/{id}`,
+  updateAppointment: `${baseURL}/api/auth/appointments/{id}`,
 };
 export default apis;

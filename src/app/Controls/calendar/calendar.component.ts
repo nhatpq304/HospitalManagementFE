@@ -41,6 +41,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   initForm() {
     this.appointmentForm = new FormGroup({
+      id: new FormControl("", []),
       searchDoctor: new FormControl("", [Validators.required]),
       doctorId: new FormControl("", []),
       date: new FormControl("", [Validators.required]),
@@ -95,21 +96,16 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.appointmentForm.get("searchDoctor").reset();
     this.appointmentForm.get("doctorId").reset();
   }
+
   handleDateClick(arg) {
-    // if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
-    //   this.calendarEvents = this.calendarEvents.concat({
-    //     // add new event data. must create new array
-    //     id: "Nhat",
-    //     title: "New Event",
-    //     start: arg.date,
-    //     allDay: arg.allDay,
-    //   });
-    // }
+    this.appointmentForm.reset();
     this.toggleModal();
   }
 
   handleEventClick(arg) {
-    console.log(arg.event);
+    this.appointmentForm.reset();
+    this.appointmentForm.patchValue(arg.event.extendedProps);
+    this.toggleModal();
   }
 
   get patientName(): string {
