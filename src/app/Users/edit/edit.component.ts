@@ -104,6 +104,9 @@ export class UserEditComponent implements OnInit {
   }
 
   onSubmitClick() {
+    if (this.userForm.disabled) {
+      return;
+    }
     if (this.userForm.valid) {
       this.disableForm(true);
 

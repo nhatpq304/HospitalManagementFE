@@ -37,14 +37,14 @@ export class AppointmentsService {
   }
 
   updateAppointment(data) {
-    const api = apis.updateExamination.replace("{id}", data.id);
-    const dataBody = data;
+    const api = apis.updateAppointment.replace("{id}", data.id);
+    const dataBody = this.appointmentMappingService.mapSaveAppointment(data);
 
     return this.restfulService
       .put(api, dataBody)
       .toPromise()
       .then((result) => {
-        return this.appointmentMappingService.mapAppointment(result.data);
+        return this.appointmentMappingService.mapAppointment([result.data]);
       });
   }
 }

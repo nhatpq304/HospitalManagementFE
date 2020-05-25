@@ -156,6 +156,9 @@ export class ExaminationEditComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.examForm.disabled) {
+      return;
+    }
     if (this.examForm.valid) {
       this.disableForm(true);
 

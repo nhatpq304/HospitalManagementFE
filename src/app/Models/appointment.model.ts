@@ -1,4 +1,5 @@
 export default class AppointmentModel {
+  id: string;
   doctorId: string;
   searchDoctor: string;
   patientId: string;

@@ -16,8 +16,7 @@ import { AppointmentsService } from "src/app/Services/Appointments/appointments.
 import * as moment from "moment";
 import formUtil from "src/util/form.util";
 import ToastService from "src/app/Services/Common/toast.service";
-import { Location } from "@angular/common";
-
+import * as _ from "lodash";
 @Component({
   selector: "calendar",
   templateUrl: "./calendar.component.html",
@@ -87,15 +86,21 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   addCalendarEvents(data: any[]) {
+    _.remove(this.calendarEvents, { id: data[0]?.id });
+
     this.calendarEvents = [...this.calendarEvents, ...data];
   }
 
   onSubmit() {
+    if (this.appointmentForm.disabled) {
+      return;
+    }
+
     if (this.appointmentForm.valid) {
       this.disableForm(true);
 
       let data = this.appointmentForm.value;
-      if (!this.appointmentForm.get("id").value) {
+      if (!this.appointmentForm.get("id")?.value) {
         this.onSaveClick(data);
       } else {
         this.onUpdateClick(data);
@@ -161,27 +166,26 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         text: this.resource.saveFail,
         type: "error",
       });
-
-      this.disableForm(false);
     }
+    this.disableForm(false);
   }
 
   async onUpdateClick(data: any) {
     try {
-      await this.updateAppointment(data);
+      let appointments = await this.updateAppointment(data);
       await this.toastService.show({
         text: this.resource.saveSuccess,
         type: "success",
       });
+      this.addCalendarEvents(appointments);
       this.toggleModal();
     } catch {
       this.toastService.show({
         text: this.resource.saveFail,
         type: "error",
       });
-
-      this.disableForm(false);
     }
+    this.disableForm(false);
   }
 
   get patientName(): string {

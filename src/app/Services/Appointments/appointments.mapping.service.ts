@@ -15,6 +15,7 @@ export class AppointmentsMappingService {
       let appointmentObj = new AppointmentModel();
 
       appointmentObj = {
+        id: appointment.id,
         date:
           (appointment.start_time &&
             moment(appointment.start_time).format("DD/MM/YYYY")) ||
@@ -53,11 +54,11 @@ export class AppointmentsMappingService {
       start_time:
         moment(data.date, "DD/MM/YYYY").format("YYYY-MM-DD") +
         "T" +
-        data.from.format("HH:mm:ssZ"),
+        moment(data.from, "HH:mm").format("HH:mm:ssZ"),
       end_time:
         moment(data.date, "DD/MM/YYYY").format("YYYY-MM-DD") +
         "T" +
-        data.to.format("HH:mm:ssZ"),
+        moment(data.to, "HH:mm").format("HH:mm:ssZ"),
       remark: data.remark,
       patient_id: data.patientId,
       doctor_id: data.doctorId,
