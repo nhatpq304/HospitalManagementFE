@@ -8,6 +8,7 @@ import {
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import * as _ from "lodash";
+import { MedicinesService } from "src/app/Services/Medicines/medicines.service";
 
 @Component({
   selector: "medicine-search",
@@ -27,7 +28,7 @@ export class MedicineSearchComponent implements OnInit, OnChanges {
   datatableData;
   searchText: string;
   modalId: string;
-  constructor() {}
+  constructor(public medicinesService: MedicinesService) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -57,7 +58,7 @@ export class MedicineSearchComponent implements OnInit, OnChanges {
       pageLength: 5,
       columns: [
         { data: "name", title: "Tên thuốc", type: "string" },
-        { data: "amount", title: "Số lượng", type: "string" },
+        { data: "originName", title: "Tên gốc", type: "string" },
         { data: "remark", title: "Ghi chú", type: "string" },
       ],
     };
@@ -96,22 +97,7 @@ export class MedicineSearchComponent implements OnInit, OnChanges {
     ($(`#${this.modalId}`) as any).modal("toggle");
   }
 
-  private loadData() {
-    setTimeout(() => {
-      this.datatableData = [
-        {
-          id: "1",
-          name: "Para",
-          amount: 4,
-          remark: "ghi chú",
-        },
-        {
-          id: "2",
-          name: "Paracetamol",
-          amount: 4,
-          remark: "ghi chú",
-        },
-      ];
-    });
+  private async loadData() {
+    this.datatableData = await this.medicinesService.getMedicines();
   }
 }
