@@ -33,7 +33,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit(): void {
-    this.loadData(this.config.searchDoctor);
     this.initResource();
     this.initGridConfig();
   }
@@ -61,42 +60,42 @@ export class SearchBarComponent implements OnInit, OnChanges {
   }
 
   private initGridConfig() {
-    // if (this.config.searchDoctor) {
-    //   this.datatableConfig = {
-    //     id: "doctorDatatableModalId",
-    //     pageLength: 5,
-    //     columns: [
-    //       { data: "name", title: "Tên", type: "string" },
-    //       { data: "phone", title: "SĐT", type: "string" },
-    //       { data: "address", title: "Địa chỉ", type: "string" },
-    //       { data: "department", title: "Khoa", type: "string" },
-    //       {
-    //         data: "gender",
-    //         title: "Giới tính",
-    //         type: "string",
-    //         render: (obj) => (obj === "1" ? "Nam" : "Nữ"),
-    //       },
-    //     ],
-    //   };
-    // } else {
-    this.datatableConfig = {
-      id: "userDatatableModalId" + this.modalId,
-      pageLength: 5,
-      columns: [
-        { data: "name", title: "Tên", type: "string" },
-        { data: "birthday", title: "Ngày sinh", type: "string" },
-        { data: "address", title: "Địa chỉ", type: "string" },
-        {
-          data: "gender",
-          title: "Giới tính",
-          type: "string",
-          render: (obj) => (obj === "1" ? "Nam" : "Nữ"),
-        },
-        { data: "idCard", title: "CMND", type: "string" },
-        { data: "medicalCard", title: "Số BHYT", type: "string" },
-      ],
-    };
-    // }
+    if (this.config.searchDoctor) {
+      this.datatableConfig = {
+        id: "doctorDatatableModalId",
+        pageLength: 5,
+        columns: [
+          { data: "name", title: "Tên", type: "string" },
+          { data: "phone", title: "SĐT", type: "string" },
+          { data: "address", title: "Địa chỉ", type: "string" },
+          { data: "department", title: "Khoa", type: "string" },
+          {
+            data: "gender",
+            title: "Giới tính",
+            type: "string",
+            render: (obj) => (obj === "1" ? "Nam" : "Nữ"),
+          },
+        ],
+      };
+    } else {
+      this.datatableConfig = {
+        id: "userDatatableModalId" + this.modalId,
+        pageLength: 5,
+        columns: [
+          { data: "name", title: "Tên", type: "string" },
+          { data: "birthday", title: "Ngày sinh", type: "string" },
+          { data: "address", title: "Địa chỉ", type: "string" },
+          {
+            data: "gender",
+            title: "Giới tính",
+            type: "string",
+            render: (obj) => (obj === "1" ? "Nam" : "Nữ"),
+          },
+          { data: "idCard", title: "CMND", type: "string" },
+          { data: "medicalCard", title: "Số BHYT", type: "string" },
+        ],
+      };
+    }
   }
 
   onSearchClick() {
@@ -125,11 +124,17 @@ export class SearchBarComponent implements OnInit, OnChanges {
   }
 
   private toggleModal() {
-    ($(`#${this.modalId}`) as any).modal("toggle");
+    let modal = $(`#${this.modalId}`) as any;
+    let isShow = modal.hasClass("show");
+
+    modal.modal("toggle");
+    if (!isShow) {
+      this.loadData(this.config.searchDoctor);
+    }
   }
 
-  private loadData(isSearchDoctor?: boolean) {
-    this.usersService.getAllUsers(isSearchDoctor).subscribe(
+  private loadData(isSearchDoctor?: boolean, filterAppointment?: any) {
+    this.usersService.getAllUsers(isSearchDoctor, filterAppointment).subscribe(
       (response) => {
         this.datatableData = response;
       },

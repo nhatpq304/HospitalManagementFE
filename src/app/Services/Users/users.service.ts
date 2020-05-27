@@ -16,8 +16,10 @@ export default class UsersService {
     public mediaService: MediaService
   ) {}
 
-  getAllUsers(isSearchDoctor?: boolean) {
-    const api = apis.getAllUsers;
+  getAllUsers(isSearchDoctor?: boolean, filter?) {
+    let api = apis.getAllUsers;
+
+    isSearchDoctor && (api += `?is_doctor=true`);
     //todo
     return this.restfulService
       .get(api)
