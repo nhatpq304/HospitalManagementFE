@@ -17,6 +17,7 @@ import * as moment from "moment";
 import formUtil from "src/util/form.util";
 import ToastService from "src/app/Services/Common/toast.service";
 import * as _ from "lodash";
+
 @Component({
   selector: "calendar",
   templateUrl: "./calendar.component.html",
@@ -68,8 +69,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       modalTitle: "Tạo cuộc hẹn",
       modalCancel: "Hủy",
       modalApply: "Xác nhận",
+      modalConfirmTitle: "Xác nhận",
+      modalNo: "Không",
+      modalYes: "Đồng ý",
       saveError: "Thông tin nhập không chính xác",
       saveSuccess: "Lưu cuộc hẹn thành công",
+      modalConfirmContent: "Bạn có đồng ý xóa đối tượng không?",
+      deleteSuccess: "Xóa cuộc hẹn thành công",
+      deleteFail: "Xóa cuộc hẹn không thành công",
       saveFail: "Lưu cuộc hẹn không thành công",
       validationErrors: {
         email: "Email không đúng định dạng",
@@ -85,8 +92,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.addCalendarEvents(data);
   }
 
-  addCalendarEvents(data: any[]) {
-    _.remove(this.calendarEvents, { id: data[0]?.id });
+  addCalendarEvents(data: any[], isDeleted?: boolean) {
+    this.calendarEvents = _.filter(this.calendarEvents, (event) => {
+      return !(event.id === data[0]?.id);
+    });
+
+    if (isDeleted) {
+      return;
+    }
 
     this.calendarEvents = [...this.calendarEvents, ...data];
   }
@@ -156,6 +169,34 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.toggleModal();
   }
 
+  onDelete() {
+    ($(`#confirmModalId`) as any).modal("toggle");
+  }
+
+  async onRemoveConfirm() {
+    ($(`#confirmModalId`) as any).modal("toggle");
+
+    this.disableForm(true);
+
+    let data = { id: this.id, active: false };
+    try {
+      let appointments = await this.deleteAppointment(data);
+      await this.toastService.show({
+        text: this.resource.deleteSuccess,
+        type: "success",
+      });
+      this.addCalendarEvents(appointments, true);
+      this.toggleModal();
+      this.disableForm(false);
+    } catch {
+      this.toastService.show({
+        text: this.resource.deleteFail,
+        type: "error",
+      });
+      this.disableForm(false);
+    }
+  }
+
   async onSaveClick(data: any) {
     try {
       let appointments = await this.saveAppointment(data);
@@ -200,6 +241,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     return this.appointmentForm.get("searchDoctor").value;
   }
 
+  get id(): string {
+    return this.appointmentForm.get("id").value;
+  }
+
   get filterRange(): any {
     let from = this.appointmentForm.get("from").value;
     let to = this.appointmentForm.get("to").value;
@@ -228,6 +273,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   private updateAppointment(data: any) {
     return this.appointmentService.updateAppointment(data);
+  }
+
+  private deleteAppointment(data: any) {
+    return this.appointmentService.deleteAppointment(data);
   }
 
   private disableForm(value: boolean) {

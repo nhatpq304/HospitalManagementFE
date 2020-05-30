@@ -104,14 +104,71 @@
           </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          {{ resource.modalCancel }}
+      <div class="modal-footer justify-content-between">
+        <div>
+          <button
+            *ngIf="id"
+            type="button"
+            class="btn btn-link"
+            (click)="onDelete()"
+          >
+            {{ resource.modalConfirmContent }}
+          </button>
+        </div>
+        <div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            {{ resource.modalCancel }}
+          </button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit()">
+            {{ resource.modalApply }}
+            <i
+              *ngIf="appointmentForm.disabled"
+              class="fa fa-spinner fa-spin"
+            ></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="confirmModalId"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalId">
+          {{ resource.modalConfirmTitle }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
         </button>
-        <button type="button" class="btn btn-primary" (click)="onSubmit()">
-          {{ resource.modalApply }}
-          <i *ngIf="appointmentForm.disabled" class="fa fa-spinner fa-spin"></i>
-        </button>
+      </div>
+      <div class="modal-body">
+        Xóa?
+      </div>
+      <div class="modal-footer justify-content-center">
+        <div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            {{ resource.modalNo }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="onRemoveConfirm()"
+          >
+            {{ resource.modalYes }}
+          </button>
+        </div>
       </div>
     </div>
   </div>

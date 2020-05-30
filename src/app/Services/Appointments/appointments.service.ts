@@ -47,4 +47,16 @@ export class AppointmentsService {
         return this.appointmentMappingService.mapAppointment([result.data]);
       });
   }
+
+  deleteAppointment(data) {
+    const api = apis.updateAppointment.replace("{id}", data.id);
+    const dataBody = { active: data.active };
+
+    return this.restfulService
+      .put(api, dataBody)
+      .toPromise()
+      .then((result) => {
+        return this.appointmentMappingService.mapAppointment([result.data]);
+      });;
+  }
 }
