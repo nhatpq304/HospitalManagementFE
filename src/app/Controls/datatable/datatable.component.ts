@@ -64,23 +64,9 @@ export class DatatableComponent implements OnInit, OnChanges {
         drawCallback: this.config.drawCallback,
       });
     } else {
+      this.table.clear();
+      this.table.rows.add(this.data);
       this.table.draw();
-    }
-  }
-
-  private setGridRenderFunction() {
-    if (this.config.columns) {
-      this.config.columns = _.map(this.config.columns, (column) => {
-        if (!column.render && column.type === "Date") {
-          column.render = (obj) => {
-            if (obj) {
-              return moment(obj).format("DD/MM/YYYY");
-            }
-            return "";
-          };
-        }
-        return column;
-      });
     }
   }
 }

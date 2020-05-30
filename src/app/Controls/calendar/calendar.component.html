@@ -86,6 +86,7 @@
               <div class="form-row">
                 <search-bar
                   [value]="doctorName"
+                  [filterRange]="filterRange"
                   [parentForm]="appointmentForm"
                   [config]="formConfig.searchDoctor"
                   (onSearchApply)="onSearchDoctorApply($event)"

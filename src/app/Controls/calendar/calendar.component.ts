@@ -143,6 +143,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.appointmentForm
       .get("date")
       .setValue(moment(arg.date).format("DD/MM/YYYY"));
+    this.appointmentForm.get("from").setValue(moment().format("HH:mm"));
+    this.appointmentForm
+      .get("to")
+      .setValue(moment().add(30, "minute").format("HH:mm"));
     this.toggleModal();
   }
 
@@ -194,6 +198,28 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   get doctorName(): string {
     return this.appointmentForm.get("searchDoctor").value;
+  }
+
+  get filterRange(): any {
+    let from = this.appointmentForm.get("from").value;
+    let to = this.appointmentForm.get("to").value;
+    let date = this.appointmentForm.get("date").value;
+    let id = this.appointmentForm.get("id").value;
+
+    let start_time =
+      moment(date, "DD/MM/YYYY").format("YYYY-MM-DD") +
+      "T" +
+      moment(from, "HH:mm").format("HH:mm:ssZ");
+    let end_time =
+      moment(date, "DD/MM/YYYY").format("YYYY-MM-DD") +
+      "T" +
+      moment(to, "HH:mm").format("HH:mm:ssZ");
+
+    return {
+      from: new Date(start_time).getTime(),
+      to: new Date(end_time).getTime(),
+      id: id || "",
+    };
   }
 
   private saveAppointment(data: any) {

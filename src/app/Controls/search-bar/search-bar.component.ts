@@ -17,6 +17,7 @@ import UsersService from "src/app/Services/Users/users.service";
 export class SearchBarComponent implements OnInit, OnChanges {
   @Input() value;
   @Input() config;
+  @Input() filterRange;
   @Input() parentForm: FormGroup;
   @Output() onSearchApply = new EventEmitter();
   @Output() onRemove = new EventEmitter();
@@ -105,9 +106,11 @@ export class SearchBarComponent implements OnInit, OnChanges {
 
   onSearchComplete() {
     let table = ($(`#${this.datatableConfig.id}`) as any).DataTable();
-    let data = table.rows({ selected: true }).data()[0];
-
-    this.onSearchApply.emit({ data: data });
+    let data = table.rows({ selected: true }).data();
+    if (!data?.length) {
+      return;
+    }
+    this.onSearchApply.emit({ data: data[0] });
     this.toggleModal();
   }
 
@@ -129,7 +132,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
 
     modal.modal("toggle");
     if (!isShow) {
-      this.loadData(this.config.searchDoctor);
+      this.loadData(this.config.searchDoctor, this.filterRange);
     }
   }
 

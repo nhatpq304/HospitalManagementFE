@@ -18,9 +18,13 @@ export default class UsersService {
 
   getAllUsers(isSearchDoctor?: boolean, filter?) {
     let api = apis.getAllUsers;
+    if (isSearchDoctor) {
+      api += `?is_doctor=true`;
+      if (filter) {
+        api += `&validFrom=${filter.from}&validTo=${filter.to}&exceptFor=${filter.id}`;
+      }
+    }
 
-    isSearchDoctor && (api += `?is_doctor=true`);
-    //todo
     return this.restfulService
       .get(api)
       .pipe(
