@@ -5,20 +5,11 @@
   [plugins]="calendarPlugins"
   [locales]="locales"
   locale="vi"
+  [customButtons]="customButtons"
   (dateClick)="handleDateClick($event)"
   (eventClick)="handleEventClick($event)"
-  [header]="{
-    left: 'prev,next today',
-    center: 'title',
-    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-  }"
-  [buttonText]="{
-    today: 'Hôm nay',
-    month: 'Tháng',
-    week: 'Tuần',
-    day: 'Ngày',
-    list: 'list'
-  }"
+  [header]="headers"
+  [buttonText]="buttonText"
   [events]="calendarEvents"
 ></full-calendar>
 
@@ -91,7 +82,7 @@
                   [filterRange]="filterRange"
                   [parentForm]="appointmentForm"
                   [config]="formConfig.searchDoctor"
-                  [isDisabled]= "isTimeConflict()"
+                  [isDisabled]="isTimeConflict()"
                   (onSearchApply)="onSearchDoctorApply($event)"
                   (onRemove)="onSearchDoctorRemove()"
                 ></search-bar>

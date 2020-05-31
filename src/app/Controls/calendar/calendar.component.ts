@@ -18,6 +18,7 @@ import * as moment from "moment";
 import formUtil from "src/util/form.util";
 import ToastService from "src/app/Services/Common/toast.service";
 import * as _ from "lodash";
+import { LocalStorageService } from "src/app/Services/LocalStorage/local-storage.service";
 
 @Component({
   selector: "calendar",
@@ -32,11 +33,43 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   appointmentForm: FormGroup;
   resource;
   formConfig = formConfig;
+  isMyAppointmentOnly = false;
+  originalEvents: EventInput[] = [];
+  userId: string;
+  customButtons = {
+    myCustomButton: {
+      text: "Tất cả",
+      click: () => {
+        this.isMyAppointmentOnly = !this.isMyAppointmentOnly;
+
+        let buttonConfig = _.assign({}, this.customButtons);
+        buttonConfig.myCustomButton.text = this.isMyAppointmentOnly
+          ? "Tất cả"
+          : "Của tôi";
+        this.customButtons = buttonConfig;
+        this.addCalendarEvents([]);
+      },
+    },
+  };
+  headers = {
+    left: "prev,next today, myCustomButton",
+    center: "title",
+    right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+  };
+  buttonText = {
+    today: "Hôm nay",
+    month: "Tháng",
+    week: "Tuần",
+    day: "Ngày",
+  };
 
   constructor(
+    public localStorage: LocalStorageService,
     public appointmentService: AppointmentsService,
     public toastService: ToastService
-  ) {}
+  ) {
+    this.userId = JSON.parse(this.localStorage.getItem("user"))?.id;
+  }
 
   ngOnInit(): void {
     this.initResource();
@@ -98,7 +131,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   addCalendarEvents(data: any[], isDeleted?: boolean) {
-    this.calendarEvents = _.filter(this.calendarEvents, (event) => {
+    this.originalEvents = _.filter(this.originalEvents, (event) => {
       return !(event.id === data[0]?.id);
     });
 
@@ -106,7 +139,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.calendarEvents = [...this.calendarEvents, ...data];
+    this.originalEvents = [...this.originalEvents, ...data];
+    this.calendarEvents = _.filter(this.originalEvents, (event) => {
+      if (!this.isMyAppointmentOnly) {
+        return true;
+      }
+      return event.extendedProps.doctorId === this.userId;
+    });
   }
 
   onSubmit() {
