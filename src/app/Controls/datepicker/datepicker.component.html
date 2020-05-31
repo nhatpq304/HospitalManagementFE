@@ -1,4 +1,9 @@
 <div [formGroup]="parentForm" class="md-form">
+  <mdb-error
+    *ngIf="property?.errors?.isAfter && (property.dirty || property.touched)"
+  >
+    {{ resource?.isAfter }}
+  </mdb-error>
   <input
     [id]="config.controlName"
     type="text"
