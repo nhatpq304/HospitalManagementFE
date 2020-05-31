@@ -14,6 +14,10 @@
       class="input-group-text red lighten-3"
       id="search"
       (click)="onSearchClick()"
+      *ngIf="!isDisabled"
+      ><i class="fas fa-search text-grey" aria-hidden="true"></i
+    ></span>
+    <span class="input-group-text grey lighten-3" id="search" *ngIf="isDisabled"
       ><i class="fas fa-search text-grey" aria-hidden="true"></i
     ></span>
   </div>
@@ -22,6 +26,10 @@
       class="input-group-text grey lighten-3"
       id="remove"
       (click)="onSearchRemove()"
+      *ngIf="!isDisabled"
+      ><i class="fas fa-remove text-grey" aria-hidden="true"></i
+    ></span>
+    <span class="input-group-text grey lighten-3" id="remove" *ngIf="isDisabled"
       ><i class="fas fa-remove text-grey" aria-hidden="true"></i
     ></span>
   </div>

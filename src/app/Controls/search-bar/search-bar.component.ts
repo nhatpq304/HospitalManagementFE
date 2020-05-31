@@ -16,6 +16,7 @@ import UsersService from "src/app/Services/Users/users.service";
 })
 export class SearchBarComponent implements OnInit, OnChanges {
   @Input() value;
+  @Input() isDisabled;
   @Input() config;
   @Input() filterRange;
   @Input() parentForm: FormGroup;

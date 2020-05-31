@@ -10,6 +10,7 @@ import {
   FormControl,
   Validators,
   AbstractControl,
+  ValidatorFn,
 } from "@angular/forms";
 import formConfig from "./formConfig";
 import { AppointmentsService } from "src/app/Services/Appointments/appointments.service";
@@ -47,21 +48,24 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   initForm() {
-    this.appointmentForm = new FormGroup({
-      id: new FormControl("", []),
-      searchDoctor: new FormControl("", [
-        this.hasDoctorDataValidator.bind(this),
-      ]),
-      doctorId: new FormControl("", []),
-      date: new FormControl("", [Validators.required]),
-      from: new FormControl("", [Validators.required]),
-      to: new FormControl("", [Validators.required]),
-      searchPatient: new FormControl("", [
-        this.hasPatientDataValidator.bind(this),
-      ]),
-      patientId: new FormControl("", []),
-      remark: new FormControl("", []),
-    });
+    this.appointmentForm = new FormGroup(
+      {
+        id: new FormControl("", []),
+        searchDoctor: new FormControl("", [
+          this.hasDoctorDataValidator.bind(this),
+        ]),
+        doctorId: new FormControl("", []),
+        date: new FormControl("", [Validators.required]),
+        from: new FormControl("", [Validators.required]),
+        to: new FormControl("", [Validators.required]),
+        searchPatient: new FormControl("", [
+          this.hasPatientDataValidator.bind(this),
+        ]),
+        patientId: new FormControl("", []),
+        remark: new FormControl("", []),
+      },
+      this.isFromDateBeforeToDate("from", "to")
+    );
   }
 
   initResource() {
@@ -79,8 +83,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       deleteFail: "Xóa cuộc hẹn không thành công",
       saveFail: "Lưu cuộc hẹn không thành công",
       validationErrors: {
+        isAfter: "Khoảng thời gian không đúng",
         email: "Email không đúng định dạng",
-        required: "Không thể để trống ",
+        required: "Không thể để trống",
         pattern: "không đúng định dạng",
         mustMatch: "không chính xác",
       },
@@ -233,6 +238,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.disableForm(false);
   }
 
+  isTimeConflict(): boolean {
+    return this.appointmentForm.get("from")?.errors?.isAfter;
+  }
+
   get patientName(): string {
     return this.appointmentForm.get("searchPatient").value;
   }
@@ -289,6 +298,35 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   private toggleModal() {
     ($(`#calendarModalId`) as any).modal("toggle");
+  }
+
+  private isFromDateBeforeToDate(from: string, to: string) {
+    return (formGroup: FormGroup): ValidatorFn => {
+      const fromControl = formGroup.controls[from];
+      const toControl = formGroup.controls[to];
+
+      if (fromControl.errors && !fromControl.errors.isAfter) {
+        return;
+      }
+
+      if (!fromControl.value || !toControl.value) {
+        return;
+      }
+
+      if (
+        moment(fromControl.value, "HH:ss").isSameOrAfter(
+          moment(toControl.value, "HH:ss")
+        )
+      ) {
+        toControl.markAsTouched();
+        fromControl.markAsTouched();
+        toControl.setErrors({ isAfter: true });
+        fromControl.setErrors({ isAfter: true });
+      } else {
+        toControl.setErrors(null);
+        fromControl.setErrors(null);
+      }
+    };
   }
 
   private hasPatientDataValidator(

@@ -17,6 +17,7 @@ import { FormGroup } from "@angular/forms";
 export class DatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() config: any;
   @Input() parentForm: FormGroup;
+  @Input() resource;
   @Output() onDataChange = new EventEmitter();
 
   constructor() {}
@@ -24,6 +25,10 @@ export class DatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnInit(): void {}
   ngAfterViewInit() {
     this.initDatePick();
+  }
+
+  get property() {
+    return this.parentForm.get(this.config.controlName);
   }
 
   private initDatePick() {

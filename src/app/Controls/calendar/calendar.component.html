@@ -59,6 +59,7 @@
               <datepicker
                 [parentForm]="appointmentForm"
                 [config]="formConfig.from"
+                [resource]="resource.validationErrors"
                 (onDataChange)="onDataChange($event)"
               >
               </datepicker>
@@ -67,6 +68,7 @@
               <datepicker
                 [parentForm]="appointmentForm"
                 [config]="formConfig.to"
+                [resource]="resource.validationErrors"
                 (onDataChange)="onDataChange($event)"
               >
               </datepicker>
@@ -89,6 +91,7 @@
                   [filterRange]="filterRange"
                   [parentForm]="appointmentForm"
                   [config]="formConfig.searchDoctor"
+                  [isDisabled]= "isTimeConflict()"
                   (onSearchApply)="onSearchDoctorApply($event)"
                   (onRemove)="onSearchDoctorRemove()"
                 ></search-bar>
