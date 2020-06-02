@@ -7,7 +7,7 @@ import MedicineModel from "src/app/Models/medicine.model";
 export class MedicinesMappingService {
   constructor() {}
 
-  mapMedicines(data): MedicineModel {
+  mapMedicines(data): MedicineModel[] {
     return data.map((med) => {
       let medicine = new MedicineModel();
 

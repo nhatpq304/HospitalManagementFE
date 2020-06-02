@@ -7,6 +7,7 @@ import { ControlsModule } from "../Controls/controls.module";
 import { RouterModule } from "@angular/router";
 import { ExaminationsModule } from "../examinations/examinations.module";
 import { CalendarModule } from "../calendar/calendar.module";
+import { MedicinesModule } from "../medicines/medicines.module";
 
 @NgModule({
   declarations: [MainComponent],
@@ -18,6 +19,7 @@ import { CalendarModule } from "../calendar/calendar.module";
     RouterModule,
     ExaminationsModule,
     CalendarModule,
+    MedicinesModule,
   ],
   exports: [MainComponent],
 })
