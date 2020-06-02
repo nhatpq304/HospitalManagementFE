@@ -28,9 +28,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
   datatableData;
   searchText: string;
   modalId: string;
-  constructor(public usersService: UsersService) {
-    
-  }
+  constructor(public usersService: UsersService) {}
   ngOnChanges(changeObj) {
     if (changeObj?.value?.currentValue) {
       this.setText(this.value);
@@ -65,6 +63,11 @@ export class SearchBarComponent implements OnInit, OnChanges {
 
   private initGridConfig() {
     if (this.config.searchDoctor) {
+      let codeTables = [
+        { title: "Khoa tim", value: "CARDIOLOGY" },
+        { title: "Khoa da liễu", value: "DERMATOLOGY" },
+        { title: "Khoa dinh dưỡng", value: "DIETETICS" },
+      ];
       this.datatableConfig = {
         id: "doctorDatatableModalId",
         pageLength: 5,
@@ -72,7 +75,13 @@ export class SearchBarComponent implements OnInit, OnChanges {
           { data: "name", title: "Tên", type: "string" },
           { data: "phone", title: "SĐT", type: "string" },
           { data: "address", title: "Địa chỉ", type: "string" },
-          { data: "department", title: "Khoa", type: "string" },
+          {
+            data: "department",
+            title: "Khoa",
+            type: "string",
+            render: (obj) =>
+              codeTables.find((codeTable) => codeTable.value === obj)?.title,
+          },
           {
             data: "gender",
             title: "Giới tính",
