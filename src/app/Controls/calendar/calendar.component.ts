@@ -43,10 +43,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         this.isMyAppointmentOnly = !this.isMyAppointmentOnly;
 
         let buttonConfig = _.assign({}, this.customButtons);
-        buttonConfig.myCustomButton.text = this.isMyAppointmentOnly
+        buttonConfig.myCustomButton.text = !this.isMyAppointmentOnly
           ? "Tất cả"
           : "Của tôi";
         this.customButtons = buttonConfig;
+
         this.addCalendarEvents([]);
       },
     },
@@ -109,6 +110,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       modalConfirmTitle: "Xác nhận",
       modalNo: "Không",
       modalYes: "Đồng ý",
+      removeButton: "Xóa",
       saveError: "Thông tin nhập không chính xác",
       saveSuccess: "Lưu cuộc hẹn thành công",
       modalConfirmContent: "Bạn có đồng ý xóa đối tượng không?",
@@ -135,12 +137,15 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       return !(event.id === data[0]?.id);
     });
 
-    if (isDeleted) {
-      return;
+    if (!isDeleted) {
+      this.originalEvents = [...this.originalEvents, ...data];
     }
 
-    this.originalEvents = [...this.originalEvents, ...data];
-    this.calendarEvents = _.filter(this.originalEvents, (event) => {
+    this.calendarEvents = this.filterMyAppointment(this.originalEvents);
+  }
+
+  filterMyAppointment(data) {
+    return _.filter(data, (event) => {
       if (!this.isMyAppointmentOnly) {
         return true;
       }
@@ -152,7 +157,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     if (this.appointmentForm.disabled) {
       return;
     }
-
+    formUtil.validateAllFormFields(this.appointmentForm);
     if (this.appointmentForm.valid) {
       this.disableForm(true);
 
@@ -164,8 +169,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       }
     } else {
       this.toastService.show({ text: this.resource.saveError, type: "error" });
-
-      formUtil.validateAllFormFields(this.appointmentForm);
     }
   }
 

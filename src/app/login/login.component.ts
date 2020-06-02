@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
 
   async onLoginClick() {
     this.isLoggingFailed = false;
+    formUtil.validateAllFormFields(this.loginForm);
+
     if (this.loginForm.valid) {
       let authData = new AuthModel();
       authData.email = this.loginForm.controls.email.value;
@@ -48,8 +50,6 @@ export class LoginComponent implements OnInit {
         this.isLoggingFailed = true;
       }
       this.isLogPromisePending = false;
-    } else {
-      formUtil.validateAllFormFields(this.loginForm);
     }
   }
 

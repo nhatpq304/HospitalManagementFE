@@ -17,17 +17,11 @@ export class DatatableComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changeObj) {
-    if (changeObj?.config?.currentValue) {
-      // this.setGridRenderFunction();
+    if (this.table) {
+      this.table.clear().search("").draw();
     }
-
     if (changeObj?.data?.currentValue) {
       this.initGrid();
-    }
-
-    if (changeObj?.searchText) {
-      this.table?.search(this.searchText);
-      this.table?.draw(false);
     }
   }
 

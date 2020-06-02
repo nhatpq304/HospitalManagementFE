@@ -159,6 +159,8 @@ export class ExaminationEditComponent implements OnInit {
     if (this.examForm.disabled) {
       return;
     }
+    formUtil.validateAllFormFields(this.examForm);
+
     if (this.examForm.valid) {
       this.disableForm(true);
 
@@ -174,8 +176,6 @@ export class ExaminationEditComponent implements OnInit {
         text: this.resource.saveError,
         type: "error",
       });
-
-      formUtil.validateAllFormFields(this.examForm);
     }
   }
 

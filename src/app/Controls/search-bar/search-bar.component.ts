@@ -28,7 +28,9 @@ export class SearchBarComponent implements OnInit, OnChanges {
   datatableData;
   searchText: string;
   modalId: string;
-  constructor(public usersService: UsersService) {}
+  constructor(public usersService: UsersService) {
+    
+  }
   ngOnChanges(changeObj) {
     if (changeObj?.value?.currentValue) {
       this.setText(this.value);

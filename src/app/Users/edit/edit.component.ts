@@ -107,6 +107,8 @@ export class UserEditComponent implements OnInit {
     if (this.userForm.disabled) {
       return;
     }
+    formUtil.validateAllFormFields(this.userForm);
+
     if (this.userForm.valid) {
       this.disableForm(true);
 
@@ -118,8 +120,6 @@ export class UserEditComponent implements OnInit {
       }
     } else {
       this.toastService.show({ text: this.resource.saveError, type: "error" });
-
-      formUtil.validateAllFormFields(this.userForm);
     }
   }
 

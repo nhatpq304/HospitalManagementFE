@@ -106,7 +106,7 @@
             class="btn btn-link"
             (click)="onDelete()"
           >
-            {{ resource.modalConfirmContent }}
+            {{ resource.removeButton }}
           </button>
         </div>
         <div>
@@ -148,7 +148,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Xóa?
+        {{ resource.modalConfirmContent }}
       </div>
       <div class="modal-footer justify-content-center">
         <div>
