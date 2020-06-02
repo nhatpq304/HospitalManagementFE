@@ -32,6 +32,11 @@ export class SideBarComponent implements OnInit {
           iconCss: "fas fa-calendar",
           routerLink: `${this.defaultLink}/calendar`,
         },
+        {
+          title: "Thuốc",
+          iconCss: "fas fa-pills",
+          routerLink: `${this.defaultLink}/medicines`,
+        },
       ],
     };
   }

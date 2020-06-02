@@ -6,6 +6,7 @@ import { UserEditComponent } from "../Users/edit/edit.component";
 import { ExaminationDashboardComponent } from "../examinations/dashboard/dashboard.component";
 import { ExaminationEditComponent } from "../examinations/edit/edit.component";
 import { CalendarDashboardComponent } from "../calendar/dashboard/dashboard.component";
+import { MedicinesDashboardComponent } from "../medicines/dashboard/dashboard.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
         component: ExaminationEditComponent,
       },
       { path: "calendar", component: CalendarDashboardComponent },
+      { path: "medicines", component: MedicinesDashboardComponent },
     ],
   },
 ];

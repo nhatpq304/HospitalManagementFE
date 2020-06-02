@@ -58,7 +58,7 @@ export class MedicineSearchComponent implements OnInit, OnChanges {
       pageLength: 5,
       columns: [
         { data: "name", title: "Tên thuốc", type: "string" },
-        { data: "originName", title: "Tên gốc", type: "string" },
+        { data: "unit", title: "Đơn vị", type: "string" },
         { data: "remark", title: "Ghi chú", type: "string" },
       ],
     };

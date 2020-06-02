@@ -13,8 +13,8 @@ export class MedicinesMappingService {
 
       medicine = {
         id: med.id,
-        name: med.brand_name,
-        originName: med.origin_name,
+        name: med.name,
+        unit: med.unit,
         remark: med.remark,
       };
       return medicine;

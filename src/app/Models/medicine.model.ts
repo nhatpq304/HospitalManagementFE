@@ -1,6 +1,6 @@
 export default class MedicineModel {
   id: string;
   name: string;
-  originName: string;
+  unit: string;
   remark: string;
 }
