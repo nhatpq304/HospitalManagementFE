@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { RestfulService } from "../restful.service";
 import apis from "../api.routes";
 import { MedicinesMappingService } from "./medicines.mapping.service";
-import MedicineModel from 'src/app/Models/medicine.model';
+import MedicineModel from "src/app/Models/medicine.model";
 
 @Injectable({
   providedIn: "root",
@@ -22,5 +22,10 @@ export class MedicinesService {
       .then((data) => {
         return this.medicinesMappingService.mapMedicines(data);
       });
+  }
+
+  saveMedicines(data) {
+    const api = apis.saveMedicines;
+    return this.restfulService.post(api, { file: data }).toPromise();
   }
 }

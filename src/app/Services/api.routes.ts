@@ -27,5 +27,6 @@ const apis = {
 
   //Medicines
   getMedicines: `${baseURL}/api/auth/medicines`,
+  saveMedicines: `${baseURL}/api/auth/medicines`,
 };
 export default apis;

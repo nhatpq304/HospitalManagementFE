@@ -15,6 +15,7 @@ import { MedicinePickerComponent } from "./medicine-picker/medicine-picker.compo
 import { MedicineSearchComponent } from "./medicine-search/medicine-search.component";
 import { CalendarComponent } from "./calendar/calendar.component";
 import { FullCalendarModule } from "@fullcalendar/angular";
+import { ExcelUploaderComponent } from "./excel-uploader/excel-uploader.component";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FullCalendarModule } from "@fullcalendar/angular";
     MedicinePickerComponent,
     MedicineSearchComponent,
     CalendarComponent,
+    ExcelUploaderComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +52,7 @@ import { FullCalendarModule } from "@fullcalendar/angular";
     MedicinePickerComponent,
     MedicineSearchComponent,
     CalendarComponent,
+    ExcelUploaderComponent,
   ],
 })
 export class ControlsModule {}
