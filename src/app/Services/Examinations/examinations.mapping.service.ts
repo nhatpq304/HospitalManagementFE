@@ -66,7 +66,7 @@ export class ExaminationsMappingService {
     exam.medicine = _.map(data.medicines, (med) => {
       return {
         medicineId: med.id,
-        medicineName: med.brand_name,
+        medicineName: med.name,
         amount: med.pivot.amount,
         remark: med.pivot.remark,
       };
