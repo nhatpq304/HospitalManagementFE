@@ -1,3 +1,5 @@
+import MediaModel from "./media.model";
+
 export default class ExaminationModel {
   id: string = "";
 
@@ -21,7 +23,7 @@ export default class ExaminationModel {
   phone: string = "";
   birthday: string = "";
   email: string = "";
-  avatar: string = "";
+  avatar: MediaModel = null;
   search: string = "";
 
   reminders: string = "";

@@ -5,6 +5,7 @@ import * as _ from "lodash";
 import * as moment from "moment";
 import ExaminationModel from "src/app/Models/examination.model";
 import ExaminationSearchModel from "src/app/Models/examinationSearch.model";
+import MediaModel from "src/app/Models/media.model";
 
 @Injectable({
   providedIn: "root",
@@ -39,6 +40,12 @@ export class ExaminationsMappingService {
     exam.bloodPressure = data.blood_pressure;
     exam.examResult = data.result;
 
+    let media = new MediaModel();
+    media.id = data.patient?.media[0]?.id;
+    media.type = data.patient?.media[0]?.media_type;
+    media.path = data.patient?.media[0]?.media_link;
+    
+    exam.avatar = media;
     exam.search = data.patient.name;
     exam.name = data.patient.name;
     exam.email = data.patient.email;
