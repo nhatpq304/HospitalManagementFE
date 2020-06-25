@@ -163,7 +163,6 @@ export class UserEditComponent implements OnInit {
 
   onDataChange(param) {
     this.userForm.controls[param.controlName].setValue(param.data);
-    this.handleEnablePassword(param);
   }
 
   onImageChanged($event) {
@@ -187,19 +186,16 @@ export class UserEditComponent implements OnInit {
     return this.userForm.enable();
   }
 
-  private handleEnablePassword(param) {
-    if (param.controlName === "department") {
-      let isDisabled = param.data === "undefined";
-      let password = this.userForm.get("password");
-      let confirmPassword = this.userForm.get("confirmPassword");
-
-      if (isDisabled) {
-        password.disable();
-        confirmPassword.disable();
-      } else {
-        password.enable();
-        confirmPassword.enable();
-      }
+  handleDepartmentChange(event) {
+    const department = this.userForm.get("department");
+    const password = this.userForm.get("password");
+    const confirmPassword = this.userForm.get("confirmPassword");
+    if (!department.value) {
+      password.disable();
+      confirmPassword.disable();
+    } else {
+      password.enable();
+      confirmPassword.enable();
     }
   }
 }

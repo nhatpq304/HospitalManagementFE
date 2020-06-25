@@ -31,7 +31,7 @@ const formConfig = {
     controlName: "department",
     title: "Khoa",
     options: [
-      { title: "Vui lòng chọn khoa" },
+      { title: "Vui lòng chọn khoa", value: "" },
       { title: "Khoa tim", value: "CARDIOLOGY" },
       { title: "Khoa da liễu", value: "DERMATOLOGY" },
       { title: "Khoa dinh dưỡng", value: "DIETETICS" },

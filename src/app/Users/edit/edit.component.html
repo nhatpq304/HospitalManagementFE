@@ -111,6 +111,7 @@
                     <select-box
                       [parentForm]="userForm"
                       [config]="formConfig.department"
+                      (change)="handleDepartmentChange($event)"
                     ></select-box>
                   </div>
                 </div>

@@ -2,21 +2,26 @@
   <!--Card content-->
   <div class="card-body d-sm-flex justify-content-between">
     <h5 class="mb-2 mb-sm-0 pt-1">
-      {{ resource.stateTitle }}
+      {{ resource?.stateTitle }}
     </h5>
 
     <button
       class="btn btn-primary btn-sm my-0 p"
+      [ngClass]="resource?.addButton.disabled ? 'btn-light' : ''"
       type="button"
-      [routerLink]="[resource.addButton.routerLink]"
+      (click)="onAddClick(resource?.addButton.disabled)"
     >
-      {{ resource.addButton.title }}
+      {{ resource?.addButton.title }}
       <i class="fas fa-plus"></i>
     </button>
   </div>
 </div>
 <div class="card">
   <div class="card-body">
-    <datatable [config]="datatableConfig" [data]="datatableData"></datatable>
+    <datatable
+      *ngIf="datatableConfig"
+      [config]="datatableConfig"
+      [data]="datatableData"
+    ></datatable>
   </div>
 </div>

@@ -39,6 +39,5 @@ export class MainComponent implements OnInit {
   async getLoggedUserPermissions() {
     const response = await this.authService.getLoggedUserPermissions();
     this.permissions = response.permissions;
-    console.log(this.permissions);
   }
 }
