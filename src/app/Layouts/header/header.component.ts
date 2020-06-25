@@ -8,6 +8,7 @@ import UserModel from "src/app/Models/user.model";
 })
 export class HeaderComponent implements OnInit {
   @Input() userData: UserModel;
+  @Input() permissions: DynamicObject[];
   constructor() {}
 
   ngOnInit(): void {}

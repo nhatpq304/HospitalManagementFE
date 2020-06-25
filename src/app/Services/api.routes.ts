@@ -2,6 +2,7 @@ const baseURL = "https://hospital-myn-be.herokuapp.com";
 const apis = {
   login: `${baseURL}/api/auth/login`,
   getLoggedAccount: `${baseURL}/api/auth/user`,
+  getLoggedUserPermissions: `${baseURL}/api/auth/user/permissions`,
 
   // Users
   getUser: `${baseURL}/api/auth/users/{id}`,

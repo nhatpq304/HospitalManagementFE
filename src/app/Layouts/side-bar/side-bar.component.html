@@ -7,14 +7,16 @@
       alt=""
     />
   </a>
-
-  <div class="list-group list-group-flush" *ngFor="let menu of resource.menu">
-    <a
-      [routerLink]="[menu.routerLink]"
-      class="list-group-item list-group-item-action waves-effect"
-    >
-      <i class="mr-3" [ngClass]="menu.iconCss"> </i>{{ menu.title }}</a
-    >
+  <div *ngIf="resource">
+    <div class="list-group list-group-flush" *ngFor="let menu of resource.menu">
+      <a
+        *ngIf="menu.active"
+        [routerLink]="[menu.routerLink]"
+        class="list-group-item list-group-item-action waves-effect"
+      >
+        <i class="mr-3" [ngClass]="menu.iconCss"> </i>{{ menu.title }}</a
+      >
+    </div>
   </div>
 </div>
 <!-- Sidebar -->

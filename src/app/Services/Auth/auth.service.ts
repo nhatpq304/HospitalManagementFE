@@ -24,4 +24,10 @@ export class AuthService {
 
     return this.restfulService.get(api).toPromise();
   }
+
+  getLoggedUserPermissions() {
+    const api = apis.getLoggedUserPermissions;
+
+    return this.restfulService.get(api).toPromise();
+  }
 }

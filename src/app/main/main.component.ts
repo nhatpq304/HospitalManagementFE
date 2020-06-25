@@ -10,6 +10,7 @@ import UserModel from "../Models/user.model";
 })
 export class MainComponent implements OnInit {
   user = new UserModel();
+  permissions;
 
   constructor(
     public authService: AuthService,
@@ -18,6 +19,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLoggedUser();
+    this.getLoggedUserPermissions();
   }
 
   getLoggedUser() {
@@ -32,5 +34,11 @@ export class MainComponent implements OnInit {
 
       this.localStorage.setItem("user", responseData);
     });
+  }
+
+  async getLoggedUserPermissions() {
+    const response = await this.authService.getLoggedUserPermissions();
+    this.permissions = response.permissions;
+    console.log(this.permissions);
   }
 }
