@@ -32,17 +32,18 @@ export class UserEditComponent extends BaseComponent {
     public toastService: ToastService,
     public usersService: UsersService
   ) {
-    super(
-      { router: router, authService: authService },
-      { name: "USER_DASHBOARD" }
-    );
+    super({ router: router, authService: authService }, { name: "USER" });
   }
 
   async afterOnInit(permissions) {
-    this.getPermissions();
-    this.initForm();
-    this.initResource();
-    this.getUserData();
+    try {
+      await this.getPermissions();
+      this.initForm();
+      this.initResource();
+      this.getUserData();
+    } catch {
+      this.router.navigate(["default"]);
+    }
   }
 
   getUserData() {
@@ -210,7 +211,8 @@ export class UserEditComponent extends BaseComponent {
 
   private getPermissions() {
     if (!this.checkPermissionRequired("WRITE")) {
-      return this.services.router.navigate(["default"]);
+      return Promise.reject();
     }
+    return Promise.resolve();
   }
 }

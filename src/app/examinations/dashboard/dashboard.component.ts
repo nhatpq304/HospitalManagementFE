@@ -2,25 +2,48 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { ExaminationsService } from "src/app/Services/Examinations/examinations.service";
 import * as moment from "moment";
+import { BaseComponent } from "src/app/commonClass/baseComponent";
+import { AuthService } from "src/app/Services/Auth/auth.service";
 
 @Component({
   selector: "examinations-dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"],
 })
-export class ExaminationDashboardComponent implements OnInit {
+export class ExaminationDashboardComponent extends BaseComponent {
   resource;
   datatableConfig;
   datatableData;
+  updateResultPermission;
+
   constructor(
     public router: Router,
+    public authService: AuthService,
     public examinationService: ExaminationsService
-  ) {}
+  ) {
+    super(
+      { router: router, authService: authService },
+      { name: "EXAMINATION" }
+    );
+  }
 
-  ngOnInit(): void {
+  async afterOnInit(permissions) {
+    this.getPermissions();
     this.initResource();
     this.initGridConfig();
     this.loadData();
+  }
+
+  onAddClick(isDisabled: boolean) {
+    if (isDisabled) {
+      return;
+    }
+
+    this.router.navigate([this.resource.addButton.routerLink]);
+  }
+
+  private getPermissions() {
+    this.updateResultPermission = this.checkPermissionRequired("WRITE");
   }
 
   private initResource() {
@@ -28,7 +51,8 @@ export class ExaminationDashboardComponent implements OnInit {
       stateTitle: "Quản lý kết quả khám",
       addButton: {
         title: "Thêm kết quả khám",
-        routerLink: "../examinations/add",
+        routerLink: "default/examinations/add",
+        disabled: !this.updateResultPermission,
       },
       editRouterLink: "default/examinations/{id}/edit",
     };
@@ -45,6 +69,7 @@ export class ExaminationDashboardComponent implements OnInit {
   }
 
   private initGridConfig() {
+    let self = this;
     this.datatableConfig = {
       id: "resultDatatableId",
       order: [[4, "desc"]],
@@ -70,7 +95,9 @@ export class ExaminationDashboardComponent implements OnInit {
             return `
             <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-link" id="editButton" data-id= "${id}">
-            <i class="fas fa-edit text-primary"></i>
+            <i class="fas fa-edit ${
+              !this.updateResultPermission ? "text-light" : "text-primary"
+            }"></i>
             </button>
             </div>`;
           },
@@ -78,6 +105,9 @@ export class ExaminationDashboardComponent implements OnInit {
       ],
       drawCallback: () => {
         $(".btn-link").on("click", ($event) => {
+          if (!self.updateResultPermission) {
+            return;
+          }
           let id = $event.currentTarget.dataset.id;
           let routerLink = this.resource.editRouterLink.replace("{id}", id);
           this.router.navigateByUrl(routerLink);

@@ -19,10 +19,7 @@ export class UserDashboardComponent extends BaseComponent {
     public router: Router,
     public authService: AuthService
   ) {
-    super(
-      { router: router, authService: authService },
-      { name: "USER_DASHBOARD" }
-    );
+    super({ router: router, authService: authService }, { name: "USER" });
   }
 
   async afterOnInit(permissions) {

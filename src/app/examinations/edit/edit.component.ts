@@ -17,13 +17,14 @@ import { AuthService } from "src/app/Services/Auth/auth.service";
 import * as moment from "moment";
 import formUtil from "src/util/form.util";
 import { ExaminationsService } from "src/app/Services/Examinations/examinations.service";
+import { BaseComponent } from "src/app/commonClass/baseComponent";
 
 @Component({
   selector: "examination-edit",
   templateUrl: "./edit.component.html",
   styleUrls: ["./edit.component.scss"],
 })
-export class ExaminationEditComponent implements OnInit {
+export class ExaminationEditComponent extends BaseComponent {
   resource;
   examId = this.route.snapshot.paramMap.get("id");
   state = this.examId ? "EDIT" : "ADD";
@@ -39,13 +40,23 @@ export class ExaminationEditComponent implements OnInit {
     public toastService: ToastService,
     public authService: AuthService,
     public examinationsService: ExaminationsService
-  ) {}
+  ) {
+    super(
+      { router: router, authService: authService },
+      { name: "EXAMINATION" }
+    );
+  }
 
-  ngOnInit(): void {
-    this.getAccountData();
-    this.initForm();
-    this.initResource();
-    this.loadData();
+  async afterOnInit(permissions) {
+    try {
+      await this.getPermissions();
+      this.getAccountData();
+      this.initForm();
+      this.initResource();
+      this.loadData();
+    } catch {
+      this.router.navigate(["default"]);
+    }
   }
 
   getAccountData() {
@@ -233,6 +244,13 @@ export class ExaminationEditComponent implements OnInit {
 
   get patientName(): string {
     return this.examForm.get("search").value;
+  }
+
+  private getPermissions() {
+    if (!this.checkPermissionRequired("WRITE")) {
+      return Promise.reject();
+    }
+    return Promise.resolve();
   }
 
   private saveExam(data: any) {

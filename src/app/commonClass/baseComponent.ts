@@ -42,9 +42,10 @@ export class BaseComponent implements OnInit {
   getModulePermission(name) {
     const module = [
       {
-        name: "USER_DASHBOARD",
+        name: "USER",
         permission: "USER",
       },
+      { name: "EXAMINATION", permission: "RESULT" },
     ];
 
     return _.find(module, { name: name })?.permission;
