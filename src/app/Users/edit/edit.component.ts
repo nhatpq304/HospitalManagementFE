@@ -7,13 +7,15 @@ import UsersService from "src/app/Services/Users/users.service";
 import { Location } from "@angular/common";
 import ToastService from "src/app/Services/Common/toast.service";
 import UserModel from "src/app/Models/user.model";
+import { BaseComponent } from "src/app/commonClass/baseComponent";
+import { AuthService } from "src/app/Services/Auth/auth.service";
 
 @Component({
   selector: "user-edit",
   templateUrl: "./edit.component.html",
   styleUrls: ["./edit.component.scss"],
 })
-export class UserEditComponent implements OnInit {
+export class UserEditComponent extends BaseComponent {
   resource;
   formConfig = formConfig;
   userForm: FormGroup;
@@ -26,11 +28,18 @@ export class UserEditComponent implements OnInit {
     public router: Router,
     public route: ActivatedRoute,
     public location: Location,
+    public authService: AuthService,
     public toastService: ToastService,
     public usersService: UsersService
-  ) {}
+  ) {
+    super(
+      { router: router, authService: authService },
+      { name: "USER_DASHBOARD" }
+    );
+  }
 
-  ngOnInit(): void {
+  async afterOnInit(permissions) {
+    this.getPermissions();
     this.initForm();
     this.initResource();
     this.getUserData();
@@ -165,6 +174,19 @@ export class UserEditComponent implements OnInit {
     this.userForm.controls[param.controlName].setValue(param.data);
   }
 
+  handleDepartmentChange(event) {
+    const department = this.userForm.get("department");
+    const password = this.userForm.get("password");
+    const confirmPassword = this.userForm.get("confirmPassword");
+    if (!department.value) {
+      password.disable();
+      confirmPassword.disable();
+    } else {
+      password.enable();
+      confirmPassword.enable();
+    }
+  }
+
   onImageChanged($event) {
     $("#preview_image").attr("src", $event.data);
     this.userForm.get("avatar").setValue($event.data);
@@ -186,16 +208,9 @@ export class UserEditComponent implements OnInit {
     return this.userForm.enable();
   }
 
-  handleDepartmentChange(event) {
-    const department = this.userForm.get("department");
-    const password = this.userForm.get("password");
-    const confirmPassword = this.userForm.get("confirmPassword");
-    if (!department.value) {
-      password.disable();
-      confirmPassword.disable();
-    } else {
-      password.enable();
-      confirmPassword.enable();
+  private getPermissions() {
+    if (!this.checkPermissionRequired("WRITE")) {
+      return this.services.router.navigate(["default"]);
     }
   }
 }
