@@ -11,6 +11,7 @@
   [header]="headers"
   [buttonText]="buttonText"
   [events]="calendarEvents"
+  *ngIf="permissions"
 ></full-calendar>
 
 <div
@@ -101,7 +102,11 @@
       <div class="modal-footer justify-content-between">
         <div>
           <button
-            *ngIf="id"
+            *ngIf="
+              modalState === 'UPDATE' &&
+              updateAppointmentPermission &&
+              hasOwnerPermission
+            "
             type="button"
             class="btn btn-link"
             (click)="onDelete()"
@@ -115,10 +120,7 @@
           </button>
           <button type="button" class="btn btn-primary" (click)="onSubmit()">
             {{ resource.modalApply }}
-            <i
-              *ngIf="appointmentForm.disabled"
-              class="fa fa-spinner fa-spin"
-            ></i>
+            <i *ngIf="isShowLoadingButton" class="fa fa-spinner fa-spin"></i>
           </button>
         </div>
       </div>

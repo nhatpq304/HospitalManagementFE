@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, OnChanges } from "@angular/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { FullCalendarComponent } from "@fullcalendar/angular";
 import { EventInput } from "@fullcalendar/core";
@@ -25,8 +25,11 @@ import { LocalStorageService } from "src/app/Services/LocalStorage/local-storage
   templateUrl: "./calendar.component.html",
   styleUrls: ["./calendar.component.scss"],
 })
-export class CalendarComponent implements OnInit, AfterViewInit {
+export class CalendarComponent implements OnInit, OnChanges {
   @ViewChild("calendar") calendarComponent: FullCalendarComponent;
+  @Input() permissions;
+  createAppointmentPermission: boolean;
+  updateAppointmentPermission: boolean;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarEvents: EventInput[] = [];
   locales: [viLocale];
@@ -36,6 +39,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   isMyAppointmentOnly = false;
   originalEvents: EventInput[] = [];
   userId: string;
+  modalState: string;
+  hasOwnerPermission: boolean;
+  adminPermission: boolean;
+  isShowLoadingButton: boolean;
   customButtons = {
     myCustomButton: {
       text: "Tất cả",
@@ -77,8 +84,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.initForm();
   }
 
-  ngAfterViewInit() {
-    this.loadData();
+  ngOnChanges(obj) {
+    if (obj?.permissions?.currentValue) {
+      this.getPermissions();
+      this.loadData();
+    }
   }
 
   initForm() {
@@ -160,6 +170,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     formUtil.validateAllFormFields(this.appointmentForm);
     if (this.appointmentForm.valid) {
       this.disableForm(true);
+      this.toggleLoadingButton(true);
 
       let data = this.appointmentForm.value;
       if (!this.appointmentForm.get("id")?.value) {
@@ -183,6 +194,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   onSearchRemove() {
+    if (this.appointmentForm.disabled) {
+      return;
+    }
     this.appointmentForm.get("searchPatient").reset();
     this.appointmentForm.get("patientId").reset();
   }
@@ -194,11 +208,19 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   onSearchDoctorRemove() {
+    if (this.appointmentForm.disabled) {
+      return;
+    }
     this.appointmentForm.get("searchDoctor").reset();
     this.appointmentForm.get("doctorId").reset();
   }
 
   handleDateClick(arg) {
+    if (!this.createAppointmentPermission) {
+      return;
+    }
+    this.modalState = "CREATE";
+    this.appointmentForm.enable();
     this.appointmentForm.reset();
     this.appointmentForm
       .get("date")
@@ -211,6 +233,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   handleEventClick(arg) {
+    this.modalState = "UPDATE";
+    this.hasOwnerPermission =
+      this.userId === arg.event.extendedProps.doctorId || this.adminPermission;
+
+    if (!this.updateAppointmentPermission || !this.hasOwnerPermission) {
+      this.appointmentForm.disable();
+    }
     this.appointmentForm.reset();
     this.appointmentForm.patchValue(arg.event.extendedProps);
     this.toggleModal();
@@ -260,6 +289,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       });
     }
     this.disableForm(false);
+    this.toggleLoadingButton(false);
   }
 
   async onUpdateClick(data: any) {
@@ -278,10 +308,15 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       });
     }
     this.disableForm(false);
+    this.toggleLoadingButton(false);
   }
 
   isTimeConflict(): boolean {
     return this.appointmentForm.get("from")?.errors?.isAfter;
+  }
+
+  toggleLoadingButton(value) {
+    this.isShowLoadingButton = value;
   }
 
   get patientName(): string {
@@ -385,5 +420,22 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     return !!this.appointmentForm?.get("doctorId").value
       ? null
       : { requireData: { valid: true } };
+  }
+
+  private getPermissions() {
+    this.updateAppointmentPermission = this.checkPermissionRequired("UPDATE");
+    this.createAppointmentPermission = this.checkPermissionRequired("WRITE");
+    this.adminPermission = this.checkIsAdmin(this.permissions);
+  }
+
+  private checkPermissionRequired(permissionName): boolean {
+    return (
+      this.checkIsAdmin(this.permissions) ||
+      _.some(this.permissions, { name: permissionName })
+    );
+  }
+
+  private checkIsAdmin(permissions) {
+    return _.some(permissions, { name: "ADMIN" });
   }
 }
