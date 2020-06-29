@@ -239,11 +239,11 @@ export class ExaminationEditComponent extends BaseComponent {
   }
 
   get avatar(): MediaModel {
-    return this.examForm.get("avatar").value;
+    return this.examForm?.get("avatar")?.value;
   }
 
   get patientName(): string {
-    return this.examForm.get("search").value;
+    return this.examForm?.get("search")?.value;
   }
 
   private getPermissions() {

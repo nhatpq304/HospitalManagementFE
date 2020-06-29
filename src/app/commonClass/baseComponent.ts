@@ -54,8 +54,12 @@ export class BaseComponent implements OnInit {
 
   checkPermissionRequired(permissionName): boolean {
     return (
-      _.some(this.permissions, { name: "ADMIN" }) ||
+      this.checkAdminPermission() ||
       _.some(this.permissions, { name: permissionName })
     );
+  }
+
+  checkAdminPermission(): boolean {
+    return _.some(this.permissions, { name: "ADMIN" });
   }
 }

@@ -14,13 +14,15 @@ export class ExaminationsMappingService {
   constructor(public localStorageService: LocalStorageService) {}
 
   mappingSearchExamination(data): ExaminationSearchModel {
-    let exam = new ExaminationSearchModel();
+    const exam = new ExaminationSearchModel();
     exam.id = data.id;
     exam.doctorName = data.doctor.name;
     exam.patientName = data.patient.name;
     exam.idCardNumber = data.patient.id_card_number;
     exam.medicalCardNumber = data.patient.medical_card_number;
     exam.createdDate = data.created_date;
+    exam.doctorId = data.doctor.id;
+
     return exam;
   }
 
@@ -44,7 +46,7 @@ export class ExaminationsMappingService {
     media.id = data.patient?.media[0]?.id;
     media.type = data.patient?.media[0]?.media_type;
     media.path = data.patient?.media[0]?.media_link;
-    
+
     exam.avatar = media;
     exam.search = data.patient.name;
     exam.name = data.patient.name;

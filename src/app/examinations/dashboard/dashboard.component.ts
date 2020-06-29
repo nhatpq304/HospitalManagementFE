@@ -4,7 +4,8 @@ import { ExaminationsService } from "src/app/Services/Examinations/examinations.
 import * as moment from "moment";
 import { BaseComponent } from "src/app/commonClass/baseComponent";
 import { AuthService } from "src/app/Services/Auth/auth.service";
-
+import { LocalStorageService } from "src/app/Services/LocalStorage/local-storage.service";
+import * as _ from "lodash";
 @Component({
   selector: "examinations-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -15,16 +16,20 @@ export class ExaminationDashboardComponent extends BaseComponent {
   datatableConfig;
   datatableData;
   updateResultPermission;
+  adminPermission;
+  userId;
 
   constructor(
     public router: Router,
     public authService: AuthService,
+    public localStorage: LocalStorageService,
     public examinationService: ExaminationsService
   ) {
     super(
       { router: router, authService: authService },
       { name: "EXAMINATION" }
     );
+    this.userId = JSON.parse(this.localStorage.getItem("user"))?.id;
   }
 
   async afterOnInit(permissions) {
@@ -44,6 +49,7 @@ export class ExaminationDashboardComponent extends BaseComponent {
 
   private getPermissions() {
     this.updateResultPermission = this.checkPermissionRequired("WRITE");
+    this.adminPermission = this.checkAdminPermission();
   }
 
   private initResource() {
@@ -92,11 +98,17 @@ export class ExaminationDashboardComponent extends BaseComponent {
           data: "id",
           title: "Sửa",
           render: (id) => {
+            let updatePermission =
+              self.adminPermission ||
+              (self.updateResultPermission &&
+                self.userId ===
+                  _.find(self.datatableData, { id: id })?.doctorId);
+
             return `
             <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-link" id="editButton" data-id= "${id}">
             <i class="fas fa-edit ${
-              !this.updateResultPermission ? "text-light" : "text-primary"
+              !updatePermission ? "text-light" : "text-primary"
             }"></i>
             </button>
             </div>`;
@@ -105,10 +117,16 @@ export class ExaminationDashboardComponent extends BaseComponent {
       ],
       drawCallback: () => {
         $(".btn-link").on("click", ($event) => {
-          if (!self.updateResultPermission) {
+          let id = $event.currentTarget.dataset.id;
+          let updatePermission =
+            self.adminPermission ||
+            (self.updateResultPermission &&
+              self.userId ===
+                _.find(self.datatableData, { id: +id })?.doctorId);
+          if (!updatePermission) {
             return;
           }
-          let id = $event.currentTarget.dataset.id;
+
           let routerLink = this.resource.editRouterLink.replace("{id}", id);
           this.router.navigateByUrl(routerLink);
         });

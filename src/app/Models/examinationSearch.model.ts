@@ -7,4 +7,5 @@ export default class ExaminationSearchModel {
   gender: boolean = false;
   idCardNumber: string = "";
   medicalCardNumber: string = "";
+  doctorId: string = "";
 }
