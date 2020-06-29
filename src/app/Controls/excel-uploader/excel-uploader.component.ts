@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnChanges } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { MedicinesService } from "src/app/Services/Medicines/medicines.service";
 
@@ -7,13 +7,16 @@ import { MedicinesService } from "src/app/Services/Medicines/medicines.service";
   templateUrl: "./excel-uploader.component.html",
   styleUrls: ["./excel-uploader.component.scss"],
 })
-export class ExcelUploaderComponent implements OnInit {
+export class ExcelUploaderComponent implements OnChanges {
   base64: string;
   resource;
+  @Input() permission;
   constructor(public medicinesService: MedicinesService) {}
 
-  ngOnInit(): void {
-    this.initResource();
+  ngOnChanges(obj) {
+    if (obj?.permission?.value) {
+      this.initResource();
+    }
   }
 
   initResource() {
@@ -32,6 +35,9 @@ export class ExcelUploaderComponent implements OnInit {
   }
 
   onUploadClick() {
+    if (!this.permission) {
+      return;
+    }
     return this.medicinesService.saveMedicines(this.base64);
   }
 

@@ -2,7 +2,7 @@
   <!--Card content-->
   <div class="card-body d-sm-flex justify-content-between">
     <h5 class="mb-2 mb-sm-0 pt-1">
-      {{ resource.stateTitle }}
+      {{ resource?.stateTitle }}
     </h5>
   </div>
 </div>
@@ -11,6 +11,7 @@
     <div class="card">
       <div class="card-body">
         <datatable
+          *ngIf="datatableConfig"
           [config]="datatableConfig"
           [data]="datatableData"
         ></datatable>
@@ -20,7 +21,10 @@
   <div class="col-3">
     <div class="card">
       <div class="card-body">
-        <excel-uploader></excel-uploader>
+        <excel-uploader
+          *ngIf="permissions"
+          [permission]="writePermission"
+        ></excel-uploader>
       </div>
     </div>
   </div>

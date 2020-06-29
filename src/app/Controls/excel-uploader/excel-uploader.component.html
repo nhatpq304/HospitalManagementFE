@@ -11,7 +11,7 @@
         />
         <div></div>
         <label class="custom-file-label" for="uploaded_image">
-          {{ resource.browseFile }}
+          {{ resource?.browseFile }}
         </label>
       </div>
     </div>
@@ -19,6 +19,7 @@
   <button
     type="button"
     class="btn btn-info btn-block my-4"
+    [ngClass]="!permission ? 'btn-blue-grey' : ''"
     (click)="onUploadClick()"
   >
     Tải lên

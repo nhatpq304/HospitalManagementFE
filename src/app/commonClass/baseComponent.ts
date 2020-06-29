@@ -47,6 +47,7 @@ export class BaseComponent implements OnInit {
       },
       { name: "EXAMINATION", permission: "RESULT" },
       { name: "APPOINTMENT", permission: "APPOINTMENT" },
+      { name: "MEDICINES", permission: "MEDICINE" },
     ];
 
     return _.find(module, { name: name })?.permission;
