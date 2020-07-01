@@ -4,7 +4,7 @@
       <!--Card content-->
       <div class="card-body d-sm-flex justify-content-between">
         <h5 class="mb-2 mb-sm-0 pt-1">
-          {{ resource.stateTitle }}
+          {{ resource?.stateTitle }}
         </h5>
       </div>
     </div>
@@ -14,8 +14,12 @@
   <div class="col-9">
     <div class="card">
       <div class="card-body">
-        <a>{{ resource.cardTitle }}</a>
-        <form [formGroup]="userForm" (ngSubmit)="onSubmitClick()">
+        <a>{{ resource?.cardTitle }}</a>
+        <form
+          *ngIf="userForm"
+          [formGroup]="userForm"
+          (ngSubmit)="onSubmitClick()"
+        >
           <!-- USER INFO -->
 
           <div class="form-row">
@@ -23,7 +27,7 @@
               <text-input
                 [parentForm]="userForm"
                 [config]="formConfig.name"
-                [resource]="resource.validationErrors"
+                [resource]="resource?.validationErrors"
               ></text-input>
             </div>
             <div class="form-group col">
@@ -45,14 +49,14 @@
               <text-input
                 [parentForm]="userForm"
                 [config]="formConfig.idCard"
-                [resource]="resource.validationErrors"
+                [resource]="resource?.validationErrors"
               ></text-input>
             </div>
             <div class="form-group col-4">
               <text-input
                 [parentForm]="userForm"
                 [config]="formConfig.medicalCard"
-                [resource]="resource.validationErrors"
+                [resource]="resource?.validationErrors"
               ></text-input>
             </div>
           </div>
@@ -61,14 +65,14 @@
               <text-input
                 [parentForm]="userForm"
                 [config]="formConfig.phone"
-                [resource]="resource.validationErrors"
+                [resource]="resource?.validationErrors"
               ></text-input>
             </div>
             <div class="form-group col-4">
               <text-input
                 [parentForm]="userForm"
                 [config]="formConfig.email"
-                [resource]="resource.validationErrors"
+                [resource]="resource?.validationErrors"
               ></text-input>
             </div>
           </div>
@@ -77,7 +81,7 @@
               <text-input
                 [parentForm]="userForm"
                 [config]="formConfig.address"
-                [resource]="resource.validationErrors"
+                [resource]="resource?.validationErrors"
               ></text-input>
             </div>
           </div>
@@ -87,7 +91,7 @@
           <div class="accordion" id="loginAccordion">
             <div class="z-depth-0">
               <div>
-                {{ resource.loginInfoTitle }}
+                {{ resource?.loginInfoTitle }}
                 <button
                   type="button"
                   class="btn btn-success"
@@ -111,7 +115,7 @@
                     <select-box
                       [parentForm]="userForm"
                       [config]="formConfig.department"
-                      (change)="handleDepartmentChange($event)"
+                      (change)="handleDepartmentChange()"
                     ></select-box>
                   </div>
                 </div>
@@ -120,14 +124,14 @@
                     <text-input
                       [parentForm]="userForm"
                       [config]="formConfig.password"
-                      [resource]="resource.validationErrors"
+                      [resource]="resource?.validationErrors"
                     ></text-input>
                   </div>
                   <div class="form-group col-4">
                     <text-input
                       [parentForm]="userForm"
                       [config]="formConfig.confirmPassword"
-                      [resource]="resource.validationErrors"
+                      [resource]="resource?.validationErrors"
                     ></text-input>
                   </div>
                 </div>
@@ -137,8 +141,8 @@
           <!-- END LOGIN INFO ACCORDION -->
           <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-info btn-block my-4 w-25">
-              {{ resource.saveButton }}
-              <i *ngIf="userForm.disabled" class="fa fa-spinner fa-spin"></i>
+              {{ resource?.saveButton }}
+              <i *ngIf="userForm?.disabled" class="fa fa-spinner fa-spin"></i>
             </button>
           </div>
         </form>
@@ -148,6 +152,7 @@
   <div class="col-3">
     <div class="card">
       <image-uploader
+        *ngIf="userForm"
         [parentForm]="userForm"
         [config]="formConfig.avatar"
         [source]="avatar"

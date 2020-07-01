@@ -52,7 +52,7 @@ export class UserEditComponent extends BaseComponent {
         this.originalData = data;
         this.avatar = data.avatar?.path;
 
-        this.userForm.patchValue({
+        this.userForm?.patchValue({
           name: data.name,
           gender: data.gender,
           idCard: data.idCard,
@@ -63,6 +63,7 @@ export class UserEditComponent extends BaseComponent {
           department: data.department,
           email: data.email,
         });
+        this.handleDepartmentChange();
       });
     }
   }
@@ -114,15 +115,15 @@ export class UserEditComponent extends BaseComponent {
   }
 
   onSubmitClick() {
-    if (this.userForm.disabled) {
+    if (this.userForm?.disabled) {
       return;
     }
     formUtil.validateAllFormFields(this.userForm);
 
-    if (this.userForm.valid) {
+    if (this.userForm?.valid) {
       this.disableForm(true);
 
-      let data = this.userForm.value;
+      let data = this.userForm?.value;
       if (this.state === "ADD") {
         this.onSaveClick(data);
       } else {
@@ -172,13 +173,13 @@ export class UserEditComponent extends BaseComponent {
   }
 
   onDataChange(param) {
-    this.userForm.controls[param.controlName].setValue(param.data);
+    this.userForm?.controls[param.controlName].setValue(param.data);
   }
 
-  handleDepartmentChange(event) {
-    const department = this.userForm.get("department");
-    const password = this.userForm.get("password");
-    const confirmPassword = this.userForm.get("confirmPassword");
+  handleDepartmentChange() {
+    const department = this.userForm?.get("department");
+    const password = this.userForm?.get("password");
+    const confirmPassword = this.userForm?.get("confirmPassword");
     if (!department.value) {
       password.disable();
       confirmPassword.disable();
@@ -190,7 +191,7 @@ export class UserEditComponent extends BaseComponent {
 
   onImageChanged($event) {
     $("#preview_image").attr("src", $event.data);
-    this.userForm.get("avatar").setValue($event.data);
+    this.userForm?.get("avatar").setValue($event.data);
   }
 
   private saveUser(data: any) {
@@ -203,10 +204,10 @@ export class UserEditComponent extends BaseComponent {
 
   private disableForm(value: boolean) {
     if (value) {
-      return this.userForm.disable();
+      return this.userForm?.disable();
     }
 
-    return this.userForm.enable();
+    return this.userForm?.enable();
   }
 
   private getPermissions() {

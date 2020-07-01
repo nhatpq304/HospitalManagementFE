@@ -6,25 +6,26 @@ import { AuthGuardService } from "./Services/Auth/auth-guard.service";
 import { LoginGuardService } from "./Services/Auth/login-guard.service";
 
 const routes: Routes = [
+  { path: "**", redirectTo: "/default", pathMatch: "full" },
   {
     path: "",
     pathMatch: "full",
-    redirectTo: "default"
+    redirectTo: "default",
   },
   {
     path: "login",
     component: LoginComponent,
-    canActivate: [LoginGuardService]
+    canActivate: [LoginGuardService],
   },
   {
     path: "default",
     component: MainComponent,
-    canActivate: [AuthGuardService]
-  }
+    canActivate: [AuthGuardService],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

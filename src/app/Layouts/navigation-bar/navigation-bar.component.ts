@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: "layouts-navigation-bar",
   templateUrl: "./navigation-bar.component.html",
-  styleUrls: ["./navigation-bar.component.scss"]
+  styleUrls: ["./navigation-bar.component.scss"],
 })
 export class NavigationBarComponent implements OnInit {
   @Input() username: string;
@@ -23,13 +23,13 @@ export class NavigationBarComponent implements OnInit {
     this.localStorage.removeItem("token");
     this.localStorage.removeItem("user");
 
-    return this.router.navigate(["/"]);
+    this.router.navigate(["/"]);
   }
 
   private initResource() {
     this.resource = {
       accountMenu: "Xin chào",
-      logOut: "Đăng xuất"
+      logOut: "Đăng xuất",
     };
   }
 }
