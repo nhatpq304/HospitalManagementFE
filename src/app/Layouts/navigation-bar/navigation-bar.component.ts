@@ -23,7 +23,13 @@ export class NavigationBarComponent implements OnInit {
     this.localStorage.removeItem("token");
     this.localStorage.removeItem("user");
 
-    this.router.navigate(["/"]);
+    this.reloadComponent();
+  }
+
+  reloadComponent() {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = "reload";
+    this.router.navigate(["/login"]);
   }
 
   private initResource() {

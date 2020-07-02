@@ -21,10 +21,7 @@
   <div class="col-3">
     <div class="card">
       <div class="card-body">
-        <excel-uploader
-          *ngIf="permissions"
-          [permission]="writePermission"
-        ></excel-uploader>
+        <excel-uploader [permission]="writePermission"(onUploadComplete)="onUploadComplete($event)"></excel-uploader>
       </div>
     </div>
   </div>

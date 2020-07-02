@@ -23,5 +23,6 @@
     (click)="onUploadClick()"
   >
     Tải lên
+    <i *ngIf="isDisabled" class="fa fa-spinner fa-spin"></i>
   </button>
 </div>

@@ -1,5 +1,10 @@
-import { Component, OnInit, Input, OnChanges } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import {
+  Component,
+  Input,
+  OnChanges,
+  EventEmitter,
+  Output,
+} from "@angular/core";
 import { MedicinesService } from "src/app/Services/Medicines/medicines.service";
 
 @Component({
@@ -10,7 +15,9 @@ import { MedicinesService } from "src/app/Services/Medicines/medicines.service";
 export class ExcelUploaderComponent implements OnChanges {
   base64: string;
   resource;
+  isDisabled: boolean;
   @Input() permission;
+  @Output() onUploadComplete = new EventEmitter();
   constructor(public medicinesService: MedicinesService) {}
 
   ngOnChanges(obj) {
@@ -34,11 +41,18 @@ export class ExcelUploaderComponent implements OnChanges {
     }
   }
 
-  onUploadClick() {
-    if (!this.permission) {
+  async onUploadClick() {
+    if (!this.permission || !this.isFileChosen) {
       return;
     }
-    return this.medicinesService.saveMedicines(this.base64);
+    this.isDisabled = true;
+    try {
+      await this.medicinesService.saveMedicines(this.base64);
+      this.onUploadComplete.emit({ value: true });
+    } catch {
+      this.onUploadComplete.emit({ value: false });
+    }
+    this.isDisabled = false;
   }
 
   getBase64(file): Promise<any> {
@@ -48,5 +62,9 @@ export class ExcelUploaderComponent implements OnChanges {
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
+  }
+
+  get isFileChosen(): boolean {
+    return !!this.base64;
   }
 }
