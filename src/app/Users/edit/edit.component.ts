@@ -9,6 +9,7 @@ import ToastService from "src/app/Services/Common/toast.service";
 import UserModel from "src/app/Models/user.model";
 import { BaseComponent } from "src/app/commonClass/baseComponent";
 import { AuthService } from "src/app/Services/Auth/auth.service";
+import * as moment from "moment";
 
 @Component({
   selector: "user-edit",
@@ -80,7 +81,7 @@ export class UserEditComponent extends BaseComponent {
         medicalCard: new FormControl("", []),
         address: new FormControl("", []),
         phone: new FormControl("", [Validators.pattern("^[0-9]*$")]),
-        birthday: new FormControl("", []),
+        birthday: new FormControl(moment().format("DD/MM/YYYY"), []),
         department: new FormControl("", []),
         email: new FormControl("", [Validators.email]),
         password: new FormControl({ value: "", disabled: true }, [

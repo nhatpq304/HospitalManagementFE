@@ -59,6 +59,9 @@ export default class UsersMappingService {
     user.password = data.department ? data.password : null;
     user.avatar_image = data.avatar;
 
+    if (!user.password) {
+      delete user.password;
+    }
     return user;
   }
 }

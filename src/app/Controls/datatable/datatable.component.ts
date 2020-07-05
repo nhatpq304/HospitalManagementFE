@@ -44,7 +44,9 @@ export class DatatableComponent implements OnInit, OnChanges {
           infoEmpty: "Không tồn tại bản ghi nào",
           infoFiltered: " - lọc từ _MAX_ bản ghi",
           lengthMenu: `Hiển thị _MENU_ bản ghi`,
-
+          select: {
+            rows: "",
+          },
           paginate: {
             previous: "Trước",
             next: "Sau",
