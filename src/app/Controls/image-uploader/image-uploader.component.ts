@@ -54,7 +54,6 @@ export class ImageUploaderComponent implements OnInit, OnChanges {
     if (mimeType.match(/image\/*/) == null) {
       return;
     }
-
     var reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (_event) => {
@@ -79,7 +78,8 @@ export class ImageUploaderComponent implements OnInit, OnChanges {
   }
 
   private initCropper() {
-    ($("#image") as any).cropper({
+    ($("#image") as any)?.cropper("destroy");
+    ($("#image") as any)?.cropper({
       aspectRatio: 3 / 4,
       minContainerWidth: 400,
       minContainerHeight: 300,

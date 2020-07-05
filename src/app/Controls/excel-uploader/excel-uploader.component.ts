@@ -35,6 +35,7 @@ export class ExcelUploaderComponent implements OnChanges {
   async onFileChange($event) {
     if ($event.target.files.length > 0) {
       const file = $event.target.files[0];
+      $("#uploaded_image_label").html(file.name);
       this.base64 = await this.getBase64(file);
     } else {
       this.base64 = null;

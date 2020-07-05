@@ -9,8 +9,7 @@
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           (change)="onFileChange($event)"
         />
-        <div></div>
-        <label class="custom-file-label" for="uploaded_image">
+        <label id="uploaded_image_label" class="custom-file-label" for="uploaded_image">
           {{ resource?.browseFile }}
         </label>
       </div>
