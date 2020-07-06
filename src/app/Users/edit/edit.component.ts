@@ -111,6 +111,7 @@ export class UserEditComponent extends BaseComponent {
         required: "Không thể để trống ",
         pattern: "không đúng định dạng",
         mustMatch: "không chính xác",
+        minLength: "tối thiểu {*} ký tự",
       },
     };
   }

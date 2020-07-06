@@ -23,6 +23,17 @@
   >
     {{ config.title }} {{ resource?.mustMatch }}
   </mdb-error>
+  <mdb-error
+    *ngIf="property?.errors?.minlength && (property.dirty || property.touched)"
+  >
+    {{ config.title }}
+    {{
+      resource?.minLength?.replace(
+        "{*}",
+        property?.errors?.minlength?.requiredLength
+      )
+    }}
+  </mdb-error>
 
   <input
     [id]="config.controlName"
